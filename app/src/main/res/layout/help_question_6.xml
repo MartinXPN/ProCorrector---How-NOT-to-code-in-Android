@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:background="@color/edit_correct_text_main_background"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="18dp"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:gravity="start"
+        android:textColor="@color/help_text_question"
+        android:textSize="@dimen/help_question_text_size"
+        android:text="-What other features does ProCorrector have?"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:layout_width="@dimen/help_icons_width"
+                android:layout_height="@dimen/help_icons_height"
+                android:layout_marginRight="7dp"
+                android:layout_marginBottom="7dp"
+                android:src="@drawable/menu_icon" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/help_text_answer"
+            android:textSize="@dimen/help_answer_text_size"
+            android:text="Inside the menu you can..."
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/menu"
+            android:layout_toStartOf="@+id/menu" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:layout_width="@dimen/help_icons_width"
+                android:layout_height="@dimen/help_icons_height"
+                android:layout_marginRight="7dp"
+                android:layout_marginBottom="7dp"
+                android:src="@drawable/record_icon" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/help_text_answer"
+            android:textSize="@dimen/help_answer_text_size"
+            android:text="Instead of typing the text you can just record it."
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/record"
+            android:layout_toStartOf="@+id/record" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/copy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:layout_width="@dimen/help_icons_width"
+                android:layout_height="@dimen/help_icons_height"
+                android:layout_marginRight="7dp"
+                android:layout_marginBottom="7dp"
+                android:src="@drawable/copy_icon" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/help_text_answer"
+            android:textSize="@dimen/help_answer_text_size"
+            android:text="You can copy the whole document to clipboard and then paste it anywhere."
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/copy"
+            android:layout_toStartOf="@+id/copy" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:layout_width="@dimen/help_icons_width"
+                android:layout_height="@dimen/help_icons_height"
+                android:layout_marginRight="7dp"
+                android:layout_marginBottom="7dp"
+                android:src="@drawable/send_icon" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/help_text_answer"
+            android:textSize="@dimen/help_answer_text_size"
+            android:text="Send your document by Email, Messenger, Skype, etc."
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/send"
+            android:layout_toStartOf="@+id/send" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/feedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
+
+
+            <ImageView
+                android:layout_width="@dimen/help_icons_width"
+                android:layout_height="@dimen/help_icons_height"
+                android:layout_marginRight="7dp"
+                android:layout_marginBottom="7dp"
+                android:src="@drawable/feedback_icon" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/help_text_answer"
+            android:textSize="@dimen/help_answer_text_size"
+            android:text="Write feedback to make ProCorrector even better!"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/feedback"
+            android:layout_toStartOf="@+id/feedback" />
+
+    </RelativeLayout>
+</LinearLayout>

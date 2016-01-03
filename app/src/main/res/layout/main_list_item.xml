@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/transparent_rectangle"
+    android:layout_weight="10">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/title"
+            android:background="@drawable/transparent_rectangle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:maxLines="1"
+            android:ellipsize="end"
+
+            android:paddingTop="@dimen/main_list_title_padding_top"
+            android:paddingLeft="@dimen/main_list_title_padding_left"
+            android:paddingRight="@dimen/main_list_title_padding_right"
+            android:paddingBottom="@dimen/main_list_title_padding_bottom"
+            android:layout_marginBottom="@dimen/main_list_title_margin_bottom"
+            android:layout_marginTop="@dimen/main_list_title_margin_top"
+            android:layout_marginLeft="@dimen/main_list_title_margin_left"
+            android:layout_marginRight="@dimen/main_list_title_margin_right"
+
+            android:textStyle="normal"
+            android:textSize="@dimen/main_list_title_text_size"
+            android:textColor="@color/main_list_title" />
+
+        <TextView
+            android:id="@+id/text"
+            android:background="@drawable/transparent_rectangle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:maxLines="1"
+            android:ellipsize="end"
+
+            android:paddingTop="@dimen/main_list_text_padding_top"
+            android:paddingLeft="@dimen/main_list_text_padding_left"
+            android:paddingRight="@dimen/main_list_text_padding_right"
+            android:paddingBottom="@dimen/main_list_text_padding_bottom"
+            android:layout_marginBottom="@dimen/main_list_text_margin_bottom"
+            android:layout_marginTop="@dimen/main_list_text_margin_top"
+            android:layout_marginLeft="@dimen/main_list_text_margin_left"
+            android:layout_marginRight="@dimen/main_list_text_margin_right"
+
+            android:textSize="@dimen/main_list_text_size"
+            android:textColor="@color/main_list_text" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="6"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/date"
+            android:padding="@dimen/main_list_date_padding"
+            android:textColor="@color/main_list_date"
+            android:textSize="@dimen/main_list_date_text_size"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/transparent_rectangle" />
+
+    </LinearLayout>
+
+</LinearLayout>

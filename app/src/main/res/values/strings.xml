@@ -1,0 +1,48 @@
+<resources>
+
+    <string name="app_name">ProCorrector</string>
+    <string name="title_hint">Type the title here…</string>
+    <string name="text_hint">Type your text here…</string>
+
+    <string name="action_settings_title">Settings</string>
+    <string name="action_show_suggestions_title">Show suggestions</string>
+    <string name="action_add_to_library_title">Add to library</string>
+    <string name="action_ignore_once_title">Ignore once</string>
+    <string name="action_add_title_title">Title</string>
+    <string name="action_choose_language_title">Recording Language</string>
+    <string name="action_record_title">Record</string>
+    <string name="action_send_title">Send</string>
+    <string name="action_find_title">Find</string>
+    <string name="action_help_title">Help</string>
+    <string name="action_feedback_title">Feedback</string>
+    <string name="action_about_title">About</string>
+    <string name="action_overflow_menu_title">Menu</string>
+    <string name="action_done_title">Done</string>
+    <string name="action_back_title">Back</string>
+
+    <string name="action_language_ARM_title">Հայերեն</string>
+    <string name="action_language_ENG_title">English</string>
+    <string name="action_language_RUS_title">Русский</string>
+    <string name="language_ARM">ARM</string>
+    <string name="language_ENG">ENG</string>
+    <string name="language_RUS">RUS</string>
+    <string name="language_locale_ARM">hy_AM</string>
+    <string name="language_locale_ENG">en</string>
+    <string name="language_locale_RUS">ru_RU</string>
+
+    <string name="about_app_description">ProCorrector is an app designed for creating texts, taking notes, editing and correcting essays, etc. It can be used any time even without an internet access.\nIt will find any spelling mistake and offer suggestions from its dictionary, which is created from Wikipedia’s most widely used words.\nThe app supports several languages, including English, Russian and Armenian.</string>
+    <string name="about_author_description">My name is Martin. I’m an 18 year-old guy who lives in Armenia. Last year I graduated from a high school called <a href="http://www.aybschool.am/">AYB</a>.\nProCorrector is a project I did mainly for educational purposes and it helped me get acquainted with the basics of JAVA and Android.</string>
+    <string name="action_copy_title">Copy</string>
+
+    <string name="help_question_1_question">-How to create a document?</string>
+    <string name="help_question_1_answer">Click on the blue button that appears in the bottom-right corner of the main screen</string>
+    <string name="help_question_2_question">-How to edit a document?</string>
+    <string name="help_question_2_answer">Click on the document you want to edit</string>
+    <string name="help_question_3_question">-How to delete a document?</string>
+    <string name="help_question_3_answer">Long press on the document you want to delete</string>
+    <string name="help_question_4_question">-How to turn suggestions ON/OFF?</string>
+    <string name="help_question_4_answer">To turn the suggestions off click on the yellow bulb\nTo turn the suggestions on click on the light grey bulb</string>
+    <string name="help_question_5_question">-How to add a word to dictionary, or how to ignore it for once?</string>
+    <string name="help_question_5_answer">To add a word to dictionary click on the word you want to add, and then click on this button\nTo ignore a word for once click on the word you want to ignore and then click on this button</string>
+
+</resources>

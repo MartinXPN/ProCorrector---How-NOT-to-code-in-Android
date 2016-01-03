@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:background="@color/edit_correct_text_main_background"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="18dp"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:gravity="start"
+        android:textColor="@color/help_text_question"
+        android:textSize="@dimen/help_question_text_size"
+        android:text="@string/help_question_5_question"/>
+
+
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:layout_width="@dimen/help_icons_width"
+                android:layout_height="@dimen/help_icons_height"
+                android:layout_marginRight="7dp"
+                android:src="@drawable/add_to_library_icon" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/help_text_answer"
+            android:textSize="@dimen/help_answer_text_size"
+            android:text="To add a word to dictionary click on the word you want to add, and then click on this button"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/add"
+            android:layout_toStartOf="@+id/add" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="7dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/ignore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:layout_width="@dimen/help_icons_width"
+                android:layout_height="@dimen/help_icons_height"
+                android:layout_marginRight="7dp"
+                android:src="@drawable/ignore_once_icon" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/help_text_answer"
+            android:textSize="@dimen/help_answer_text_size"
+            android:text="To ignore a word for once click on the word you want to ignore and then click on this button"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/ignore"
+            android:layout_toStartOf="@+id/ignore" />
+
+    </RelativeLayout>
+</LinearLayout>

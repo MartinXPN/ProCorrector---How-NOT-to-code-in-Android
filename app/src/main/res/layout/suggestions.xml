@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/all_suggestions"
+    android:weightSum="2"
+    android:layout_width="@dimen/suggestion_box_width"
+    android:layout_height="@dimen/suggestion_box_height"
+    android:orientation="horizontal"
+    android:baselineAligned="false" >
+
+    <LinearLayout
+        android:id="@+id/correction_box"
+        android:visibility="invisible"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/rectangle_with_round_corners">
+
+        <ListView
+            android:id = "@+id/correction_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:dividerHeight="@dimen/suggestion_box_list_divider"
+            android:divider="@color/suggestion_list_divider" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/continuation_box"
+        android:visibility="invisible"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/rectangle_with_round_corners">
+
+        <ListView
+            android:id = "@+id/continuation_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:dividerHeight="@dimen/suggestion_box_list_divider"
+            android:divider="@color/suggestion_list_divider" />
+    </LinearLayout>
+
+</LinearLayout>

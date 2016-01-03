@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="rectangle_with_round_corners_radius">2dp</dimen>
+    <dimen name="about_text_size">18sp</dimen>
+    <dimen name="about_text_padding">9dp</dimen>
+
+    <dimen name="edit_correct_text_title_left_margin">5dp</dimen>
+    <dimen name="edit_correct_text_title_text_size">20sp</dimen>
+    <dimen name="edit_correct_text_content_padding_left">10dp</dimen>
+    <dimen name="edit_correct_text_content_padding_right">10dp</dimen>
+    <dimen name="edit_correct_text_content_padding_top">11dp</dimen>
+    <dimen name="edit_correct_text_content_text_size">17sp</dimen>
+
+
+    <dimen name="help_text_padding">16dp</dimen>
+
+    <dimen name="main_add_note_margin">16dp</dimen>
+    <dimen name="main_list_title_padding_top">5dp</dimen>
+    <dimen name="main_list_title_padding_left">5dp</dimen>
+    <dimen name="main_list_title_padding_right">5dp</dimen>
+    <dimen name="main_list_title_padding_bottom">0dp</dimen>
+    <dimen name="main_list_title_margin_top">5dp</dimen>
+    <dimen name="main_list_title_margin_bottom">0dp</dimen>
+    <dimen name="main_list_title_margin_left">5dp</dimen>
+    <dimen name="main_list_title_margin_right">8dp</dimen>
+    <dimen name="main_list_title_text_size">23sp</dimen>
+    <dimen name="main_list_text_padding_top">0dp</dimen>
+    <dimen name="main_list_text_padding_left">0dp</dimen>
+    <dimen name="main_list_text_padding_right">5dp</dimen>
+    <dimen name="main_list_text_padding_bottom">5dp</dimen>
+    <dimen name="main_list_text_margin_bottom">5dp</dimen>
+    <dimen name="main_list_text_margin_top">0dp</dimen>
+    <dimen name="main_list_text_margin_left">12dp</dimen>
+    <dimen name="main_list_text_margin_right">8dp</dimen>
+    <dimen name="main_list_text_size">15sp</dimen>
+    <dimen name="main_list_date_padding">2dp</dimen>
+    <dimen name="main_list_divider">0.01dp</dimen>
+    <dimen name="main_list_date_text_size">14sp</dimen>
+
+
+    <dimen name="suggestion_list_item_padding">5dp</dimen>
+    <dimen name="suggestion_list_item_text_size">20sp</dimen>
+    <dimen name="suggestion_box_height">190dp</dimen>
+    <dimen name="suggestion_box_width">250dp</dimen>
+    <dimen name="suggestion_box_list_divider">0.01dp</dimen>
+
+    <dimen name="help_question_text_size">22sp</dimen>
+    <dimen name="help_answer_text_size">17sp</dimen>
+    <dimen name="help_icons_width">45dp</dimen>
+    <dimen name="help_icons_height">53dp</dimen>
+
+
+</resources>

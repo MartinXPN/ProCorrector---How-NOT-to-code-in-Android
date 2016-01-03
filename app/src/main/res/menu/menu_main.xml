@@ -1,0 +1,59 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Main">
+
+    <item
+        android:id="@+id/action_overflow_menu"
+        android:title="@string/action_overflow_menu_title"
+        android:icon="@drawable/menu_icon"
+        android:orderInCategory="1000"
+        app:showAsAction="always">
+
+        <menu>
+
+            <!-- TODO find all notes with typed phrase
+            <item
+                android:id="@+id/action_find"
+                android:title="@string/action_find_title"
+                android:icon="@drawable/find_icon"
+                android:orderInCategory="800"
+                app:showAsAction="never" />
+            -->
+
+            <!-- TODO Settings
+            <item
+                android:id="@+id/action_settings"
+                android:title="@string/action_settings_title"
+                android:icon="@drawable/settings_icon"
+                android:orderInCategory="900"
+                app:showAsAction="never" />
+            -->
+
+            <item
+                android:id="@+id/action_help"
+                android:title="@string/action_help_title"
+                android:icon="@drawable/help_icon"
+                android:orderInCategory="1000"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/action_feedback"
+                android:title="@string/action_feedback_title"
+                android:icon="@drawable/feedback_icon"
+                android:orderInCategory="1100"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/action_about"
+                android:title="@string/action_about_title"
+                android:icon="@drawable/about_icon"
+                android:orderInCategory="1200"
+                app:showAsAction="never" />
+
+        </menu>
+    </item>
+
+
+</menu>
