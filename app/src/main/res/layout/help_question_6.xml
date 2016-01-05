@@ -192,7 +192,7 @@
             android:paddingRight="10dp"
             android:textColor="@color/help_text_answer"
             android:textSize="@dimen/help_answer_text_size"
-            android:text="Write feedback to make ProCorrector even better!"
+            android:text="Write feedback to make ProCorrector better!"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"

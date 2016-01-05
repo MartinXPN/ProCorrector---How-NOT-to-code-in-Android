@@ -11,6 +11,7 @@
     <string name="action_add_title_title">Title</string>
     <string name="action_choose_language_title">Recording Language</string>
     <string name="action_record_title">Record</string>
+    <string name="action_copy_title">Copy</string>
     <string name="action_send_title">Send</string>
     <string name="action_find_title">Find</string>
     <string name="action_help_title">Help</string>
@@ -30,9 +31,9 @@
     <string name="language_locale_ENG">en</string>
     <string name="language_locale_RUS">ru_RU</string>
 
-    <string name="about_app_description">ProCorrector is an app designed for creating texts, taking notes, editing and correcting essays, etc. It can be used any time even without an internet access.\nIt will find any spelling mistake and offer suggestions from its dictionary, which is created from Wikipedia’s most widely used words.\nThe app supports several languages, including English, Russian and Armenian.</string>
-    <string name="about_author_description">My name is Martin. I’m an 18 year-old guy who lives in Armenia. Last year I graduated from a high school called <a href="http://www.aybschool.am/">AYB</a>.\nProCorrector is a project I did mainly for educational purposes and it helped me get acquainted with the basics of JAVA and Android.</string>
-    <string name="action_copy_title">Copy</string>
+    <string name="about_app_description">ProCorrector is an app designed for creating texts, taking notes, editing and correcting essays, etc. It can be used any time even without an internet access.\nIt will find any spelling mistake and offer suggestions from its dictionary, which is created from Wikipedia’s most widely used words.\nThe app supports several languages, including English, Russian and Armenian.\nIt\'s an open-source <a href="https://github.com/MartinXPN/ProCorrector.git">project</a> done mainly for educational reasons.</string>
+    <string name="about_author_text">© 2016 <a href="https://www.linkedin.com/in/martin-mirakyan-945597101">Martin Mirakyan</a>\nAll Rights Reserved.</string>
+
 
     <string name="help_question_1_question">-How to create a document?</string>
     <string name="help_question_1_answer">Click on the blue button that appears in the bottom-right corner of the main screen</string>

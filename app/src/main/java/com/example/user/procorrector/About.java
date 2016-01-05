@@ -11,6 +11,7 @@ import android.widget.TextView;
 public class About extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about);
 
@@ -20,17 +21,11 @@ public class About extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        /*
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        */
+        TextView about_author = (TextView) findViewById( R.id.about_author );
+        about_author.setMovementMethod(LinkMovementMethod.getInstance());
 
-        TextView about_author = (TextView) findViewById(R.id.about_author_text);
-        about_author.setMovementMethod( LinkMovementMethod.getInstance() );
+        TextView about_app = (TextView) findViewById( R.id.about_app );
+        about_app.setMovementMethod( LinkMovementMethod.getInstance() );
     }
 
     @Override
