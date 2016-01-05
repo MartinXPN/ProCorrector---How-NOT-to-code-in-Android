@@ -41,6 +41,7 @@ import java.util.Date;
 import java.util.Deque;
 import java.util.List;
 import java.util.Locale;
+import java.lang.Object;
 
 
 public class EditCorrectText extends AppCompatActivity {
@@ -68,9 +69,9 @@ public class EditCorrectText extends AppCompatActivity {
     private boolean showSuggestions = true;
     private Menu myMenu = null;
 
-    private static String CurrentLanguageLocale = Locale.ENGLISH.toString();
-    private static String CurrentLanguageCode = "ENG";
-    private static String CurrentLanguage = "English";
+    private static String CurrentRecordingLanguageLocale = Locale.ENGLISH.toString();
+    private static String CurrentRecordingLanguageCode = "ENG";
+    private static String CurrentRecordingLanguage = "English";
     private static final int SPEECH_REQUEST_CODE = 0;
 
 
@@ -78,14 +79,14 @@ public class EditCorrectText extends AppCompatActivity {
     private void setLanguage( String languageCode ) {
 
         MenuItem flag = myMenu.findItem( R.id.action_choose_language );
-        CurrentLanguageCode = languageCode;
-        CurrentLanguageLocale = Language.getLanguageLocaleFromCode(languageCode);
-        CurrentLanguage = Language.getLanguageFromCode(languageCode);
+        CurrentRecordingLanguageCode = languageCode;
+        CurrentRecordingLanguageLocale = Language.getLanguageLocaleFromCode(languageCode);
+        CurrentRecordingLanguage = Language.getLanguageFromCode(languageCode);
         int flagID = Language.getLanguageFlagIDFromCode(languageCode);
         flag.setIcon( flagID );
 
         if( !Language.supportsLanguage( languageCode ) ) {
-            Toast.makeText( EditCorrectText.this, CurrentLanguage + " is not fully supported!\nThe program may make wrong corrections.", Toast.LENGTH_LONG ).show();
+            Toast.makeText( EditCorrectText.this, CurrentRecordingLanguage + " is not fully supported!\nThe program may make wrong corrections.", Toast.LENGTH_LONG ).show();
         }
     }
 
@@ -171,7 +172,7 @@ public class EditCorrectText extends AppCompatActivity {
     private void displaySpeechRecognizer() {
 
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, CurrentLanguageLocale);    /// set the language here
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, CurrentRecordingLanguageLocale);    /// set the language here
         startActivityForResult(intent, SPEECH_REQUEST_CODE);    // Start the activity, the intent will be populated with the speech text
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -409,7 +410,7 @@ public class EditCorrectText extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate( R.menu.menu_edit_correct_text, menu );
         myMenu = menu;
-        setLanguage(CurrentLanguageCode);
+        setLanguage(CurrentRecordingLanguageCode);
 
         return true;
     }
@@ -538,7 +539,6 @@ public class EditCorrectText extends AppCompatActivity {
         if( end > s.length()-1 )    end = s.length()-1;
 
 
-        /// TODO do this stuff in Language
         while (start < s.length() && !Language.isCorrectLetter(s.charAt(start)))            start++;
         while (end >= 0 && end < s.length() && !Language.isCorrectLetter(s.charAt(end)))    end--;
         if (end < start || start >= s.length() || end < 0 )                                 return;
@@ -819,8 +819,8 @@ public class EditCorrectText extends AppCompatActivity {
 
             String word = params[0].toString();
             database.insert(word);
-            DatabaseHelper.wrongWords.remove( database.convertToSQLiteFormat(word) );
-            DatabaseHelper.correctWords.add( database.convertToSQLiteFormat(word) );
+            DatabaseHelper.wrongWords.remove( DatabaseHelper.convertToSQLiteFormat(word) );
+            DatabaseHelper.correctWords.add( DatabaseHelper.convertToSQLiteFormat(word) );
             return null;
         }
 
