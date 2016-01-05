@@ -68,46 +68,25 @@ public class EditCorrectText extends AppCompatActivity {
     private boolean showSuggestions = true;
     private Menu myMenu = null;
 
-    private static String LocaleLanguage = Locale.ENGLISH.toString();
-    private static String CurrentLanguage = "ENG";
+    private static String CurrentLanguageLocale = Locale.ENGLISH.toString();
+    private static String CurrentLanguageCode = "ENG";
+    private static String CurrentLanguage = "English";
     private static final int SPEECH_REQUEST_CODE = 0;
 
 
     /*******************************actions support functions**************************************/
-    private void setLanguage( String language ) {
+    private void setLanguage( String languageCode ) {
 
-        CurrentLanguage = language;
         MenuItem flag = myMenu.findItem( R.id.action_choose_language );
+        CurrentLanguageCode = languageCode;
+        CurrentLanguageLocale = Language.getLanguageLocaleFromCode(languageCode);
+        CurrentLanguage = Language.getLanguageFromCode(languageCode);
+        int flagID = Language.getLanguageFlagIDFromCode(languageCode);
+        flag.setIcon( flagID );
 
-        if( language.matches( getResources().getString( R.string.language_ENG ) ) )         { LocaleLanguage = getResources().getString( R.string.language_locale_ENG );      flag.setIcon(R.drawable.flag_eng_icon); }
-        else if( language.matches( getResources().getString( R.string.language_BUL ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_BUL );      flag.setIcon(R.drawable.flag_bul_icon); }
-        else if( language.matches( getResources().getString( R.string.language_CZE ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_CZE );      flag.setIcon(R.drawable.flag_cze_icon); }
-        else if( language.matches( getResources().getString( R.string.language_DAN ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_DAN );      flag.setIcon(R.drawable.flag_dan_icon); }
-        else if( language.matches( getResources().getString( R.string.language_DUT ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_DUT );      flag.setIcon(R.drawable.flag_dut_icon); }
-        else if( language.matches( getResources().getString( R.string.language_FIL ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_FIL );      flag.setIcon(R.drawable.flag_fil_icon); }
-        else if( language.matches( getResources().getString( R.string.language_FIN ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_FIN );      flag.setIcon(R.drawable.flag_fin_icon); }
-        else if( language.matches( getResources().getString( R.string.language_FRA ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_FRA );      flag.setIcon(R.drawable.flag_fra_icon); }
-        else if( language.matches( getResources().getString( R.string.language_GER ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_GER );      flag.setIcon(R.drawable.flag_ger_icon); }
-        else if( language.matches( getResources().getString( R.string.language_GRE ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_GRE );      flag.setIcon(R.drawable.flag_gre_icon); }
-        else if( language.matches( getResources().getString( R.string.language_HEB ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_HEB );      flag.setIcon(R.drawable.flag_heb_icon); }
-        else if( language.matches( getResources().getString( R.string.language_HUN ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_HUN );      flag.setIcon(R.drawable.flag_hun_icon); }
-        else if( language.matches( getResources().getString( R.string.language_ICE ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_ICE );      flag.setIcon(R.drawable.flag_ice_icon); }
-        else if( language.matches( getResources().getString( R.string.language_ITL ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_ITL );      flag.setIcon(R.drawable.flag_itl_icon); }
-        else if( language.matches( getResources().getString( R.string.language_IND ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_IND );      flag.setIcon(R.drawable.flag_ind_icon); }
-        else if( language.matches( getResources().getString( R.string.language_JAP ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_JAP );      flag.setIcon(R.drawable.flag_jap_icon); }
-        else if( language.matches( getResources().getString( R.string.language_KOR ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_KOR );      flag.setIcon(R.drawable.flag_kor_icon); }
-        else if( language.matches( getResources().getString( R.string.language_LIT ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_LIT );      flag.setIcon(R.drawable.flag_lit_icon); }
-        else if( language.matches( getResources().getString( R.string.language_MAL ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_MAL );      flag.setIcon(R.drawable.flag_mal_icon); }
-        else if( language.matches( getResources().getString( R.string.language_NOR ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_NOR );      flag.setIcon(R.drawable.flag_nor_icon); }
-        else if( language.matches( getResources().getString( R.string.language_POL ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_POL );      flag.setIcon(R.drawable.flag_pol_icon); }
-        else if( language.matches( getResources().getString( R.string.language_POR ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_POR );      flag.setIcon(R.drawable.flag_por_icon); }
-        else if( language.matches( getResources().getString( R.string.language_ROM ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_ROM );      flag.setIcon(R.drawable.flag_rom_icon); }
-        else if( language.matches( getResources().getString( R.string.language_RUS ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_RUS );      flag.setIcon(R.drawable.flag_rus_icon); }
-        else if( language.matches( getResources().getString( R.string.language_SER ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_SER );      flag.setIcon(R.drawable.flag_ser_icon); }
-        else if( language.matches( getResources().getString( R.string.language_SLO ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_SLO );      flag.setIcon(R.drawable.flag_slo_icon); }
-        else if( language.matches( getResources().getString( R.string.language_SPA ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_SPA );      flag.setIcon(R.drawable.flag_spa_icon); }
-        else if( language.matches( getResources().getString( R.string.language_SWE ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_SWE );      flag.setIcon(R.drawable.flag_swe_icon); }
-        else if( language.matches( getResources().getString( R.string.language_VIE ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_VIE );      flag.setIcon(R.drawable.flag_vie_icon); }
+        if( !Language.supportsLanguage( languageCode ) ) {
+            Toast.makeText( EditCorrectText.this, CurrentLanguage + " is not fully supported!\nThe program may make wrong corrections.", Toast.LENGTH_LONG ).show();
+        }
     }
 
     private void saveNoteToDatabase() {
@@ -133,7 +112,7 @@ public class EditCorrectText extends AppCompatActivity {
         ClipboardManager clipboard = (ClipboardManager) getSystemService( CLIPBOARD_SERVICE );
         ClipData clip = ClipData.newPlainText( "ProCorrector", text );
         clipboard.setPrimaryClip( clip );
-        Toast.makeText( EditCorrectText.this, "Text was copied to clipboard", Toast.LENGTH_LONG ).show();
+        Toast.makeText( EditCorrectText.this, "Text copied to clipboard", Toast.LENGTH_LONG ).show();
     }
 
     ////////////////////////////////show or hide////////////////////////////////////////////////////
@@ -192,7 +171,7 @@ public class EditCorrectText extends AppCompatActivity {
     private void displaySpeechRecognizer() {
 
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, LocaleLanguage);    /// set the language here
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, CurrentLanguageLocale);    /// set the language here
         startActivityForResult(intent, SPEECH_REQUEST_CODE);    // Start the activity, the intent will be populated with the speech text
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -265,7 +244,7 @@ public class EditCorrectText extends AppCompatActivity {
             }
         });
 
-        new Language();
+        new Language( EditCorrectText.this );
 
 
         documentID = bundle.getInt( "id" );
@@ -299,8 +278,9 @@ public class EditCorrectText extends AppCompatActivity {
             }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
                 //Log.d("text changed", s + " START=" + start + " B=" + before + " C=" + count);
-                Log.d("EditCorrectText", "text is changed");
+                text = s;
 
                 if( before == count ) {
                     Log.d( "EditCorrectText", "color is changed" );
@@ -311,7 +291,6 @@ public class EditCorrectText extends AppCompatActivity {
                 if (CorrectionAndContinuationTask != null)
                     CorrectionAndContinuationTask.cancel(true);
 
-                text = s;
                 if (TextChangedTask != null)
                     TextChangedTask.cancel(true);
 
@@ -430,7 +409,7 @@ public class EditCorrectText extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate( R.menu.menu_edit_correct_text, menu );
         myMenu = menu;
-        setLanguage( CurrentLanguage );
+        setLanguage(CurrentLanguageCode);
 
         return true;
     }
@@ -593,12 +572,11 @@ public class EditCorrectText extends AppCompatActivity {
 
     public void replaceFragment( String newString, int l, int r ) {
 
-        SpannableStringBuilder res = new SpannableStringBuilder( content.getText() );
-        res.delete( l, r );
+        SpannableStringBuilder res = new SpannableStringBuilder( content.getText());
+        res.delete(l, r);
         res.insert(l, newString);
         content.setText(res);
         content.setSelection(l + newString.length());
-        setSuggestionsInvisibleAndClearLists();
 
         history.clear();
         historyTimer = 0;
@@ -620,6 +598,7 @@ public class EditCorrectText extends AppCompatActivity {
         while( l-1 >= 0 && Language.isCorrectLetter( text.charAt( l-1 ), currentLanguage ) )            l--;
 
         replaceFragment( newWord, l, Math.min(r+1, text.length()) );
+        setSuggestionsInvisibleAndClearLists();
     }
 
     private void showCorrectionList() {

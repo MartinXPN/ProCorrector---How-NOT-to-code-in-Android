@@ -64,7 +64,8 @@ public class Main extends AppCompatActivity {
         setContentView(R.layout.main);
 
         /// use toolbar as actionbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById( R.id.toolbar );
+        toolbar.setLogo( R.mipmap.ic_launcher_for_action_bar );
         setSupportActionBar(toolbar);
 
 
@@ -79,7 +80,6 @@ public class Main extends AppCompatActivity {
                 startActivityForResult( i, EDIT_CORRECT_TEXT_ACTIVITY_CODE );
             }
         });
-
 
 
         list = myNotesDB.getAll();

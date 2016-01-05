@@ -1,6 +1,7 @@
 package com.example.user.procorrector;
 
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -22,12 +23,15 @@ public class Language {
     private static HashMap <String, HashSet <Character> > languageCodeToLetters = new HashMap<>();
     private static HashMap <Character, String> lettersToLanguageCode = new HashMap<>();
     private static final String defaultLanguage = "ENG";
+    private static Context context;
 
 
-    public Language() {
+    public Language( Context currentContext ) {
+
+        context = currentContext;
 
         for( String languageCode : languageCodes ) {
-            languageCodeToLetters.put(languageCode, new HashSet<Character>());
+            languageCodeToLetters.put( languageCode, new HashSet<Character>() );
         }
 
         for( int i=0; i < languageCodes.length; i++ )
@@ -37,6 +41,113 @@ public class Language {
                 languageCodeToLetters.get( languageCodes[i]).add( alphabet[i][j] );
                 lettersToLanguageCode.put( alphabet[i][j], languageCodes[i] );
             }
+    }
+
+    public static boolean supportsLanguage( String languageCode ) {
+        return languageCodeToLetters.containsKey( languageCode );
+    }
+
+    public static String getLanguageLocaleFromCode(String languageCode) {
+
+        if( languageCode.matches( context.getResources().getString(R.string.language_ENG ) ) )          { return context.getResources().getString( R.string.language_locale_ENG ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_BUL ) ) )    { return context.getResources().getString( R.string.language_locale_BUL ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_CZE ) ) )    { return context.getResources().getString( R.string.language_locale_CZE ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_DAN ) ) )    { return context.getResources().getString( R.string.language_locale_DAN ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_DUT ) ) )    { return context.getResources().getString( R.string.language_locale_DUT ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_FIL ) ) )    { return context.getResources().getString( R.string.language_locale_FIL ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_FIN ) ) )    { return context.getResources().getString( R.string.language_locale_FIN ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_FRA ) ) )    { return context.getResources().getString( R.string.language_locale_FRA ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_GER ) ) )    { return context.getResources().getString( R.string.language_locale_GER ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_GRE ) ) )    { return context.getResources().getString( R.string.language_locale_GRE ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_HEB ) ) )    { return context.getResources().getString( R.string.language_locale_HEB ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_HUN ) ) )    { return context.getResources().getString( R.string.language_locale_HUN ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_ICE ) ) )    { return context.getResources().getString( R.string.language_locale_ICE ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_ITL ) ) )    { return context.getResources().getString( R.string.language_locale_ITL ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_IND ) ) )    { return context.getResources().getString( R.string.language_locale_IND ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_JAP ) ) )    { return context.getResources().getString( R.string.language_locale_JAP ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_KOR ) ) )    { return context.getResources().getString( R.string.language_locale_KOR ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_LIT ) ) )    { return context.getResources().getString( R.string.language_locale_LIT ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_MAL ) ) )    { return context.getResources().getString( R.string.language_locale_MAL ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_NOR ) ) )    { return context.getResources().getString( R.string.language_locale_NOR ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_POL ) ) )    { return context.getResources().getString( R.string.language_locale_POL ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_POR ) ) )    { return context.getResources().getString( R.string.language_locale_POR ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_ROM ) ) )    { return context.getResources().getString( R.string.language_locale_ROM ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_RUS ) ) )    { return context.getResources().getString( R.string.language_locale_RUS ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_SER ) ) )    { return context.getResources().getString( R.string.language_locale_SER ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_SLO ) ) )    { return context.getResources().getString( R.string.language_locale_SLO ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_SPA ) ) )    { return context.getResources().getString( R.string.language_locale_SPA ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_SWE ) ) )    { return context.getResources().getString( R.string.language_locale_SWE ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_VIE ) ) )    { return context.getResources().getString( R.string.language_locale_VIE ); }
+
+        return "";
+    }
+    public static String getLanguageFromCode(String languageCode) {
+
+        if( languageCode.matches( context.getResources().getString( R.string.language_ENG ) ) )         { return context.getResources().getString( R.string.action_language_ENG_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_BUL ) ) )    { return context.getResources().getString( R.string.action_language_BUL_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_CZE ) ) )    { return context.getResources().getString( R.string.action_language_CZE_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_DAN ) ) )    { return context.getResources().getString( R.string.action_language_DAN_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_DUT ) ) )    { return context.getResources().getString( R.string.action_language_DUT_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_FIL ) ) )    { return context.getResources().getString( R.string.action_language_FIL_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_FIN ) ) )    { return context.getResources().getString( R.string.action_language_FIN_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_FRA ) ) )    { return context.getResources().getString( R.string.action_language_FRA_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_GER ) ) )    { return context.getResources().getString( R.string.action_language_GER_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_GRE ) ) )    { return context.getResources().getString( R.string.action_language_GRE_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_HEB ) ) )    { return context.getResources().getString( R.string.action_language_HEB_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_HUN ) ) )    { return context.getResources().getString( R.string.action_language_HUN_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_ICE ) ) )    { return context.getResources().getString( R.string.action_language_ICE_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_ITL ) ) )    { return context.getResources().getString( R.string.action_language_ITL_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_IND ) ) )    { return context.getResources().getString( R.string.action_language_IND_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_JAP ) ) )    { return context.getResources().getString( R.string.action_language_JAP_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_KOR ) ) )    { return context.getResources().getString( R.string.action_language_KOR_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_LIT ) ) )    { return context.getResources().getString( R.string.action_language_LIT_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_MAL ) ) )    { return context.getResources().getString( R.string.action_language_MAL_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_NOR ) ) )    { return context.getResources().getString( R.string.action_language_NOR_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_POL ) ) )    { return context.getResources().getString( R.string.action_language_POL_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_POR ) ) )    { return context.getResources().getString( R.string.action_language_POR_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_ROM ) ) )    { return context.getResources().getString( R.string.action_language_ROM_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_RUS ) ) )    { return context.getResources().getString( R.string.action_language_RUS_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_SER ) ) )    { return context.getResources().getString( R.string.action_language_SER_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_SLO ) ) )    { return context.getResources().getString( R.string.action_language_SLO_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_SPA ) ) )    { return context.getResources().getString( R.string.action_language_SPA_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_SWE ) ) )    { return context.getResources().getString( R.string.action_language_SWE_title ); }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_VIE ) ) )    { return context.getResources().getString( R.string.action_language_VIE_title ); }
+
+        return "";
+    }
+    public static int getLanguageFlagIDFromCode(String languageCode) {
+
+        if( languageCode.matches( context.getResources().getString( R.string.language_ENG ) ) )         { return R.drawable.flag_eng_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_BUL ) ) )    { return R.drawable.flag_bul_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_CZE ) ) )    { return R.drawable.flag_cze_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_DAN ) ) )    { return R.drawable.flag_dan_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_DUT ) ) )    { return R.drawable.flag_dut_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_FIL ) ) )    { return R.drawable.flag_fil_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_FIN ) ) )    { return R.drawable.flag_fin_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_FRA ) ) )    { return R.drawable.flag_fra_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_GER ) ) )    { return R.drawable.flag_ger_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_GRE ) ) )    { return R.drawable.flag_gre_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_HEB ) ) )    { return R.drawable.flag_heb_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_HUN ) ) )    { return R.drawable.flag_hun_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_ICE ) ) )    { return R.drawable.flag_ice_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_ITL ) ) )    { return R.drawable.flag_itl_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_IND ) ) )    { return R.drawable.flag_ind_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_JAP ) ) )    { return R.drawable.flag_jap_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_KOR ) ) )    { return R.drawable.flag_kor_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_LIT ) ) )    { return R.drawable.flag_lit_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_MAL ) ) )    { return R.drawable.flag_mal_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_NOR ) ) )    { return R.drawable.flag_nor_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_POL ) ) )    { return R.drawable.flag_pol_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_POR ) ) )    { return R.drawable.flag_por_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_ROM ) ) )    { return R.drawable.flag_rom_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_RUS ) ) )    { return R.drawable.flag_rus_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_SER ) ) )    { return R.drawable.flag_ser_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_SLO ) ) )    { return R.drawable.flag_slo_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_SPA ) ) )    { return R.drawable.flag_spa_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_SWE ) ) )    { return R.drawable.flag_swe_icon; }
+        else if( languageCode.matches( context.getResources().getString( R.string.language_VIE ) ) )    { return R.drawable.flag_vie_icon; }
+
+        return 0;
     }
 
     public static HashSet <Character> getAlphabet( String languageCode ) {
