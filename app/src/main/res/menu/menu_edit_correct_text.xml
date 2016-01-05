@@ -50,13 +50,6 @@
 
                 <menu>
                     <item
-                        android:id="@+id/action_language_ARM"
-                        android:title="@string/action_language_ARM_title"
-                        android:icon="@drawable/flag_arm_icon"
-                        android:orderInCategory="100"
-                        app:showAsAction="never" />
-
-                    <item
                         android:id="@+id/action_language_ENG"
                         android:title="@string/action_language_ENG_title"
                         android:icon="@drawable/flag_eng_icon"
@@ -64,11 +57,201 @@
                         app:showAsAction="never" />
 
                     <item
+                        android:id="@+id/action_language_BUL"
+                        android:title="@string/action_language_BUL_title"
+                        android:icon="@drawable/flag_bul_icon"
+                        android:orderInCategory="250"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_CZE"
+                        android:title="@string/action_language_CZE_title"
+                        android:icon="@drawable/flag_cze_icon"
+                        android:orderInCategory="300"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_DAN"
+                        android:title="@string/action_language_DAN_title"
+                        android:icon="@drawable/flag_dan_icon"
+                        android:orderInCategory="350"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_DUT"
+                        android:title="@string/action_language_DUT_title"
+                        android:icon="@drawable/flag_dut_icon"
+                        android:orderInCategory="400"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_FIL"
+                        android:title="@string/action_language_FIL_title"
+                        android:icon="@drawable/flag_fil_icon"
+                        android:orderInCategory="450"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_FIN"
+                        android:title="@string/action_language_FIN_title"
+                        android:icon="@drawable/flag_fin_icon"
+                        android:orderInCategory="500"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_FRA"
+                        android:title="@string/action_language_FRA_title"
+                        android:icon="@drawable/flag_fra_icon"
+                        android:orderInCategory="550"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_GER"
+                        android:title="@string/action_language_GER_title"
+                        android:icon="@drawable/flag_ger_icon"
+                        android:orderInCategory="600"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_GRE"
+                        android:title="@string/action_language_GRE_title"
+                        android:icon="@drawable/flag_gre_icon"
+                        android:orderInCategory="650"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_HEB"
+                        android:title="@string/action_language_HEB_title"
+                        android:icon="@drawable/flag_heb_icon"
+                        android:orderInCategory="700"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_HUN"
+                        android:title="@string/action_language_HUN_title"
+                        android:icon="@drawable/flag_hun_icon"
+                        android:orderInCategory="750"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_ICE"
+                        android:title="@string/action_language_ICE_title"
+                        android:icon="@drawable/flag_ice_icon"
+                        android:orderInCategory="800"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_ITL"
+                        android:title="@string/action_language_ITL_title"
+                        android:icon="@drawable/flag_itl_icon"
+                        android:orderInCategory="850"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_IND"
+                        android:title="@string/action_language_IND_title"
+                        android:icon="@drawable/flag_ind_icon"
+                        android:orderInCategory="900"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_JAP"
+                        android:title="@string/action_language_JAP_title"
+                        android:icon="@drawable/flag_jap_icon"
+                        android:orderInCategory="950"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_KOR"
+                        android:title="@string/action_language_KOR_title"
+                        android:icon="@drawable/flag_kor_icon"
+                        android:orderInCategory="1000"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_LIT"
+                        android:title="@string/action_language_LIT_title"
+                        android:icon="@drawable/flag_lit_icon"
+                        android:orderInCategory="1050"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_MAL"
+                        android:title="@string/action_language_MAL_title"
+                        android:icon="@drawable/flag_mal_icon"
+                        android:orderInCategory="1050"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_NOR"
+                        android:title="@string/action_language_NOR_title"
+                        android:icon="@drawable/flag_nor_icon"
+                        android:orderInCategory="1100"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_POL"
+                        android:title="@string/action_language_POL_title"
+                        android:icon="@drawable/flag_pol_icon"
+                        android:orderInCategory="1150"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_POR"
+                        android:title="@string/action_language_POR_title"
+                        android:icon="@drawable/flag_por_icon"
+                        android:orderInCategory="1200"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_ROM"
+                        android:title="@string/action_language_ROM_title"
+                        android:icon="@drawable/flag_rom_icon"
+                        android:orderInCategory="1250"
+                        app:showAsAction="never" />
+
+                    <item
                         android:id="@+id/action_language_RUS"
                         android:title="@string/action_language_RUS_title"
                         android:icon="@drawable/flag_rus_icon"
-                        android:orderInCategory="300"
+                        android:orderInCategory="1300"
                         app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_SER"
+                        android:title="@string/action_language_SER_title"
+                        android:icon="@drawable/flag_ser_icon"
+                        android:orderInCategory="1350"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_SLO"
+                        android:title="@string/action_language_SLO_title"
+                        android:icon="@drawable/flag_slo_icon"
+                        android:orderInCategory="1400"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_SPA"
+                        android:title="@string/action_language_SPA_title"
+                        android:icon="@drawable/flag_spa_icon"
+                        android:orderInCategory="1450"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_SWE"
+                        android:title="@string/action_language_SWE_title"
+                        android:icon="@drawable/flag_swe_icon"
+                        android:orderInCategory="1500"
+                        app:showAsAction="never" />
+
+                    <item
+                        android:id="@+id/action_language_VIE"
+                        android:title="@string/action_language_VIE_title"
+                        android:icon="@drawable/flag_vie_icon"
+                        android:orderInCategory="1550"
+                        app:showAsAction="never" />
+
                 </menu>
             </item>
 

@@ -21,15 +21,132 @@
     <string name="action_done_title">Done</string>
     <string name="action_back_title">Back</string>
 
-    <string name="action_language_ARM_title">Հայերեն</string>
+
+
+    <!--                       LANGUAGES!!!                      -->
     <string name="action_language_ENG_title">English</string>
-    <string name="action_language_RUS_title">Русский</string>
-    <string name="language_ARM">ARM</string>
-    <string name="language_ENG">ENG</string>
-    <string name="language_RUS">RUS</string>
-    <string name="language_locale_ARM">hy_AM</string>
     <string name="language_locale_ENG">en</string>
-    <string name="language_locale_RUS">ru_RU</string>
+    <string name="language_ENG">ENG</string>
+
+    <string name="action_language_BUL_title">Bulgarian</string>
+    <string name="language_locale_BUL">bg</string>
+    <string name="language_BUL">BUL</string>
+
+    <string name="action_language_CZE_title">Czech</string>
+    <string name="language_locale_CZE">cs</string>
+    <string name="language_CZE">CZE</string>
+
+    <string name="action_language_DAN_title">Danish</string>
+    <string name="language_locale_DAN">da</string>
+    <string name="language_DAN">DAN</string>
+
+    <string name="action_language_DUT_title">Dutch</string>
+    <string name="language_locale_DUT">nl</string>
+    <string name="language_DUT">DUT</string>
+
+    <string name="action_language_FIL_title">Filipino</string>
+    <string name="language_locale_FIL">fil</string>
+    <string name="language_FIL">FIL</string>
+
+    <string name="action_language_FIN_title">Finnish</string>
+    <string name="language_locale_FIN">fi</string>
+    <string name="language_FIN">FIN</string>
+
+    <string name="action_language_FRA_title">French</string>
+    <string name="language_locale_FRA">fr</string>
+    <string name="language_FRA">FRA</string>
+
+    <string name="action_language_GER_title">German</string>
+    <string name="language_locale_GER">de</string>
+    <string name="language_GER">GER</string>
+
+    <string name="action_language_GRE_title">Greek</string>
+    <string name="language_locale_GRE">el</string>
+    <string name="language_GRE">GRE</string>
+
+    <string name="action_language_HEB_title">Hebrew</string>
+    <string name="language_locale_HEB">he</string>
+    <string name="language_HEB">HEB</string>
+
+    <string name="action_language_HUN_title">Hungarian</string>
+    <string name="language_locale_HUN">hu</string>
+    <string name="language_HUN">HUN</string>
+
+    <string name="action_language_ICE_title">Icelandic</string>
+    <string name="language_locale_ICE">is</string>
+    <string name="language_ICE">ICE</string>
+
+    <string name="action_language_ITL_title">Italian</string>
+    <string name="language_locale_ITL">it</string>
+    <string name="language_ITL">ITL</string>
+
+    <string name="action_language_IND_title">Indonesian</string>
+    <string name="language_locale_IND">id</string>
+    <string name="language_IND">IND</string>
+
+    <string name="action_language_JAP_title">Japanese</string>
+    <string name="language_locale_JAP">ja</string>
+    <string name="language_JAP">JAP</string>
+
+    <string name="action_language_KOR_title">Korean</string>
+    <string name="language_locale_KOR">ko</string>
+    <string name="language_KOR">KOR</string>
+
+    <string name="action_language_LIT_title">Lithuanian</string>
+    <string name="language_locale_LIT">lt</string>
+    <string name="language_LIT">LIT</string>
+
+    <string name="action_language_MAL_title">Malay</string>
+    <string name="language_locale_MAL">ms</string>
+    <string name="language_MAL">MAL</string>
+
+    <string name="action_language_NOR_title">Norwegian Nynorsk</string>
+    <string name="language_locale_NOR">nn</string>
+    <string name="language_NOR">NOR</string>
+
+    <string name="action_language_POL_title">Polish</string>
+    <string name="language_locale_POL">pl</string>
+    <string name="language_POL">POL</string>
+
+    <string name="action_language_POR_title">Portuguese</string>
+    <string name="language_locale_POR">pt</string>
+    <string name="language_POR">POR</string>
+
+    <string name="action_language_ROM_title">Romanian</string>
+    <string name="language_locale_ROM">ro</string>
+    <string name="language_ROM">ROM</string>
+
+    <string name="action_language_RUS_title">Russian</string>
+    <string name="language_locale_RUS">ru</string>
+    <string name="language_RUS">RUS</string>
+
+    <string name="action_language_SER_title">Serbian</string>
+    <string name="language_locale_SER">sr</string>
+    <string name="language_SER">SER</string>
+
+    <string name="action_language_SLO_title">Slovak</string>
+    <string name="language_locale_SLO">sk</string>
+    <string name="language_SLO">SLO</string>
+
+    <string name="action_language_SPA_title">Spanish</string>
+    <string name="language_locale_SPA">es</string>
+    <string name="language_SPA">SPA</string>
+
+    <string name="action_language_SWE_title">Swedish</string>
+    <string name="language_locale_SWE">sv</string>
+    <string name="language_SWE">SWE</string>
+
+    <string name="action_language_VIE_title">Vietnamese</string>
+    <string name="language_locale_VIE">vi</string>
+    <string name="language_VIE">VIE</string>
+
+
+
+    <string name="action_language_ARM_title">Հայերեն</string>
+    <string name="language_locale_ARM">hy_AM</string>
+    <string name="language_ARM">ARM</string>
+    <!--                       LANGUAGES!!!                      -->
+
 
     <string name="about_app_description">ProCorrector is an app designed for creating texts, taking notes, editing and correcting essays, etc. It can be used any time even without an internet access.\nIt will find any spelling mistake and offer suggestions from its dictionary, which is created from Wikipedia’s most widely used words.\nThe app supports several languages, including English, Russian and Armenian.\nIt\'s an open-source <a href="https://github.com/MartinXPN/ProCorrector.git">project</a> done mainly for educational reasons.</string>
     <string name="about_author_text">© 2016 <a href="https://www.linkedin.com/in/martin-mirakyan-945597101">Martin Mirakyan</a>\nAll Rights Reserved.</string>

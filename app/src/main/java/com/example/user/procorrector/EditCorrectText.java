@@ -69,16 +69,45 @@ public class EditCorrectText extends AppCompatActivity {
     private Menu myMenu = null;
 
     private static String LocaleLanguage = Locale.ENGLISH.toString();
+    private static String CurrentLanguage = "ENG";
     private static final int SPEECH_REQUEST_CODE = 0;
 
 
     /*******************************actions support functions**************************************/
     private void setLanguage( String language ) {
 
+        CurrentLanguage = language;
         MenuItem flag = myMenu.findItem( R.id.action_choose_language );
-        if( language.matches( getResources().getString( R.string.language_ARM ) ) )         { LocaleLanguage = getResources().getString( R.string.language_locale_ARM );      flag.setIcon(R.drawable.flag_arm_icon); }
-        else if( language.matches( getResources().getString( R.string.language_ENG ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_ENG );      flag.setIcon(R.drawable.flag_eng_icon); }
+
+        if( language.matches( getResources().getString( R.string.language_ENG ) ) )         { LocaleLanguage = getResources().getString( R.string.language_locale_ENG );      flag.setIcon(R.drawable.flag_eng_icon); }
+        else if( language.matches( getResources().getString( R.string.language_BUL ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_BUL );      flag.setIcon(R.drawable.flag_bul_icon); }
+        else if( language.matches( getResources().getString( R.string.language_CZE ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_CZE );      flag.setIcon(R.drawable.flag_cze_icon); }
+        else if( language.matches( getResources().getString( R.string.language_DAN ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_DAN );      flag.setIcon(R.drawable.flag_dan_icon); }
+        else if( language.matches( getResources().getString( R.string.language_DUT ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_DUT );      flag.setIcon(R.drawable.flag_dut_icon); }
+        else if( language.matches( getResources().getString( R.string.language_FIL ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_FIL );      flag.setIcon(R.drawable.flag_fil_icon); }
+        else if( language.matches( getResources().getString( R.string.language_FIN ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_FIN );      flag.setIcon(R.drawable.flag_fin_icon); }
+        else if( language.matches( getResources().getString( R.string.language_FRA ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_FRA );      flag.setIcon(R.drawable.flag_fra_icon); }
+        else if( language.matches( getResources().getString( R.string.language_GER ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_GER );      flag.setIcon(R.drawable.flag_ger_icon); }
+        else if( language.matches( getResources().getString( R.string.language_GRE ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_GRE );      flag.setIcon(R.drawable.flag_gre_icon); }
+        else if( language.matches( getResources().getString( R.string.language_HEB ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_HEB );      flag.setIcon(R.drawable.flag_heb_icon); }
+        else if( language.matches( getResources().getString( R.string.language_HUN ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_HUN );      flag.setIcon(R.drawable.flag_hun_icon); }
+        else if( language.matches( getResources().getString( R.string.language_ICE ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_ICE );      flag.setIcon(R.drawable.flag_ice_icon); }
+        else if( language.matches( getResources().getString( R.string.language_ITL ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_ITL );      flag.setIcon(R.drawable.flag_itl_icon); }
+        else if( language.matches( getResources().getString( R.string.language_IND ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_IND );      flag.setIcon(R.drawable.flag_ind_icon); }
+        else if( language.matches( getResources().getString( R.string.language_JAP ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_JAP );      flag.setIcon(R.drawable.flag_jap_icon); }
+        else if( language.matches( getResources().getString( R.string.language_KOR ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_KOR );      flag.setIcon(R.drawable.flag_kor_icon); }
+        else if( language.matches( getResources().getString( R.string.language_LIT ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_LIT );      flag.setIcon(R.drawable.flag_lit_icon); }
+        else if( language.matches( getResources().getString( R.string.language_MAL ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_MAL );      flag.setIcon(R.drawable.flag_mal_icon); }
+        else if( language.matches( getResources().getString( R.string.language_NOR ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_NOR );      flag.setIcon(R.drawable.flag_nor_icon); }
+        else if( language.matches( getResources().getString( R.string.language_POL ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_POL );      flag.setIcon(R.drawable.flag_pol_icon); }
+        else if( language.matches( getResources().getString( R.string.language_POR ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_POR );      flag.setIcon(R.drawable.flag_por_icon); }
+        else if( language.matches( getResources().getString( R.string.language_ROM ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_ROM );      flag.setIcon(R.drawable.flag_rom_icon); }
         else if( language.matches( getResources().getString( R.string.language_RUS ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_RUS );      flag.setIcon(R.drawable.flag_rus_icon); }
+        else if( language.matches( getResources().getString( R.string.language_SER ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_SER );      flag.setIcon(R.drawable.flag_ser_icon); }
+        else if( language.matches( getResources().getString( R.string.language_SLO ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_SLO );      flag.setIcon(R.drawable.flag_slo_icon); }
+        else if( language.matches( getResources().getString( R.string.language_SPA ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_SPA );      flag.setIcon(R.drawable.flag_spa_icon); }
+        else if( language.matches( getResources().getString( R.string.language_SWE ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_SWE );      flag.setIcon(R.drawable.flag_swe_icon); }
+        else if( language.matches( getResources().getString( R.string.language_VIE ) ) )    { LocaleLanguage = getResources().getString( R.string.language_locale_VIE );      flag.setIcon(R.drawable.flag_vie_icon); }
     }
 
     private void saveNoteToDatabase() {
@@ -202,7 +231,7 @@ public class EditCorrectText extends AppCompatActivity {
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
         i.putExtra(Intent.EXTRA_SUBJECT, "ProCorrector Feedback" );
-        i.putExtra(Intent.EXTRA_EMAIL, new String[] { "XPNProCorrector@gmail.com" } );
+        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"XPNProCorrector@gmail.com"});
         try {
             startActivity(Intent.createChooser(i, "Choose an Email client :"));
         }
@@ -237,7 +266,6 @@ public class EditCorrectText extends AppCompatActivity {
         });
 
         new Language();
-
 
 
         documentID = bundle.getInt( "id" );
@@ -353,15 +381,41 @@ public class EditCorrectText extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        if( id == R.id.action_show_suggestions )    { showOrHideSuggestions( item ); }
+        if( id == R.id.action_show_suggestions )    { showOrHideSuggestions(item); }
         else if( id == R.id.action_ignore_once )    { ignoreOnce(); }
         else if( id == R.id.action_add_to_library ) { addToLibrary(); }
         else if( id == R.id.action_copy )           { copyTextToClipboard(); }
         else if( id == R.id.action_record )         { displaySpeechRecognizer(); }
         else if( id == R.id.action_send )           { sendNote(); }
-        else if (id == R.id.action_language_ARM )   { setLanguage( getResources().getString( R.string.language_ARM ) ); }
+
         else if (id == R.id.action_language_ENG )   { setLanguage( getResources().getString( R.string.language_ENG ) ); }
+        else if (id == R.id.action_language_BUL )   { setLanguage( getResources().getString( R.string.language_BUL ) ); }
+        else if (id == R.id.action_language_CZE )   { setLanguage( getResources().getString( R.string.language_CZE ) ); }
+        else if (id == R.id.action_language_DAN )   { setLanguage( getResources().getString( R.string.language_DAN ) ); }
+        else if (id == R.id.action_language_DUT )   { setLanguage( getResources().getString( R.string.language_DUT ) ); }
+        else if (id == R.id.action_language_FIL )   { setLanguage( getResources().getString( R.string.language_FIL ) ); }
+        else if (id == R.id.action_language_FIN )   { setLanguage( getResources().getString( R.string.language_FIN ) ); }
+        else if (id == R.id.action_language_FRA )   { setLanguage( getResources().getString( R.string.language_FRA ) ); }
+        else if (id == R.id.action_language_GER )   { setLanguage( getResources().getString( R.string.language_GER ) ); }
+        else if (id == R.id.action_language_GRE )   { setLanguage( getResources().getString( R.string.language_GRE ) ); }
+        else if (id == R.id.action_language_HEB )   { setLanguage( getResources().getString( R.string.language_HEB ) ); }
+        else if (id == R.id.action_language_HUN )   { setLanguage( getResources().getString( R.string.language_HUN ) ); }
+        else if (id == R.id.action_language_ITL )   { setLanguage( getResources().getString( R.string.language_ITL ) ); }
+        else if (id == R.id.action_language_IND )   { setLanguage( getResources().getString( R.string.language_IND ) ); }
+        else if (id == R.id.action_language_JAP )   { setLanguage( getResources().getString( R.string.language_JAP ) ); }
+        else if (id == R.id.action_language_KOR )   { setLanguage( getResources().getString( R.string.language_KOR ) ); }
+        else if (id == R.id.action_language_LIT )   { setLanguage( getResources().getString( R.string.language_LIT ) ); }
+        else if (id == R.id.action_language_MAL )   { setLanguage( getResources().getString( R.string.language_MAL ) ); }
+        else if (id == R.id.action_language_NOR )   { setLanguage( getResources().getString( R.string.language_NOR ) ); }
+        else if (id == R.id.action_language_POL )   { setLanguage( getResources().getString( R.string.language_POL ) ); }
+        else if (id == R.id.action_language_POR )   { setLanguage( getResources().getString( R.string.language_POR ) ); }
+        else if (id == R.id.action_language_ROM )   { setLanguage( getResources().getString( R.string.language_ROM ) ); }
         else if( id == R.id.action_language_RUS )   { setLanguage( getResources().getString( R.string.language_RUS ) ); }
+        else if( id == R.id.action_language_SER )   { setLanguage( getResources().getString( R.string.language_SER ) ); }
+        else if( id == R.id.action_language_SLO )   { setLanguage( getResources().getString( R.string.language_SLO ) ); }
+        else if( id == R.id.action_language_SPA )   { setLanguage( getResources().getString( R.string.language_SPA ) ); }
+        else if( id == R.id.action_language_SWE )   { setLanguage( getResources().getString( R.string.language_SWE ) ); }
+        else if( id == R.id.action_language_VIE )   { setLanguage( getResources().getString( R.string.language_VIE ) ); }
 
         //else if( documentID == R.documentID.action_settings )       { openSettings(); } //TODO
         else if( id == R.id.action_help )           { Intent i = new Intent( EditCorrectText.this, Help.class );    startActivity(i); }
@@ -376,6 +430,7 @@ public class EditCorrectText extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate( R.menu.menu_edit_correct_text, menu );
         myMenu = menu;
+        setLanguage( CurrentLanguage );
 
         return true;
     }
@@ -540,9 +595,10 @@ public class EditCorrectText extends AppCompatActivity {
 
         SpannableStringBuilder res = new SpannableStringBuilder( content.getText() );
         res.delete( l, r );
-        res.insert( l, newString );
-        content.setText( res );
-        content.setSelection( l + newString.length() );
+        res.insert(l, newString);
+        content.setText(res);
+        content.setSelection(l + newString.length());
+        setSuggestionsInvisibleAndClearLists();
 
         history.clear();
         historyTimer = 0;
