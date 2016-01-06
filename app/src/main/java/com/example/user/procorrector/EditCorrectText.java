@@ -71,22 +71,23 @@ public class EditCorrectText extends AppCompatActivity {
 
     private static String CurrentRecordingLanguageLocale = Locale.ENGLISH.toString();
     private static String CurrentRecordingLanguageCode = "ENG";
-    private static String CurrentRecordingLanguage = "English";
+    private static String CurrentRecordingLanguageName = "English";
+    private static int CurrentRecordingLanguageID = -1;
     private static final int SPEECH_REQUEST_CODE = 0;
 
 
     /*******************************actions support functions**************************************/
-    private void setLanguage( String languageCode ) {
+    private void setLanguage( int languageID ) {
 
         MenuItem flag = myMenu.findItem( R.id.action_choose_language );
-        CurrentRecordingLanguageCode = languageCode;
-        CurrentRecordingLanguageLocale = Language.getLanguageLocaleFromCode(languageCode);
-        CurrentRecordingLanguage = Language.getLanguageFromCode(languageCode);
-        int flagID = Language.getLanguageFlagIDFromCode(languageCode);
+        CurrentRecordingLanguageCode = Language.getLanguageCodeFromRecordingLangID( languageID );
+        CurrentRecordingLanguageLocale = Language.getLanguageLocaleFromRecordingLangID( languageID );
+        CurrentRecordingLanguageName = Language.getLanguageNameFromRecordingLanguageID( languageID );
+        int flagID = Language.getLanguageFlagFromRecordingLanguageID( languageID );
         flag.setIcon( flagID );
 
-        if( !Language.supportsLanguage( languageCode ) ) {
-            Toast.makeText( EditCorrectText.this, CurrentRecordingLanguage + " is not fully supported!\nThe program may make wrong corrections.", Toast.LENGTH_LONG ).show();
+        if( !Language.supportsLanguage( CurrentRecordingLanguageCode ) ) {
+            Toast.makeText( EditCorrectText.this, CurrentRecordingLanguageName + " is not fully supported!\nThe program may make wrong corrections.", Toast.LENGTH_LONG ).show();
         }
     }
 
@@ -105,7 +106,7 @@ public class EditCorrectText extends AppCompatActivity {
         if( documentID == -1 )  { db.insert( titleValue, contentValue, creationDate );    }
         else                    { db.update( titleValue, contentValue, documentID ); }
 
-        Log.d( "Note", "Was saved to database" );
+        Log.d("Note", "Was saved to database" );
     }
 
     private void copyTextToClipboard() {
@@ -246,6 +247,8 @@ public class EditCorrectText extends AppCompatActivity {
         });
 
         new Language( EditCorrectText.this );
+        if( CurrentRecordingLanguageID == -1 )
+            CurrentRecordingLanguageID = Language.getRecordingLanguageIDFromLanguageCode( CurrentRecordingLanguageCode );
 
 
         documentID = bundle.getInt( "id" );
@@ -361,46 +364,17 @@ public class EditCorrectText extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        if( id == R.id.action_show_suggestions )    { showOrHideSuggestions(item); }
-        else if( id == R.id.action_ignore_once )    { ignoreOnce(); }
-        else if( id == R.id.action_add_to_library ) { addToLibrary(); }
-        else if( id == R.id.action_copy )           { copyTextToClipboard(); }
-        else if( id == R.id.action_record )         { displaySpeechRecognizer(); }
-        else if( id == R.id.action_send )           { sendNote(); }
-
-        else if (id == R.id.action_language_ENG )   { setLanguage( getResources().getString( R.string.language_ENG ) ); }
-        else if (id == R.id.action_language_BUL )   { setLanguage( getResources().getString( R.string.language_BUL ) ); }
-        else if (id == R.id.action_language_CZE )   { setLanguage( getResources().getString( R.string.language_CZE ) ); }
-        else if (id == R.id.action_language_DAN )   { setLanguage( getResources().getString( R.string.language_DAN ) ); }
-        else if (id == R.id.action_language_DUT )   { setLanguage( getResources().getString( R.string.language_DUT ) ); }
-        else if (id == R.id.action_language_FIL )   { setLanguage( getResources().getString( R.string.language_FIL ) ); }
-        else if (id == R.id.action_language_FIN )   { setLanguage( getResources().getString( R.string.language_FIN ) ); }
-        else if (id == R.id.action_language_FRA )   { setLanguage( getResources().getString( R.string.language_FRA ) ); }
-        else if (id == R.id.action_language_GER )   { setLanguage( getResources().getString( R.string.language_GER ) ); }
-        else if (id == R.id.action_language_GRE )   { setLanguage( getResources().getString( R.string.language_GRE ) ); }
-        else if (id == R.id.action_language_HEB )   { setLanguage( getResources().getString( R.string.language_HEB ) ); }
-        else if (id == R.id.action_language_HUN )   { setLanguage( getResources().getString( R.string.language_HUN ) ); }
-        else if (id == R.id.action_language_ITL )   { setLanguage( getResources().getString( R.string.language_ITL ) ); }
-        else if (id == R.id.action_language_IND )   { setLanguage( getResources().getString( R.string.language_IND ) ); }
-        else if (id == R.id.action_language_JAP )   { setLanguage( getResources().getString( R.string.language_JAP ) ); }
-        else if (id == R.id.action_language_KOR )   { setLanguage( getResources().getString( R.string.language_KOR ) ); }
-        else if (id == R.id.action_language_LIT )   { setLanguage( getResources().getString( R.string.language_LIT ) ); }
-        else if (id == R.id.action_language_MAL )   { setLanguage( getResources().getString( R.string.language_MAL ) ); }
-        else if (id == R.id.action_language_NOR )   { setLanguage( getResources().getString( R.string.language_NOR ) ); }
-        else if (id == R.id.action_language_POL )   { setLanguage( getResources().getString( R.string.language_POL ) ); }
-        else if (id == R.id.action_language_POR )   { setLanguage( getResources().getString( R.string.language_POR ) ); }
-        else if (id == R.id.action_language_ROM )   { setLanguage( getResources().getString( R.string.language_ROM ) ); }
-        else if( id == R.id.action_language_RUS )   { setLanguage( getResources().getString( R.string.language_RUS ) ); }
-        else if( id == R.id.action_language_SER )   { setLanguage( getResources().getString( R.string.language_SER ) ); }
-        else if( id == R.id.action_language_SLO )   { setLanguage( getResources().getString( R.string.language_SLO ) ); }
-        else if( id == R.id.action_language_SPA )   { setLanguage( getResources().getString( R.string.language_SPA ) ); }
-        else if( id == R.id.action_language_SWE )   { setLanguage( getResources().getString( R.string.language_SWE ) ); }
-        else if( id == R.id.action_language_VIE )   { setLanguage( getResources().getString( R.string.language_VIE ) ); }
-
+        if( id == R.id.action_show_suggestions )        { showOrHideSuggestions(item); }
+        else if( id == R.id.action_ignore_once )        { ignoreOnce(); }
+        else if( id == R.id.action_add_to_library )     { addToLibrary(); }
+        else if( id == R.id.action_copy )               { copyTextToClipboard(); }
+        else if( id == R.id.action_record )             { displaySpeechRecognizer(); }
+        else if( id == R.id.action_send )               { sendNote(); }
+        else if( Language.isRecordingLanguageID( id ) ) { setLanguage( id ); }
         //else if( documentID == R.documentID.action_settings )       { openSettings(); } //TODO
-        else if( id == R.id.action_help )           { Intent i = new Intent( EditCorrectText.this, Help.class );    startActivity(i); }
-        else if( id == R.id.action_feedback )       { writeFeedback(); }
-        else if( id == R.id.action_about )          { Intent i = new Intent(EditCorrectText.this, About.class);     startActivity(i); }
+        else if( id == R.id.action_help )               { Intent i = new Intent( EditCorrectText.this, Help.class );    startActivity(i); }
+        else if( id == R.id.action_feedback )           { writeFeedback(); }
+        else if( id == R.id.action_about )              { Intent i = new Intent(EditCorrectText.this, About.class);     startActivity(i); }
 
         return super.onOptionsItemSelected(item);
     }
@@ -410,7 +384,9 @@ public class EditCorrectText extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate( R.menu.menu_edit_correct_text, menu );
         myMenu = menu;
-        setLanguage(CurrentRecordingLanguageCode);
+        if( CurrentRecordingLanguageID == -1 )
+            CurrentRecordingLanguageID = R.id.action_language_ENG;
+        setLanguage( CurrentRecordingLanguageID );
 
         return true;
     }

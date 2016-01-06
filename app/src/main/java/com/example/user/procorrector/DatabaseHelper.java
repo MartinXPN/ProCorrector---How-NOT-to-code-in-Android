@@ -77,6 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         /// clear lists in case of other thread may have filled them
         correction.clear();
         continuation.clear();
+        word = word.toLowerCase();
 
         /// word may contain some characters from other languages which is impossible for a real word
         /// therefore the query LIKE % or editDistance will be senseless
