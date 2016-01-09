@@ -80,10 +80,10 @@ public class EditCorrectText extends AppCompatActivity {
     private void setLanguage( int languageID ) {
 
         MenuItem flag = myMenu.findItem( R.id.action_choose_language );
-        CurrentRecordingLanguageCode = Language.getLanguageCodeFromRecordingLangID( languageID );
-        CurrentRecordingLanguageLocale = Language.getLanguageLocaleFromRecordingLangID( languageID );
-        CurrentRecordingLanguageName = Language.getLanguageNameFromRecordingLanguageID( languageID );
-        int flagID = Language.getLanguageFlagFromRecordingLanguageID( languageID );
+        CurrentRecordingLanguageCode = RecordingLanguage.getLanguageCodeFromLanguageID( languageID );
+        CurrentRecordingLanguageLocale = RecordingLanguage.getLanguageLocaleFromLanguageID( languageID );
+        CurrentRecordingLanguageName = RecordingLanguage.getLanguageNameFromLanguageID( languageID );
+        int flagID = RecordingLanguage.getLanguageFlagFromLanguageID( languageID );
         flag.setIcon( flagID );
 
         if( !Language.supportsLanguage( CurrentRecordingLanguageCode ) ) {
@@ -246,9 +246,10 @@ public class EditCorrectText extends AppCompatActivity {
             }
         });
 
-        new Language( EditCorrectText.this );
+        new Language();
+        new RecordingLanguage( EditCorrectText.this );
         if( CurrentRecordingLanguageID == -1 )
-            CurrentRecordingLanguageID = Language.getRecordingLanguageIDFromLanguageCode( CurrentRecordingLanguageCode );
+            CurrentRecordingLanguageID = RecordingLanguage.getLanguageIDFromLanguageCode(CurrentRecordingLanguageCode);
 
 
         documentID = bundle.getInt( "id" );
@@ -370,7 +371,7 @@ public class EditCorrectText extends AppCompatActivity {
         else if( id == R.id.action_copy )               { copyTextToClipboard(); }
         else if( id == R.id.action_record )             { displaySpeechRecognizer(); }
         else if( id == R.id.action_send )               { sendNote(); }
-        else if( Language.isRecordingLanguageID( id ) ) { setLanguage( id ); }
+        else if( RecordingLanguage.isLanguageID(id) )   { setLanguage( id ); }
         //else if( documentID == R.documentID.action_settings )       { openSettings(); } //TODO
         else if( id == R.id.action_help )               { Intent i = new Intent( EditCorrectText.this, Help.class );    startActivity(i); }
         else if( id == R.id.action_feedback )           { writeFeedback(); }
