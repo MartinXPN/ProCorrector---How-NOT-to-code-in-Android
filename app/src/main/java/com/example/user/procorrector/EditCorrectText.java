@@ -249,7 +249,7 @@ public class EditCorrectText extends AppCompatActivity {
         new Language();
         new RecordingLanguage( EditCorrectText.this );
         if( CurrentRecordingLanguageID == -1 )
-            CurrentRecordingLanguageID = RecordingLanguage.getLanguageIDFromLanguageCode(CurrentRecordingLanguageCode);
+            CurrentRecordingLanguageID = RecordingLanguage.getLanguageIDFromLanguageCode( CurrentRecordingLanguageCode );
 
 
         documentID = bundle.getInt( "id" );

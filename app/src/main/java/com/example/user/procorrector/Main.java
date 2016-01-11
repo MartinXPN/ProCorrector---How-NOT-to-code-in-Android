@@ -58,14 +58,13 @@ public class Main extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
         /// use toolbar as actionbar
         Toolbar toolbar = (Toolbar) findViewById( R.id.toolbar );
-        toolbar.setLogo( R.mipmap.ic_launcher_for_action_bar );
         setSupportActionBar(toolbar);
 
 
@@ -74,9 +73,9 @@ public class Main extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Main.this, EditCorrectText.class);
-                i.putExtra("id", -1);
-                i.putExtra("title", "");
-                i.putExtra("content", "");
+                i.putExtra( "id", -1 );
+                i.putExtra( "title", "" );
+                i.putExtra( "content", "" );
                 startActivityForResult( i, EDIT_CORRECT_TEXT_ACTIVITY_CODE );
             }
         });

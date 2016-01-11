@@ -51,7 +51,7 @@ public class Language {
 
         letter = Character.toLowerCase( letter );
         //Log.d( "Language getCode", lettersToLanguageCode.get( letter ) );
-        return lettersToLanguageCode.get( letter );
+        return lettersToLanguageCode.get(letter);
     }
     public static String getLanguageCode( String word ) {
 
@@ -61,7 +61,7 @@ public class Language {
     }
     public static String getLanguageCodeWithoutCheckingValidity( String word ) {
 
-        return getLanguageCode( word.charAt(0) );
+        return getLanguageCode(word.charAt(0));
     }
 
 
@@ -69,7 +69,7 @@ public class Language {
 
         letter = Character.toLowerCase( letter );
         //Log.d( "Language isCorrect", "" + allAlphabets.contains( letter ) );
-        return allAlphabets.contains( letter );
+        return allAlphabets.contains(letter);
     }
     public static boolean isCorrectLetter( char letter, String languageCode ) {
 
@@ -267,6 +267,34 @@ public class Language {
                 return true;
             }
 
+        return false;
+    }
+    public static boolean contains( String word, String text ) {
+
+        return contains( word, text, '#' );
+    }
+    public static boolean contains( String word, String text, char unusedCharacter ) {
+
+        String all = word + unusedCharacter + text;
+        Integer p[] = new Integer[ word.length() + 1 ];
+        p[0] = 0;
+        int previous = 0;
+
+        for( int i=1; i < all.length(); i++ ) {
+
+            int j = previous;
+            while( j > 0 && all.charAt( i ) != all.charAt( j ) )
+                j = p[ j-1 ];
+
+            if( all.charAt( i ) == all.charAt( j ) )
+                j++;
+            if( i < p.length )
+                p[i] = j;
+            previous = j;
+
+            if( j == word.length() )
+                return true;
+        }
         return false;
     }
 }

@@ -26,7 +26,6 @@ public class TextDatabase extends SQLiteOpenHelper
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d("TextDatabase: onCreate", "TextDatabase: onCreate");
         db.execSQL("CREATE TABLE " + TABLE_NAME + " ( id INTEGER PRIMARY KEY AUTOINCREMENT, " + TITLE_COLUMN + " TEXT, " + TEXT_COLUMN + " TEXT, " + DATE_COLUMN + " TEXT )");
     }
 
@@ -68,7 +67,7 @@ public class TextDatabase extends SQLiteOpenHelper
         db.close();
     }
 
-    public List getAll()
+    public List <ArrayList> getAll()
     {
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
