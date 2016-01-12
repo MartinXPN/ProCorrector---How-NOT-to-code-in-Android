@@ -125,8 +125,8 @@ public class EditCorrectText extends AppCompatActivity {
             CorrectionAndContinuationTask.cancel( true );
 
         suggestWord();
-        if( showSuggestions )   item.setIcon( R.drawable.show_suggestions_on_icon );
-        else                    item.setIcon( R.drawable.show_suggestions_off_icon );
+        if( showSuggestions )   item.setIcon( R.mipmap.show_suggestions_on_icon );
+        else                    item.setIcon( R.mipmap.show_suggestions_off_icon );
     }
     private void showOrHideIgnoreAddIcons() {
 

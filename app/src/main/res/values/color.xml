@@ -5,23 +5,24 @@
     <color name="transparent">#00000000</color>
 
     <color name="suggestion_list_divider">#e1e1e1</color>
-    <color name="suggestion_list_background">#f0f0f0</color>
-    <color name="suggestion_list_text">#373737</color>
+    <color name="suggestion_list_background">#f5f5f5</color>
+    <color name="suggestion_list_text">#414141</color>
 
-    <color name="edit_correct_text_main_background">#d7d7d7</color>
+    <color name="edit_correct_text_main_background">#e1e1e1</color>
     <color name="edit_correct_text_title_real">#9b9b9b</color>
     <color name="edit_correct_text_title_hint">#5f5f5f</color>
     <color name="edit_correct_text_main_text">#000000</color>
     <color name="edit_correct_text_hint">#5f5f5f</color>
 
-    <color name="main_list_background">#c8c8c8</color>
-    <color name="main_list_divider">#7d7d7d</color>
+    <color name="main_list_background">#e6e6e6</color>
+    <color name="main_list_divider">#afafaf</color>
     <color name="main_new_text_button_background">#3272eb</color>
-    <color name="main_list_title">#414141</color>
-    <color name="main_list_text">#696969</color>
-    <color name="main_list_date">#5f5f5f</color>
+    <color name="main_list_title">#4b4b4b</color>
+    <color name="main_list_text">#7d7d7d</color>
+    <color name="main_list_date">#737373</color>
 
-    <color name="about_text_color">#373737</color>
+    <color name="about_app_text_color">#373737</color>
+    <color name="about_author_text_color">#737373</color>
 
     <color name="help_text_question">#000</color>
     <color name="help_text_answer">#555</color>

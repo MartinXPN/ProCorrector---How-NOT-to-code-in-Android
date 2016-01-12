@@ -37,7 +37,7 @@
                 android:layout_width="@dimen/help_icons_width"
                 android:layout_height="@dimen/help_icons_height"
                 android:layout_marginRight="7dp"
-                android:src="@drawable/show_suggestions_on_icon" />
+                android:src="@mipmap/show_suggestions_on_icon" />
 
         </LinearLayout>
 
@@ -74,7 +74,7 @@
                 android:layout_width="@dimen/help_icons_width"
                 android:layout_height="@dimen/help_icons_height"
                 android:layout_marginRight="7dp"
-                android:src="@drawable/show_suggestions_off_icon" />
+                android:src="@mipmap/show_suggestions_off_icon" />
 
         </LinearLayout>
 
@@ -85,7 +85,7 @@
             android:paddingRight="10dp"
             android:textColor="@color/help_text_answer"
             android:textSize="@dimen/help_answer_text_size"
-            android:text="To turn the suggestions on click on the light grey bulb"
+            android:text="To turn the suggestions on click on the grey bulb"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"

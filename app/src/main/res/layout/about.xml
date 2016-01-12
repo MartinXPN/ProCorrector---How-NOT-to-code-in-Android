@@ -27,9 +27,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/about_text_size"
+                android:textSize="@dimen/about_title_size"
                 android:textStyle="bold"
-                android:textColor="@color/about_text_color"
+                android:textColor="@color/about_app_text_color"
                 android:gravity="center"
                 android:padding="@dimen/about_text_padding"
                 android:text="About App" />
@@ -43,7 +43,7 @@
                 android:paddingRight="@dimen/about_text_padding"
                 android:paddingBottom="@dimen/about_text_padding"
                 android:text="@string/about_app_description"
-                android:textColor="@color/about_text_color"
+                android:textColor="@color/about_app_text_color"
                 android:textStyle="normal"
                 android:textSize="@dimen/about_text_size" />
 
@@ -53,8 +53,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="#737373"
-                android:textSize="15sp"
+                android:textColor="@color/about_author_text_color"
+                android:textSize="@dimen/about_author_text_size"
                 android:text="@string/about_author_text" />
 
         </LinearLayout>
