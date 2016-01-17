@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,7 +21,7 @@ import java.util.Set;
 public class DatabaseHelper extends SQLiteOpenHelper
 {
     private static String DB_PATH = "";
-    private static String DB_NAME ="mydb.db";
+    private static String DB_NAME ="all_words.db";
     private SQLiteDatabase mDataBase;
     private final Context mContext;
 
@@ -140,7 +139,6 @@ public class DatabaseHelper extends SQLiteOpenHelper
         }
         c.close();
     }
-
     /********************************* get suggestion functions ***********************************/
 
     public static String convertToSQLiteFormat( String word ) {
