@@ -26,6 +26,7 @@
                 android:orientation="vertical"
                 android:paddingBottom="20dp" >
 
+                <include layout="@layout/list_of_supported_languages" />
                 <include layout="@layout/help_question_1" />
                 <include layout="@layout/help_question_2" />
                 <include layout="@layout/help_question_3" />

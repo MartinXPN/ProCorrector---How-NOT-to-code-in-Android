@@ -47,6 +47,8 @@
                 android:textStyle="normal"
                 android:textSize="@dimen/about_text_size" />
 
+            <include layout="@layout/list_of_supported_languages" />
+
             <TextView
                 android:id="@+id/about_author"
                 android:layout_marginTop="40dp"
