@@ -15,7 +15,6 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -106,7 +105,7 @@ public class EditCorrectText extends AppCompatActivity {
         if( documentID == -1 )  { db.insert( titleValue, contentValue, creationDate );    }
         else                    { db.update( titleValue, contentValue, documentID ); }
 
-        Log.d("Note", "Was saved to database" );
+        //Log.d("Note", "Was saved to database" );
     }
 
     private void copyTextToClipboard() {
@@ -272,7 +271,7 @@ public class EditCorrectText extends AppCompatActivity {
                     CorrectionAndContinuationTask.cancel(true);
                 suggestWord();
                 showOrHideIgnoreAddIcons();
-                Log.d("EditCorrectText", "content is clicked");
+                //Log.d("EditCorrectText", "content is clicked");
             }
         });
         content.addTextChangedListener(new TextWatcher() {
@@ -288,7 +287,7 @@ public class EditCorrectText extends AppCompatActivity {
                 text = s;
 
                 if( before == count ) {
-                    Log.d( "EditCorrectText", "color is changed" );
+                    //Log.d( "EditCorrectText", "color is changed" );
                     return;
                 }
 

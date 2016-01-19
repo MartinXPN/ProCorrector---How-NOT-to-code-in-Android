@@ -1,8 +1,6 @@
 package com.example.user.procorrector;
 
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,11 +11,11 @@ public class Language {
     /**
      * the order of languages in languageCodes has to be the same as the order in alphabet
      * */
-    private static final String[] languageCodes = { "ARM", "ENG", "RUS", "GRE"/*, "GEO"*/ };
+    private static final String[] languageCodes = { "ARM", "ENG", "RUS"/*, "GRE"*//*, "GEO"*/ };
     private static final char[][] alphabet = {  /*ARM*/ { 'ա', 'բ', 'գ', 'դ', 'ե', 'զ', 'է', 'ը', 'թ', 'ժ', 'ի', 'լ', 'խ', 'ծ', 'կ', 'հ', 'ձ', 'ղ', 'ճ', 'մ', 'յ', 'ն', 'շ', 'ո', 'չ', 'պ', 'ջ', 'ռ', 'ս', 'վ', 'տ', 'ր', 'ց', 'ւ', 'փ', 'ք', 'և', 'օ', 'ֆ' },
                                                 /*ENG*/ { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '\'' },
                                                 /*RUS*/ { 'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я' },
-                                                /*GRE*/ { 'α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω' },
+                                                /*GRE { 'α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω' },*/
                                                 /*GEO { 'ა', 'ბ', 'გ', 'დ', 'ე', 'ვ', 'ზ', 'თ', 'ი', 'კ', 'ლ', 'მ', 'ნ', 'ო', 'პ', 'ჟ', 'რ', 'ს', 'ტ', 'უ', 'ფ', 'ქ', 'ღ', 'ყ', 'შ', 'ჩ', 'ც', 'ძ', 'წ', 'ჭ', 'ხ', 'ჯ', 'ჰ' }*/ };
 
     private static HashSet <Character> allAlphabets = new HashSet<>();
@@ -137,7 +135,7 @@ public class Language {
             res.add(tmp.deleteCharAt(i).toString());
         }
 
-        Log.d( "Language editDistance", res.toString() );
+        //Log.d( "Language editDistance", res.toString() );
         return res;
     }
     public static ArrayList <String> editDistance( String s ) {
@@ -154,7 +152,7 @@ public class Language {
         for( int i=0; i < first.size(); i++ )
             res.addAll( editDistance( first.get( i ) ) );
 
-        Log.d( "Language editDistance2", res.toString() );
+        //Log.d( "Language editDistance2", res.toString() );
         return res;
     }
 
@@ -177,7 +175,7 @@ public class Language {
         if( end > text.length() )   end = text.length();
         if( start == end )          return "";
 
-        Log.d( "Language getCurrent", text.subSequence( start+1, end ).toString() );
+        //Log.d( "Language getCurrent", text.subSequence( start+1, end ).toString() );
         return text.subSequence(start + 1, end).toString();
     }
     public static String getCurrentSubstring(CharSequence text, int position) {
@@ -194,8 +192,8 @@ public class Language {
         if( start < 0 )             start = -1;
         if( end > text.length() )   end = text.length();
         if( start == end )          return "";
-        Log.d( "getCurrent", "start: " + start + " end: " + end + " text is " + text + " text.length() = " + text.length() );
-        Log.d( "Language getCurrent", text.subSequence( start+1, end ).toString() );
+        //Log.d( "getCurrent", "start: " + start + " end: " + end + " text is " + text + " text.length() = " + text.length() );
+        //Log.d( "Language getCurrent", text.subSequence( start+1, end ).toString() );
         return text.subSequence(start + 1, end).toString();
     }
 
@@ -228,7 +226,7 @@ public class Language {
             res.get( currentLanguage ).add( currentWord.toString() );
         }
 
-        Log.d( "Language divideIntoWord", res.toString() );
+        //Log.d( "Language divideIntoWord", res.toString() );
         return res;
     }
     public static HashMap <String, ArrayList <String> > divideIntoWordsUsingUnknownCharacters( String text, boolean useOnlyUnknownWords ) {
@@ -258,7 +256,7 @@ public class Language {
             res.get( currentLanguage ).add( currentWord.toString() );
         }
 
-        Log.d( "Language divideIntoWord", res.toString() );
+        //Log.d( "Language divideIntoWord", res.toString() );
         return res;
     }
 
