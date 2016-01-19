@@ -341,7 +341,7 @@ public class EditCorrectText extends AppCompatActivity {
                 }
             }
         });
-/*
+
         Thread.setDefaultUncaughtExceptionHandler( new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable ex) {
@@ -350,7 +350,7 @@ public class EditCorrectText extends AppCompatActivity {
                 Thread.dumpStack();
                 System.exit( 2 );
             }
-        });*/
+        });
     }
 
     @Override
