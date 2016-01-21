@@ -1,80 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<com.daimajia.swipe.SwipeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:swipe="http://schemas.android.com/apk/res-auto"
+
+    android:id="@+id/swipe"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:background="@drawable/transparent_rectangle"
-    android:layout_weight="10">
+    swipe:leftEdgeSwipeOffset="0dp"
+    swipe:rightEdgeSwipeOffset="0dp">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:background="#ff0c09"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/trash"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/trash_icon" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:orientation="horizontal"
+        android:background="@drawable/transparent_rectangle"
+        android:layout_weight="10">
 
-        <TextView
-            android:id="@+id/title"
-            android:background="@drawable/transparent_rectangle"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1">
 
-            android:maxLines="1"
-            android:ellipsize="end"
+            <TextView
+                android:id="@+id/title"
+                android:background="@drawable/transparent_rectangle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
-            android:paddingTop="@dimen/main_list_title_padding_top"
-            android:paddingLeft="@dimen/main_list_title_padding_left"
-            android:paddingRight="@dimen/main_list_title_padding_right"
-            android:paddingBottom="@dimen/main_list_title_padding_bottom"
-            android:layout_marginBottom="@dimen/main_list_title_margin_bottom"
-            android:layout_marginTop="@dimen/main_list_title_margin_top"
-            android:layout_marginLeft="@dimen/main_list_title_margin_left"
-            android:layout_marginRight="@dimen/main_list_title_margin_right"
+                android:maxLines="1"
+                android:ellipsize="end"
 
-            android:textStyle="normal"
-            android:textSize="@dimen/main_list_title_text_size"
-            android:textColor="@color/main_list_title" />
+                android:paddingTop="@dimen/main_list_title_padding_top"
+                android:paddingLeft="@dimen/main_list_title_padding_left"
+                android:paddingRight="@dimen/main_list_title_padding_right"
+                android:paddingBottom="@dimen/main_list_title_padding_bottom"
+                android:layout_marginBottom="@dimen/main_list_title_margin_bottom"
+                android:layout_marginTop="@dimen/main_list_title_margin_top"
+                android:layout_marginLeft="@dimen/main_list_title_margin_left"
+                android:layout_marginRight="@dimen/main_list_title_margin_right"
 
-        <TextView
-            android:id="@+id/text"
-            android:background="@drawable/transparent_rectangle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="@dimen/main_list_title_text_size"
+                android:textColor="@color/main_list_title" />
 
-            android:maxLines="1"
-            android:ellipsize="end"
+            <TextView
+                android:id="@+id/text"
+                android:background="@drawable/transparent_rectangle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
-            android:paddingTop="@dimen/main_list_text_padding_top"
-            android:paddingLeft="@dimen/main_list_text_padding_left"
-            android:paddingRight="@dimen/main_list_text_padding_right"
-            android:paddingBottom="@dimen/main_list_text_padding_bottom"
-            android:layout_marginBottom="@dimen/main_list_text_margin_bottom"
-            android:layout_marginTop="@dimen/main_list_text_margin_top"
-            android:layout_marginLeft="@dimen/main_list_text_margin_left"
-            android:layout_marginRight="@dimen/main_list_text_margin_right"
+                android:maxLines="1"
+                android:ellipsize="end"
 
-            android:textSize="@dimen/main_list_text_size"
-            android:textColor="@color/main_list_text" />
+                android:paddingTop="@dimen/main_list_text_padding_top"
+                android:paddingLeft="@dimen/main_list_text_padding_left"
+                android:paddingRight="@dimen/main_list_text_padding_right"
+                android:paddingBottom="@dimen/main_list_text_padding_bottom"
+                android:layout_marginBottom="@dimen/main_list_text_margin_bottom"
+                android:layout_marginTop="@dimen/main_list_text_margin_top"
+                android:layout_marginLeft="@dimen/main_list_text_margin_left"
+                android:layout_marginRight="@dimen/main_list_text_margin_right"
 
-    </LinearLayout>
+                android:textSize="@dimen/main_list_text_size"
+                android:textColor="@color/main_list_text" />
 
-    <LinearLayout
-        android:layout_weight="5"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal" >
+        </LinearLayout>
 
-        <TextView
-            android:gravity="center"
-            android:id="@+id/date"
-            android:padding="@dimen/main_list_date_padding"
-            android:textColor="@color/main_list_date"
-            android:textSize="@dimen/main_list_date_text_size"
+        <LinearLayout
+            android:layout_weight="5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/transparent_rectangle" />
+            android:orientation="horizontal" >
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/date"
+                android:padding="@dimen/main_list_date_padding"
+                android:textColor="@color/main_list_date"
+                android:textSize="@dimen/main_list_date_text_size"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/transparent_rectangle" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</com.daimajia.swipe.SwipeLayout>

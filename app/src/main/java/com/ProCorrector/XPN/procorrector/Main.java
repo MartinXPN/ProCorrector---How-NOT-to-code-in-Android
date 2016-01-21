@@ -11,12 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class Main extends AppCompatActivity {
 
@@ -72,11 +74,12 @@ public class Main extends AppCompatActivity {
         createNewNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent i = new Intent(Main.this, EditCorrectText.class);
-                i.putExtra( "id", -1 );
-                i.putExtra( "title", "" );
-                i.putExtra( "content", "" );
-                startActivityForResult( i, EDIT_CORRECT_TEXT_ACTIVITY_CODE );
+                i.putExtra("id", -1);
+                i.putExtra("title", "");
+                i.putExtra("content", "");
+                startActivityForResult(i, EDIT_CORRECT_TEXT_ACTIVITY_CODE);
             }
         });
 
@@ -84,7 +87,7 @@ public class Main extends AppCompatActivity {
         list = myNotesDB.getAll();
         final ListView myPreviousNotes = ( ListView ) findViewById(R.id.list );
         adapter = new MyAdapter();
-        myPreviousNotes.setAdapter( adapter );
+        myPreviousNotes.setAdapter(adapter);
 
 
         myPreviousNotes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -96,21 +99,7 @@ public class Main extends AppCompatActivity {
                 i.putExtra("id", (Integer) row.get(0));
                 i.putExtra("title", (String) row.get(1));
                 i.putExtra("content", (String) row.get(2));
-                startActivityForResult( i, EDIT_CORRECT_TEXT_ACTIVITY_CODE );
-            }
-        });
-
-        myPreviousNotes.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-                TextDatabase db = new TextDatabase(Main.this);
-                String title = (String) list.get( position ).get( 1 );
-                db.delete((int) list.get(position).get(0));
-                list.remove(position);
-                adapter.notifyDataSetChanged();
-                Toast.makeText( Main.this, title + " removed", Toast.LENGTH_SHORT ).show();
-                return true;
+                startActivityForResult(i, EDIT_CORRECT_TEXT_ACTIVITY_CODE);
             }
         });
     }
@@ -143,19 +132,34 @@ public class Main extends AppCompatActivity {
         public long getItemId(int position) { return position; }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent)
+        public View getView(final int position, View convertView, ViewGroup parent)
         {
             ArrayList row = list.get(position);
             String title_value = (String) row.get(1);
             String text_value = (String) row.get(2);
             String creationDate = (String) row.get(3);
 
-            LayoutInflater in = getLayoutInflater();
-            View res = in.inflate(R.layout.main_list_item, null);
+            final LayoutInflater in = getLayoutInflater();
+            final View res = in.inflate(R.layout.main_list_item, null);
 
             TextView title = ( TextView ) res.findViewById( R.id.title );   title.setText( title_value );
-            TextView text = ( TextView ) res.findViewById( R.id.text );     text.setText( text_value );
-            TextView date = (TextView ) res.findViewById( R.id.date );      date.setText( creationDate );
+            TextView text = ( TextView ) res.findViewById( R.id.text );     text.setText(text_value);
+            TextView date = (TextView ) res.findViewById( R.id.date );      date.setText(creationDate);
+            ImageView trash = (ImageView) res.findViewById( R.id.trash );
+
+            trash.setOnClickListener(new View.OnClickListener() {
+
+                int currentPosition = position;
+                @Override
+                public void onClick(View v) {
+                    TextDatabase db = new TextDatabase(Main.this);
+                    String title = (String) list.get(currentPosition).get( 1 );
+                    db.delete((int) list.get(currentPosition).get(0));
+                    list.remove(currentPosition);
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText( Main.this, title + " removed", Toast.LENGTH_SHORT ).show();
+                }
+            });
 
             return res;
         }
