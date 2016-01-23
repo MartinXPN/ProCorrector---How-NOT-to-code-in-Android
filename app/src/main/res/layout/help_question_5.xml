@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:background="@color/edit_correct_text_main_background"
+    android:background="@color/edit_correct_text_window_background"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
@@ -37,7 +37,7 @@
                 android:layout_width="@dimen/help_icons_width"
                 android:layout_height="@dimen/help_icons_height"
                 android:layout_marginRight="7dp"
-                android:src="@drawable/add_to_library_icon" />
+                android:src="@drawable/ic_add_to_library_white" />
 
         </LinearLayout>
 
@@ -75,7 +75,7 @@
                 android:layout_width="@dimen/help_icons_width"
                 android:layout_height="@dimen/help_icons_height"
                 android:layout_marginRight="7dp"
-                android:src="@drawable/ignore_once_icon" />
+                android:src="@drawable/ic_ignore_once_white" />
 
         </LinearLayout>
 

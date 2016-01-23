@@ -1,8 +1,8 @@
 <resources>
 
     <string name="app_name">ProCorrector</string>
-    <string name="title_hint">Type the title here…</string>
-    <string name="text_hint">Type your text here…</string>
+    <string name="title_hint">Title…</string>
+    <string name="text_hint">Type the text here…</string>
 
     <string name="action_settings_title">Settings</string>
     <string name="action_show_suggestions_title">Show suggestions</string>
@@ -14,7 +14,7 @@
     <string name="action_copy_title">Copy</string>
     <string name="action_send_title">Send</string>
     <string name="action_find_title">Find</string>
-    <string name="action_help_title">Help</string>
+    <string name="action_help_title">Help &amp; Tips</string>
     <string name="action_feedback_title">Feedback</string>
     <string name="action_about_title">About</string>
     <string name="action_overflow_menu_title">Menu</string>

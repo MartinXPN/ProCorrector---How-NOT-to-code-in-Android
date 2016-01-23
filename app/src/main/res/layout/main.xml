@@ -13,10 +13,16 @@
         android:id="@+id/toolbar"
         android:minHeight="?attr/actionBarSize"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:titleTextColor="@android:color/white"
-        android:background="@color/toolbar_background">
-    </android.support.v7.widget.Toolbar>
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="4dp"
+        android:background="@color/view_documents_primary"/>
+
+    <!--
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/shadow" />
+    -->
 
 
     <RelativeLayout
@@ -39,14 +45,16 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/new_text_button"
-            app:backgroundTint="@color/main_new_text_button_background"
+            app:backgroundTint="@color/view_documents_primary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/main_add_note_margin"
             android:clickable="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:src="@drawable/add_note_icon" />
+            android:src="@drawable/ic_add_note_white"
+            android:layout_alignParentEnd="true"
+            android:baselineAlignBottom="true" />
 
     </RelativeLayout>
 

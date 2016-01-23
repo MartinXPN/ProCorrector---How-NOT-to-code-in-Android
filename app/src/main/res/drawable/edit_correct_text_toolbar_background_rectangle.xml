@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <solid
-        android:color="@color/toolbar_background" >
+        android:color="@color/edit_correct_text_primary" >
     </solid>
 
 </shape>

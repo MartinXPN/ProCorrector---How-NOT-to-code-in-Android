@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -36,7 +39,7 @@ public class Main extends AppCompatActivity {
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
         i.putExtra(Intent.EXTRA_SUBJECT, "ProCorrector Feedback" );
-        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"XPNProCorrector@gmail.com"} );
+        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"XPNProCorrector@gmail.com"});
         try {
             startActivity(Intent.createChooser(i, "Choose an Email client:"));
         }
@@ -54,7 +57,6 @@ public class Main extends AppCompatActivity {
         {
             list = myNotesDB.getAll();
             adapter.notifyDataSetChanged();
-
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -67,7 +69,18 @@ public class Main extends AppCompatActivity {
 
         /// use toolbar as actionbar
         Toolbar toolbar = (Toolbar) findViewById( R.id.toolbar );
+        toolbar.setTitle(Html.fromHtml("<font color='#ffffff'>ProCorrector </font>"));
         setSupportActionBar(toolbar);
+
+
+        /// if the device's API level is higher than LOLLIPOP then set the status-bar color to primary_dark
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+
+            Window window = Main.this.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(Main.this.getResources().getColor(R.color.view_documents_primary_dark));
+        }
 
 
         android.support.design.widget.FloatingActionButton createNewNote = ( android.support.design.widget.FloatingActionButton ) findViewById(R.id.new_text_button);
@@ -112,6 +125,7 @@ public class Main extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
+
         int id = item.getItemId();
 
         //if( id == R.id.action_settings )        { openSettings(); } //TODO

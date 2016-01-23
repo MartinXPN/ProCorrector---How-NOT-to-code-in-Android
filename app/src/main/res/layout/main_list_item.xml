@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:background="#ff0c09"
+        android:background="@color/main_list_swipe_delete"
         android:gravity="center" >
 
         <ImageView
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:scaleType="fitCenter"
-            android:src="@drawable/trash_icon" />
+            android:src="@drawable/ic_trash_white" />
     </LinearLayout>
 
 

@@ -56,5 +56,9 @@
     <dimen name="help_icons_width">45dp</dimen>
     <dimen name="help_icons_height">53dp</dimen>
 
+    <dimen name="welcome_page_title_size">40sp</dimen>
+    <dimen name="welcome_page_continue_size">15sp</dimen>
+    <dimen name="welcome_page_image_size">200dp</dimen>
+
 
 </resources>
