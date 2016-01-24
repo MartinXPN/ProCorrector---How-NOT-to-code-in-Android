@@ -72,17 +72,6 @@ public class Main extends AppCompatActivity {
         toolbar.setTitle(Html.fromHtml("<font color='#ffffff'>ProCorrector </font>"));
         setSupportActionBar(toolbar);
 
-
-        /// if the device's API level is higher than LOLLIPOP then set the status-bar color to primary_dark
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-
-            Window window = Main.this.getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(Main.this.getResources().getColor(R.color.view_documents_primary_dark));
-        }
-
-
         android.support.design.widget.FloatingActionButton createNewNote = ( android.support.design.widget.FloatingActionButton ) findViewById(R.id.new_text_button);
         createNewNote.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,8 +126,8 @@ public class Main extends AppCompatActivity {
     }
 
 
-    class MyAdapter extends BaseAdapter
-    {
+    class MyAdapter extends BaseAdapter {
+
         @Override
         public void notifyDataSetChanged()  { super.notifyDataSetChanged(); }
         public int getCount()               { return list.size(); }

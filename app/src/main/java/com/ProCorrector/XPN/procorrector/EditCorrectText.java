@@ -353,7 +353,7 @@ public class EditCorrectText extends AppCompatActivity {
             }
         });
 
-        Thread.setDefaultUncaughtExceptionHandler( new Thread.UncaughtExceptionHandler() {
+        /*Thread.setDefaultUncaughtExceptionHandler( new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable ex) {
 
@@ -361,7 +361,7 @@ public class EditCorrectText extends AppCompatActivity {
                 Thread.dumpStack();
                 System.exit( 2 );
             }
-        });
+        });*/
     }
 
     @Override
@@ -381,7 +381,7 @@ public class EditCorrectText extends AppCompatActivity {
         else if( id == R.id.action_copy )               { copyTextToClipboard(); }
         else if( id == R.id.action_record )             { displaySpeechRecognizer(); }
         else if( id == R.id.action_send )               { sendNote(); }
-        else if( RecordingLanguage.isLanguageID(id) )   { setLanguage( id ); }
+        else if( RecordingLanguage.isLanguageID(id) )   { setLanguage( id );    displaySpeechRecognizer(); }
         //else if( documentID == R.documentID.action_settings )       { openSettings(); } //TODO
         else if( id == R.id.action_help )               { Intent i = new Intent( EditCorrectText.this, Help.class );    startActivity(i); }
         else if( id == R.id.action_feedback )           { writeFeedback(); }

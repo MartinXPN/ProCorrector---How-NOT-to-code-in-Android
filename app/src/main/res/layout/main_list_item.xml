@@ -11,16 +11,16 @@
     swipe:rightEdgeSwipeOffset="0dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
         android:background="@color/main_list_swipe_delete"
         android:gravity="center" >
 
         <ImageView
             android:id="@+id/trash"
             android:clickable="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:scaleType="fitCenter"
@@ -84,7 +84,6 @@
 
                 android:textSize="@dimen/main_list_text_size"
                 android:textColor="@color/main_list_text" />
-
         </LinearLayout>
 
         <LinearLayout

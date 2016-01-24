@@ -1,15 +1,6 @@
 
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="windowActionModeOverlay">true</item>
-        <item name="colorPrimaryDark">@color/edit_correct_text_primary_dark</item>
-        <item name="colorPrimary">@color/edit_correct_text_primary</item>
-        <item name="android:windowBackground">@color/edit_correct_text_window_background</item>
-        <item name="colorAccent">@color/edit_correct_text_accent</item>
-        <item name="android:actionMenuTextColor">@color/overflow_menu_text</item>
-    </style>
-
     <style name="WelcomeTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/welcome_color_primary</item>
         <item name="colorPrimaryDark">@color/welcome_color_primary_dark</item>
@@ -19,16 +10,24 @@
     <style name="ViewDocumentsTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimaryDark">@color/view_documents_primary_dark</item>
         <item name="colorPrimary">@color/view_documents_primary</item>
+        <item name="android:textColorLink">@color/link_color</item>
         <item name="android:windowBackground">@color/view_documents_window_background</item>
-        <item name="android:actionMenuTextColor">@color/overflow_menu_text</item>
     </style>
 
     <style name="EditCorrectTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowActionModeOverlay">true</item>
         <item name="colorPrimaryDark">@color/edit_correct_text_primary_dark</item>
         <item name="colorPrimary">@color/edit_correct_text_primary</item>
         <item name="android:windowBackground">@color/edit_correct_text_window_background</item>
         <item name="colorAccent">@color/edit_correct_text_accent</item>
-        <item name="android:actionMenuTextColor">@color/overflow_menu_text</item>
+    </style>
+
+
+    <style name="DefaultStyle" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimaryDark">@color/view_documents_primary_dark</item>
+        <item name="colorPrimary">@color/view_documents_primary</item>
+        <item name="android:textColorLink">@color/link_color</item>
+        <item name="android:windowBackground">@color/view_documents_window_background</item>
     </style>
 
 </resources>
