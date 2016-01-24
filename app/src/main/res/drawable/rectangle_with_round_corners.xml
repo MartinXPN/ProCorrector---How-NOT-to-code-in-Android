@@ -25,7 +25,7 @@
 
     <!-- Corner radius -->
     <corners
-        android:radius="@dimen/rectangle_with_round_corners_radius"   >
+        android:radius="2dp"   >
     </corners>
 
 </shape>

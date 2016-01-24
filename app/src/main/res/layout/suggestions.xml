@@ -7,19 +7,19 @@
     android:layout_width="@dimen/suggestion_box_width"
     android:layout_height="@dimen/suggestion_box_height"
     android:orientation="horizontal"
-    android:baselineAligned="false" >
+    android:baselineAligned="false">
 
     <LinearLayout
         android:id="@+id/correction_box"
+        android:background="@drawable/rectangle_with_round_corners"
         android:visibility="invisible"
         android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/rectangle_with_round_corners">
+        android:orientation="vertical">
 
         <ListView
-            android:id = "@+id/correction_list"
+            android:id="@+id/correction_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/transparent"
@@ -29,20 +29,21 @@
 
     <LinearLayout
         android:id="@+id/continuation_box"
+        android:background="@drawable/rectangle_with_round_corners"
         android:visibility="invisible"
         android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/rectangle_with_round_corners">
+        android:orientation="vertical">
 
         <ListView
-            android:id = "@+id/continuation_list"
+            android:id="@+id/continuation_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/transparent"
             android:dividerHeight="@dimen/suggestion_box_list_divider"
             android:divider="@color/suggestion_list_divider" />
+
     </LinearLayout>
 
 </LinearLayout>

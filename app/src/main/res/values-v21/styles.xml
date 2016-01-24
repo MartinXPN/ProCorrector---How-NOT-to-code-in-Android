@@ -15,11 +15,13 @@
     </style>
 
     <style name="EditCorrectTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionModeOverlay">true</item>
         <item name="android:windowActionModeOverlay">true</item>
         <item name="colorPrimaryDark">@color/edit_correct_text_primary_dark</item>
         <item name="colorPrimary">@color/edit_correct_text_primary</item>
         <item name="android:windowBackground">@color/edit_correct_text_window_background</item>
         <item name="android:colorAccent">@color/edit_correct_text_accent</item>
+        <item name="colorAccent">@color/edit_correct_text_accent</item>
     </style>
 
 

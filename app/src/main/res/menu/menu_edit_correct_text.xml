@@ -8,7 +8,7 @@
     <item
         android:id="@+id/action_ignore_once"
         android:title="@string/action_ignore_once_title"
-        android:icon="@drawable/ic_ignore_once_black"
+        android:icon="@drawable/ic_ignore_once_white"
         android:orderInCategory="100"
         android:visible="false"
         app:showAsAction="always" />
@@ -16,7 +16,7 @@
     <item
         android:id="@+id/action_add_to_library"
         android:title="@string/action_add_to_library_title"
-        android:icon="@drawable/ic_add_to_library_black"
+        android:icon="@drawable/ic_add_to_library_white"
         android:orderInCategory="200"
         android:visible="false"
         app:showAsAction="always" />
@@ -35,7 +35,7 @@
     <item
         android:id="@+id/action_overflow_menu"
         android:title="@string/action_overflow_menu_title"
-        android:icon="@drawable/ic_overflow_menu_black"
+        android:icon="@drawable/ic_overflow_menu_white"
         android:orderInCategory="1000"
         app:showAsAction="always">
 

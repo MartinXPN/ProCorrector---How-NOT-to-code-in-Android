@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/edit_correct_text_primary"
-        app:navigationIcon="@drawable/ic_done_blue" >
+        app:navigationIcon="@drawable/ic_done_white" >
 
 
         <RelativeLayout
