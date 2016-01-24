@@ -12,9 +12,9 @@
     <color name="suggestion_list_text">#4b4b4b</color>
 
 
-    <color name="edit_correct_text_accent">#1976D2</color>
-    <color name="edit_correct_text_primary_dark">#264876</color>
-    <color name="edit_correct_text_primary">#2d548a</color>
+    <color name="edit_correct_text_accent">#5f5f5f</color>
+    <color name="edit_correct_text_primary_dark">#38618d</color>
+    <color name="edit_correct_text_primary">#527dad</color>
     <color name="edit_correct_text_window_background">#f5f5f5</color>
 
     <color name="edit_correct_text_title_real">#e1e1e1</color>
@@ -23,8 +23,8 @@
     <color name="edit_correct_text_hint">#7d7d7d</color>
 
 
-    <color name="view_documents_primary_dark">#264876</color>
-    <color name="view_documents_primary">#2d548a</color>
+    <color name="view_documents_primary_dark">#38618d</color>
+    <color name="view_documents_primary">#527dad</color>
     <color name="view_documents_text_primary">#ffffff</color>
     <color name="view_documents_window_background">#FAFAFA</color>
 
