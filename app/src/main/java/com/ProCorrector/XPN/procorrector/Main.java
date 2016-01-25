@@ -1,21 +1,26 @@
 package com.ProCorrector.XPN.procorrector;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +38,6 @@ public class Main extends AppCompatActivity {
 
     /*******************************actions support functions**************************************/
 
-    //////////////////////////////////send feedback/////////////////////////////////////////////////
     private void writeFeedback() {
 
         Intent i = new Intent(Intent.ACTION_SEND);
@@ -46,6 +50,27 @@ public class Main extends AppCompatActivity {
         catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(Main.this, "There are no Email applications installed", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void showWelcomePage(){
+
+        final Dialog dialog = new Dialog(Main.this, R.style.WelcomeTheme);
+        dialog.setContentView(R.layout.welcome_page);
+        RelativeLayout layout = (RelativeLayout) dialog.findViewById(R.id.welcome_page);
+        dialog.show();
+
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+
+                SharedPreferences sp = getSharedPreferences("data", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+
+                editor.putBoolean("firstLaunch", false);
+                editor.commit();
+                dialog.dismiss();
+            }
+        });
     }
     /*******************************actions support functions**************************************/
 
@@ -104,6 +129,12 @@ public class Main extends AppCompatActivity {
                 startActivityForResult(i, EDIT_CORRECT_TEXT_ACTIVITY_CODE);
             }
         });
+
+
+        SharedPreferences sp = getSharedPreferences("data", Context.MODE_PRIVATE);
+        if( !sp.contains( "firstLaunch" ) ) {
+            showWelcomePage();
+        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
