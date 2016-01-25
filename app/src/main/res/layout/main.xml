@@ -9,6 +9,7 @@
     android:background="@color/main_list_background"
     android:orientation="vertical">
 
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:minHeight="?attr/actionBarSize"
@@ -23,6 +24,14 @@
         android:dividerHeight="@dimen/main_list_divider"
         android:divider="@color/main_list_divider"
         android:layout_below="@+id/toolbar" />
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/semitransparent_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#de000000"
+        android:orientation="vertical"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/new_text_button"
@@ -43,5 +52,29 @@
         android:layout_height="4dp"
         android:layout_below="@id/toolbar"
         android:background="@drawable/shadow" />
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/help_show_suggestions_arrow"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_arrow_down_right"
+        android:layout_alignBottom="@+id/new_text_button"
+        android:layout_toLeftOf="@+id/new_text_button"
+        android:layout_toStartOf="@+id/new_text_button" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/help_create_new_document_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ebebeb"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:text="Create your\nfirst document"
+        android:layout_above="@+id/help_show_suggestions_arrow"
+        android:layout_alignRight="@+id/help_show_suggestions_arrow"
+        android:layout_alignEnd="@+id/help_show_suggestions_arrow" />
 
 </RelativeLayout>

@@ -31,12 +31,6 @@
             android:label="@string/app_name">
         </activity>
 
-        <activity
-            android:theme="@style/DefaultStyle"
-            android:name="com.ProCorrector.XPN.procorrector.Help"
-            android:label="@string/app_name">
-        </activity>
-
     </application>
 
 </manifest>

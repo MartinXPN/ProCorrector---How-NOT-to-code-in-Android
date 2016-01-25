@@ -8,17 +8,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,6 +31,7 @@ public class Main extends AppCompatActivity {
     public static List <ArrayList> list = new ArrayList<>();
     TextDatabase myNotesDB = new TextDatabase( this );
     private final int EDIT_CORRECT_TEXT_ACTIVITY_CODE = 1;
+    private final String CACHE = "data";
     MyAdapter adapter = null;
 
 
@@ -63,12 +62,49 @@ public class Main extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
 
-                SharedPreferences sp = getSharedPreferences("data", Context.MODE_PRIVATE);
+                SharedPreferences sp = getSharedPreferences(CACHE, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sp.edit();
 
                 editor.putBoolean("firstLaunch", false);
-                editor.commit();
+                editor.apply();
                 dialog.dismiss();
+
+                showHelpAndTips();
+            }
+        });
+    }
+
+    private void showHelpAndTips() {
+
+        final LinearLayout background = (LinearLayout) findViewById( R.id.semitransparent_background );
+        final ImageView arrow = (ImageView) findViewById( R.id.help_show_suggestions_arrow);
+        final TextView hint = (TextView) findViewById( R.id.help_create_new_document_hint );
+
+
+        background.setVisibility( View.VISIBLE );
+        arrow.setVisibility( View.VISIBLE );
+        hint.setVisibility(View.VISIBLE);
+
+
+        android.support.design.widget.FloatingActionButton createNewNote = ( android.support.design.widget.FloatingActionButton ) findViewById(R.id.new_text_button);
+        createNewNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(Main.this, EditCorrectText.class);
+                i.putExtra("id", -1);
+                i.putExtra("title", "");
+                i.putExtra("content", "");
+                startActivityForResult(i, EDIT_CORRECT_TEXT_ACTIVITY_CODE);
+
+                SharedPreferences sp = getSharedPreferences(CACHE, MODE_PRIVATE );
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putBoolean( "newDocumentHintShown", true );
+                editor.apply();
+
+                background.setVisibility(View.GONE);
+                arrow.setVisibility(View.GONE);
+                hint.setVisibility(View.GONE);
             }
         });
     }
@@ -131,9 +167,12 @@ public class Main extends AppCompatActivity {
         });
 
 
-        SharedPreferences sp = getSharedPreferences("data", Context.MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences(CACHE, Context.MODE_PRIVATE);
         if( !sp.contains( "firstLaunch" ) ) {
             showWelcomePage();
+        }
+        else if( !sp.contains("newDocumentHintShown" ) ) {
+            showHelpAndTips();
         }
     }
 
@@ -149,7 +188,7 @@ public class Main extends AppCompatActivity {
         int id = item.getItemId();
 
         //if( id == R.id.action_settings )        { openSettings(); } //TODO
-        if( id == R.id.action_help )            { Intent i = new Intent(Main.this, Help.class);     startActivity(i); }
+        if( id == R.id.action_help )            { showHelpAndTips(); }
         else if( id == R.id.action_feedback )   { writeFeedback(); }
         else if( id == R.id.action_about )      { Intent i = new Intent(Main.this, About.class);    startActivity(i); }
 

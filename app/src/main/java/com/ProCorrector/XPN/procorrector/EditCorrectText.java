@@ -3,6 +3,7 @@ package com.ProCorrector.XPN.procorrector;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -42,7 +44,6 @@ import java.util.Date;
 import java.util.Deque;
 import java.util.List;
 import java.util.Locale;
-import java.lang.Object;
 
 
 public class EditCorrectText extends AppCompatActivity {
@@ -75,12 +76,14 @@ public class EditCorrectText extends AppCompatActivity {
     private static String CurrentRecordingLanguageName = "English";
     private static int CurrentRecordingLanguageID = -1;
     private static final int SPEECH_REQUEST_CODE = 0;
+    private final String CACHE = "data";
+
 
 
     /*******************************actions support functions**************************************/
     private void setLanguage( int languageID ) {
 
-        MenuItem flag = myMenu.findItem( R.id.action_choose_language );
+        MenuItem flag = myMenu.findItem(R.id.action_choose_language);
         CurrentRecordingLanguageCode = RecordingLanguage.getLanguageCodeFromLanguageID( languageID );
         CurrentRecordingLanguageLocale = RecordingLanguage.getLanguageLocaleFromLanguageID( languageID );
         CurrentRecordingLanguageName = RecordingLanguage.getLanguageNameFromLanguageID( languageID );
@@ -105,7 +108,7 @@ public class EditCorrectText extends AppCompatActivity {
 
         TextDatabase db = new TextDatabase(getApplicationContext());
         if( documentID == -1 )  { db.insert( titleValue, contentValue, creationDate );    }
-        else                    { db.update( titleValue, contentValue, documentID ); }
+        else                    { db.update(titleValue, contentValue, documentID); }
 
         //Log.d("Note", "Was saved to database" );
     }
@@ -113,7 +116,7 @@ public class EditCorrectText extends AppCompatActivity {
     private void copyTextToClipboard() {
 
         ClipboardManager clipboard = (ClipboardManager) getSystemService( CLIPBOARD_SERVICE );
-        ClipData clip = ClipData.newPlainText( "ProCorrector", text );
+        ClipData clip = ClipData.newPlainText("ProCorrector", text);
         clipboard.setPrimaryClip( clip );
         Toast.makeText( EditCorrectText.this, "Text copied to clipboard", Toast.LENGTH_LONG ).show();
     }
@@ -141,6 +144,9 @@ public class EditCorrectText extends AppCompatActivity {
             if (spans.length != 0) {
                 ignoreOnce.setVisible(true);
                 addToLibrary.setVisible(true);
+
+                if( !getSharedPreferences( CACHE, MODE_PRIVATE ).contains( "addToDictionaryTipShown" ) )
+                    showAddToDictionaryTip();
             }
             else {
                 ignoreOnce.setVisible(false);
@@ -198,7 +204,7 @@ public class EditCorrectText extends AppCompatActivity {
         String messageTitle = title.getText().toString();
 
         Intent i = new Intent(Intent.ACTION_SEND);
-        i.setType( "text/plain" );
+        i.setType("text/plain");
         i.putExtra(Intent.EXTRA_SUBJECT, messageTitle);
         i.putExtra(Intent.EXTRA_TEXT, messageBody);
         try {
@@ -207,6 +213,70 @@ public class EditCorrectText extends AppCompatActivity {
         catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText( EditCorrectText.this, "There are no messaging applications installed", Toast.LENGTH_SHORT ).show();
         }
+    }
+    private void showSuggestionsTip() {
+
+        final LinearLayout background = (LinearLayout) findViewById( R.id.hint_semitransparent_background );
+        final ImageView arrow = (ImageView) findViewById( R.id.help_show_suggestions_arrow);
+        final TextView hint = (TextView) findViewById( R.id.help_show_suggestions_hint );
+
+
+        background.setVisibility( View.VISIBLE );
+        arrow.setVisibility(View.VISIBLE);
+        hint.setVisibility(View.VISIBLE);
+
+
+        background.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SharedPreferences sp = getSharedPreferences(CACHE, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putBoolean("suggestionsTipShown", true);
+                editor.apply();
+
+                arrow.setVisibility(View.GONE);
+                hint.setVisibility(View.GONE);
+                background.setVisibility(View.GONE);
+            }
+        });
+    }
+    private void showAddToDictionaryTip() {
+
+        final LinearLayout background = (LinearLayout) findViewById( R.id.hint_semitransparent_background );
+        final ImageView arrow = (ImageView) findViewById( R.id.help_add_to_dictionary_arrow );
+        final TextView hint = (TextView) findViewById( R.id.help_add_to_dictionary_hint );
+
+
+        background.setVisibility( View.VISIBLE );
+        arrow.setVisibility( View.VISIBLE );
+        hint.setVisibility(View.VISIBLE);
+
+
+        background.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SharedPreferences sp = getSharedPreferences(CACHE, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putBoolean("addToDictionaryTipShown", true);
+                editor.apply();
+
+                arrow.setVisibility(View.GONE);
+                hint.setVisibility(View.GONE);
+                background.setVisibility(View.GONE);
+            }
+        });
+    }
+    private void showHelpAndTips() {
+
+        SharedPreferences sp = getSharedPreferences(CACHE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.remove("addToDictionaryTipShown");
+        editor.remove("suggestionsTipShown");
+        editor.apply();
+
+        showSuggestionsTip();
     }
     private void writeFeedback() {
 
@@ -383,7 +453,7 @@ public class EditCorrectText extends AppCompatActivity {
         else if( id == R.id.action_send )               { sendNote(); }
         else if( RecordingLanguage.isLanguageID(id) )   { setLanguage( id );    displaySpeechRecognizer(); }
         //else if( documentID == R.documentID.action_settings )       { openSettings(); } //TODO
-        else if( id == R.id.action_help )               { Intent i = new Intent( EditCorrectText.this, Help.class );    startActivity(i); }
+        else if( id == R.id.action_help )               { showHelpAndTips(); }
         else if( id == R.id.action_feedback )           { writeFeedback(); }
         else if( id == R.id.action_about )              { Intent i = new Intent(EditCorrectText.this, About.class);     startActivity(i); }
 
@@ -442,10 +512,20 @@ public class EditCorrectText extends AppCompatActivity {
             x = Math.max( x, -suggestions_layout.width / 2 );
             setContinuationListVisible();
         }
+        else {
+            return;
+        }
+
 
         if( suggestions.getX() != x || suggestions.getY() != y ) {
             suggestions.setX(x);
             suggestions.setY(y);
+        }
+
+        /// if the app is launched the first time show that its possible to turn suggestions on/off
+        SharedPreferences sp = getSharedPreferences( CACHE, MODE_PRIVATE );
+        if( !sp.contains( "suggestionsTipShown" ) ) {
+            showSuggestionsTip();
         }
     }
 
