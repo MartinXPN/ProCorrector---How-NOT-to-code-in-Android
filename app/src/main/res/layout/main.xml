@@ -30,7 +30,7 @@
         android:id="@+id/semitransparent_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#de000000"
+        android:background="@color/semitransparent_background_black"
         android:orientation="vertical"/>
 
     <android.support.design.widget.FloatingActionButton

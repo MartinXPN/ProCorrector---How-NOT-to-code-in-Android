@@ -7,15 +7,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -79,8 +81,10 @@ public class Main extends AppCompatActivity {
 
         final Dialog dialog = new Dialog(Main.this, R.style.WelcomeTheme);
         dialog.setContentView(R.layout.welcome_page);
-        RelativeLayout layout = (RelativeLayout) dialog.findViewById(R.id.welcome_page);
+        final RelativeLayout layout = (RelativeLayout) dialog.findViewById(R.id.welcome_page);
+        Animation animation = AnimationUtils.loadAnimation( Main.this, R.anim.fade_in );
         dialog.show();
+        layout.startAnimation( animation );
 
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,9 +95,24 @@ public class Main extends AppCompatActivity {
 
                 editor.putBoolean("firstLaunch", false);
                 editor.apply();
-                dialog.dismiss();
 
-                showHelpAndTips();
+                Animation animation = AnimationUtils.loadAnimation( getApplicationContext(), R.anim.fade_out );
+                layout.startAnimation(animation);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+
+                        Handler my = new Handler();
+                        my.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                showHelpAndTips();
+                            }
+                        }, 400);
+                    }
+                }, 250);
             }
         });
     }
@@ -101,7 +120,7 @@ public class Main extends AppCompatActivity {
     private void showHelpAndTips() {
 
         final LinearLayout background = (LinearLayout) findViewById( R.id.semitransparent_background );
-        final ImageView arrow = (ImageView) findViewById( R.id.help_show_suggestions_arrow);
+        final ImageView arrow = (ImageView) findViewById( R.id.help_show_suggestions_arrow );
         final TextView hint = (TextView) findViewById( R.id.help_create_new_document_hint );
         final SharedPreferences sp = getSharedPreferences( CACHE, MODE_PRIVATE );
         final SharedPreferences.Editor editor = sp.edit();
@@ -109,9 +128,14 @@ public class Main extends AppCompatActivity {
         editor.apply();
 
 
+        Animation animation = AnimationUtils.loadAnimation( Main.this, R.anim.fade_in );
         background.setVisibility( View.VISIBLE );
         arrow.setVisibility( View.VISIBLE );
-        hint.setVisibility(View.VISIBLE);
+        hint.setVisibility( View.VISIBLE );
+
+        background.startAnimation(animation);
+        arrow.startAnimation(animation);
+        hint.startAnimation(animation);
 
         android.support.design.widget.FloatingActionButton createNewNote = ( android.support.design.widget.FloatingActionButton ) findViewById(R.id.new_text_button);
         createNewNote.setOnClickListener(new View.OnClickListener() {
@@ -121,16 +145,27 @@ public class Main extends AppCompatActivity {
                 editor.putBoolean( "newDocumentHintShown", true );
                 editor.apply();
 
-                background.setVisibility(View.GONE);
-                arrow.setVisibility(View.GONE);
-                hint.setVisibility(View.GONE);
+                Animation animation = AnimationUtils.loadAnimation( Main.this, R.anim.fade_out );
+                background.startAnimation(animation);
+                arrow.startAnimation(animation);
+                hint.startAnimation(animation);
 
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
 
-                Intent i = new Intent(Main.this, EditCorrectText.class);
-                i.putExtra("id", -1);
-                i.putExtra("title", "");
-                i.putExtra("content", "");
-                startActivityForResult(i, EDIT_CORRECT_TEXT_ACTIVITY_CODE);
+                        background.setVisibility( View.GONE );
+                        arrow.setVisibility( View.GONE );
+                        hint.setVisibility( View.GONE );
+
+                        Intent i = new Intent(Main.this, EditCorrectText.class);
+                        i.putExtra("id", -1);
+                        i.putExtra("title", "");
+                        i.putExtra("content", "");
+                        startActivityForResult(i, EDIT_CORRECT_TEXT_ACTIVITY_CODE);
+                    }
+                }, 250 );
             }
         });
     }

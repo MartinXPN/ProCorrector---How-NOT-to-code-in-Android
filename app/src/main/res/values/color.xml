@@ -6,6 +6,7 @@
     <color name="link_color">#3366BB</color>
     <color name="overflow_menu_text">#0f0f12</color>
     <color name="overflow_menu_background">#f9f9f9</color>
+    <color name="semitransparent_background_black">#be000000</color>
 
     <color name="suggestion_list_divider">#e1e1e1</color>
     <color name="suggestion_list_background">#ffffff</color>

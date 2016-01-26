@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +24,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -224,9 +227,14 @@ public class EditCorrectText extends AppCompatActivity {
         final TextView hint = (TextView) findViewById( R.id.help_show_suggestions_hint );
 
 
+        Animation animation = AnimationUtils.loadAnimation(EditCorrectText.this, R.anim.fade_in);
         background.setVisibility( View.VISIBLE );
-        arrow.setVisibility(View.VISIBLE);
-        hint.setVisibility(View.VISIBLE);
+        arrow.setVisibility( View.VISIBLE );
+        hint.setVisibility( View.VISIBLE );
+
+        background.startAnimation(animation);
+        arrow.startAnimation(animation);
+        hint.startAnimation(animation);
 
 
         background.setOnClickListener(new View.OnClickListener() {
@@ -238,9 +246,21 @@ public class EditCorrectText extends AppCompatActivity {
                 editor.putBoolean("suggestionsTipShown", true);
                 editor.apply();
 
-                arrow.setVisibility(View.GONE);
-                hint.setVisibility(View.GONE);
-                background.setVisibility(View.GONE);
+                Animation animation = AnimationUtils.loadAnimation(EditCorrectText.this, R.anim.fade_out);
+                background.startAnimation(animation);
+                arrow.startAnimation(animation);
+                hint.startAnimation(animation);
+
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        arrow.setVisibility(View.GONE);
+                        hint.setVisibility(View.GONE);
+                        background.setVisibility(View.GONE);
+                    }
+                }, 250);
             }
         });
     }
@@ -251,9 +271,14 @@ public class EditCorrectText extends AppCompatActivity {
         final TextView hint = (TextView) findViewById( R.id.help_add_to_dictionary_hint );
 
 
+        Animation animation = AnimationUtils.loadAnimation(EditCorrectText.this, R.anim.fade_in);
         background.setVisibility( View.VISIBLE );
         arrow.setVisibility( View.VISIBLE );
-        hint.setVisibility(View.VISIBLE);
+        hint.setVisibility( View.VISIBLE );
+
+        background.startAnimation(animation);
+        arrow.startAnimation(animation);
+        hint.startAnimation(animation);
 
 
         background.setOnClickListener(new View.OnClickListener() {
@@ -265,9 +290,21 @@ public class EditCorrectText extends AppCompatActivity {
                 editor.putBoolean("addToDictionaryTipShown", true);
                 editor.apply();
 
-                arrow.setVisibility(View.GONE);
-                hint.setVisibility(View.GONE);
-                background.setVisibility(View.GONE);
+                Animation animation = AnimationUtils.loadAnimation(EditCorrectText.this, R.anim.fade_out);
+                background.startAnimation(animation);
+                arrow.startAnimation(animation);
+                hint.startAnimation(animation);
+
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        arrow.setVisibility(View.GONE);
+                        hint.setVisibility(View.GONE);
+                        background.setVisibility(View.GONE);
+                    }
+                }, 250);
             }
         });
     }

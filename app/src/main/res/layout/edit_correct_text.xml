@@ -102,7 +102,7 @@
         android:id="@+id/hint_semitransparent_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#de000000"
+        android:background="@color/semitransparent_background_black"
         android:orientation="vertical"
         android:layout_below="@+id/toolbar" />
 
