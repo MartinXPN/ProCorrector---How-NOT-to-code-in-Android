@@ -1,6 +1,8 @@
 package com.ProCorrector.XPN.procorrector;
 
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +39,27 @@ public class Main extends AppCompatActivity {
 
 
     /*******************************actions support functions**************************************/
+
+    private void copyTextToClipboard( String text ) {
+
+        ClipboardManager clipboard = (ClipboardManager) getSystemService( CLIPBOARD_SERVICE );
+        ClipData clip = ClipData.newPlainText("ProCorrector", text);
+        clipboard.setPrimaryClip( clip );
+        Toast.makeText( Main.this, "Text copied to clipboard", Toast.LENGTH_SHORT ).show();
+    }
+    private void sendNote( String messageTitle, String messageBody ) {
+
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("text/plain");
+        i.putExtra(Intent.EXTRA_SUBJECT, messageTitle);
+        i.putExtra(Intent.EXTRA_TEXT, messageBody);
+        try {
+            startActivity(Intent.createChooser( i, "Send Message...") );
+        }
+        catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText( Main.this, "There are no messaging applications installed", Toast.LENGTH_SHORT ).show();
+        }
+    }
 
     private void writeFeedback() {
 
@@ -79,32 +103,34 @@ public class Main extends AppCompatActivity {
         final LinearLayout background = (LinearLayout) findViewById( R.id.semitransparent_background );
         final ImageView arrow = (ImageView) findViewById( R.id.help_show_suggestions_arrow);
         final TextView hint = (TextView) findViewById( R.id.help_create_new_document_hint );
+        final SharedPreferences sp = getSharedPreferences( CACHE, MODE_PRIVATE );
+        final SharedPreferences.Editor editor = sp.edit();
+        editor.remove( "newDocumentHintShown" );
+        editor.apply();
 
 
         background.setVisibility( View.VISIBLE );
         arrow.setVisibility( View.VISIBLE );
         hint.setVisibility(View.VISIBLE);
 
-
         android.support.design.widget.FloatingActionButton createNewNote = ( android.support.design.widget.FloatingActionButton ) findViewById(R.id.new_text_button);
         createNewNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(Main.this, EditCorrectText.class);
-                i.putExtra("id", -1);
-                i.putExtra("title", "");
-                i.putExtra("content", "");
-                startActivityForResult(i, EDIT_CORRECT_TEXT_ACTIVITY_CODE);
-
-                SharedPreferences sp = getSharedPreferences(CACHE, MODE_PRIVATE );
-                SharedPreferences.Editor editor = sp.edit();
                 editor.putBoolean( "newDocumentHintShown", true );
                 editor.apply();
 
                 background.setVisibility(View.GONE);
                 arrow.setVisibility(View.GONE);
                 hint.setVisibility(View.GONE);
+
+
+                Intent i = new Intent(Main.this, EditCorrectText.class);
+                i.putExtra("id", -1);
+                i.putExtra("title", "");
+                i.putExtra("content", "");
+                startActivityForResult(i, EDIT_CORRECT_TEXT_ACTIVITY_CODE);
             }
         });
     }
@@ -208,9 +234,9 @@ public class Main extends AppCompatActivity {
         public View getView(final int position, View convertView, ViewGroup parent)
         {
             ArrayList row = list.get(position);
-            String title_value = (String) row.get(1);
-            String text_value = (String) row.get(2);
-            String creationDate = (String) row.get(3);
+            final String title_value = (String) row.get(1);
+            final String text_value = (String) row.get(2);
+            final String creationDate = (String) row.get(3);
 
             final LayoutInflater in = getLayoutInflater();
             final View res = in.inflate(R.layout.main_list_item, null);
@@ -218,8 +244,16 @@ public class Main extends AppCompatActivity {
             TextView title = ( TextView ) res.findViewById( R.id.title );   title.setText( title_value );
             TextView text = ( TextView ) res.findViewById( R.id.text );     text.setText(text_value);
             TextView date = (TextView ) res.findViewById( R.id.date );      date.setText(creationDate);
+            ImageView copy = (ImageView) res.findViewById( R.id.copy );
             ImageView trash = (ImageView) res.findViewById( R.id.trash );
+            ImageView send = (ImageView) res.findViewById( R.id.send );
 
+            copy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    copyTextToClipboard( text_value );
+                }
+            });
             trash.setOnClickListener(new View.OnClickListener() {
 
                 int currentPosition = position;
@@ -231,6 +265,12 @@ public class Main extends AppCompatActivity {
                     list.remove(currentPosition);
                     adapter.notifyDataSetChanged();
                     Toast.makeText( Main.this, title + " removed", Toast.LENGTH_SHORT ).show();
+                }
+            });
+            send.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sendNote( title_value, text_value );
                 }
             });
 

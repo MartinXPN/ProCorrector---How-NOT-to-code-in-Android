@@ -23,8 +23,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -124,6 +122,11 @@ public class EditCorrectText extends AppCompatActivity {
     ////////////////////////////////show or hide////////////////////////////////////////////////////
     private void showOrHideSuggestions( MenuItem item ) {
 
+        if( !getSharedPreferences(CACHE, MODE_PRIVATE).contains( "suggestionsTipShown" ) ) {
+            SharedPreferences.Editor editor = getSharedPreferences(CACHE, MODE_PRIVATE).edit();
+            editor.putBoolean( "suggestionsTipShown", true );
+            editor.apply();
+        }
         showSuggestions = !showSuggestions;
         if( CorrectionAndContinuationTask != null )
             CorrectionAndContinuationTask.cancel( true );
@@ -145,7 +148,7 @@ public class EditCorrectText extends AppCompatActivity {
                 ignoreOnce.setVisible(true);
                 addToLibrary.setVisible(true);
 
-                if( !getSharedPreferences( CACHE, MODE_PRIVATE ).contains( "addToDictionaryTipShown" ) )
+                if( !getSharedPreferences( CACHE, MODE_PRIVATE ).contains( "addToDictionaryTipShown" ) && getSharedPreferences( CACHE, MODE_PRIVATE ).contains( "suggestionsTipShown" ) )
                     showAddToDictionaryTip();
             }
             else {
@@ -300,15 +303,6 @@ public class EditCorrectText extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_correct_text);
         Bundle bundle = getIntent().getExtras();
-
-        /// if the device's API level is higher than LOLLIPOP then set the status-bar color to primary_dark
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-
-            Window window = EditCorrectText.this.getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(EditCorrectText.this.getResources().getColor(R.color.edit_correct_text_primary_dark));
-        }
 
         content = (EditText) findViewById( R.id.text );
         title = (EditText) findViewById( R.id.title );

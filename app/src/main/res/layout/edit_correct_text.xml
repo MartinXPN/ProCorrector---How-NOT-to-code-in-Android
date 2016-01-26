@@ -103,13 +103,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#de000000"
-        android:orientation="vertical"/>
+        android:orientation="vertical"
+        android:layout_below="@+id/toolbar" />
 
     <ImageView
         android:visibility="gone"
         android:id="@+id/help_show_suggestions_arrow"
-        android:layout_marginRight="50dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginRight="65dp"
+        android:layout_marginEnd="65dp"
         android:layout_width="100dp"
         android:layout_height="120dp"
         android:scaleType="centerInside"
@@ -117,7 +118,6 @@
         android:layout_below="@+id/toolbar"
         android:layout_alignRight="@+id/toolbar"
         android:layout_alignEnd="@+id/toolbar"/>
-
     <TextView
         android:visibility="gone"
         android:id="@+id/help_show_suggestions_hint"
@@ -131,12 +131,11 @@
         android:layout_alignRight="@+id/help_show_suggestions_arrow"
         android:layout_alignEnd="@+id/help_show_suggestions_arrow" />
 
-
     <ImageView
         android:visibility="gone"
         android:id="@+id/help_add_to_dictionary_arrow"
-        android:layout_marginRight="110dp"
-        android:layout_marginEnd="110dp"
+        android:layout_marginRight="130dp"
+        android:layout_marginEnd="130dp"
         android:layout_width="100dp"
         android:layout_height="120dp"
         android:scaleType="centerInside"
@@ -144,7 +143,6 @@
         android:layout_below="@+id/toolbar"
         android:layout_alignRight="@+id/toolbar"
         android:layout_alignEnd="@+id/toolbar"/>
-
     <TextView
         android:visibility="gone"
         android:id="@+id/help_add_to_dictionary_hint"
@@ -157,6 +155,5 @@
         android:layout_below="@+id/help_add_to_dictionary_arrow"
         android:layout_alignRight="@+id/help_add_to_dictionary_arrow"
         android:layout_alignEnd="@+id/help_add_to_dictionary_arrow" />
-
 
 </RelativeLayout>
