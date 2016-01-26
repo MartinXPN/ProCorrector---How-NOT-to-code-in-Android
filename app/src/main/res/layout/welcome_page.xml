@@ -14,7 +14,7 @@
         android:gravity="center"
         android:textColor="#e6ffffff"
         android:textSize="@dimen/welcome_page_title_size"
-        android:text="Welcome to ProCorrector"
+        android:text="Welcome to Spell Checker"
         android:layout_above="@+id/imageView"
         android:layout_centerHorizontal="true" />
 

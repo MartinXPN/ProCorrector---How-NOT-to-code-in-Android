@@ -1,12 +1,12 @@
 <resources>
 
-    <string name="app_name">ProCorrector</string>
+    <string name="app_name">Spell Checker</string>
     <string name="title_hint">Title…</string>
     <string name="text_hint">Type the text here…</string>
 
     <string name="action_settings_title">Settings</string>
     <string name="action_show_suggestions_title">Show suggestions</string>
-    <string name="action_add_to_library_title">Add to library</string>
+    <string name="action_add_to_library_title">Add to dictionary</string>
     <string name="action_ignore_once_title">Ignore once</string>
     <string name="action_add_title_title">Title</string>
     <string name="action_choose_language_title">Recording Language</string>
@@ -147,7 +147,7 @@
     <!--                       LANGUAGES!!!                      -->
 
 
-    <string name="about_app_description">ProCorrector is an app designed for creating texts, taking notes, editing and correcting essays, etc. It can be used any time even without an internet access.\nIt will find any spelling mistake and offer suggestions from its dictionary, which is created from Wikipedia’s most widely used words.\nThe app supports several languages, including English, Russian and Armenian.\nIt\'s an open-source <a href="https://github.com/MartinXPN/ProCorrector.git">project</a> done mainly for educational reasons.</string>
+    <string name="about_app_description">Spell Checker is an app designed for creating texts, taking notes, editing and correcting essays, etc. It can be used any time even without an internet access.\nIt will find any spelling mistake and offer suggestions from its dictionary, which is created from Wikipedia’s most widely used words.\nThe app supports several languages, including English, Russian and Armenian.\nIt\'s an open-source <a href="https://github.com/MartinXPN/ProCorrector.git">project</a> done mainly for educational reasons.</string>
     <string name="about_author_text">© 2016 <a href="https://www.linkedin.com/in/martin-mirakyan-945597101">Martin Mirakyan</a>\nAll Rights Reserved.</string>
 
 

@@ -117,7 +117,7 @@ public class EditCorrectText extends AppCompatActivity {
     private void copyTextToClipboard() {
 
         ClipboardManager clipboard = (ClipboardManager) getSystemService( CLIPBOARD_SERVICE );
-        ClipData clip = ClipData.newPlainText("ProCorrector", text);
+        ClipData clip = ClipData.newPlainText("Spell Checker", text);
         clipboard.setPrimaryClip( clip );
         Toast.makeText( EditCorrectText.this, "Text copied to clipboard", Toast.LENGTH_LONG ).show();
     }
@@ -322,8 +322,8 @@ public class EditCorrectText extends AppCompatActivity {
 
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
-        i.putExtra(Intent.EXTRA_SUBJECT, "ProCorrector Feedback" );
-        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"XPNProCorrector@gmail.com"});
+        i.putExtra(Intent.EXTRA_SUBJECT, "Spell Checker Feedback" );
+        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"XPNInc@gmail.com"});
         try {
             startActivity(Intent.createChooser(i, "Choose an Email client :"));
         }

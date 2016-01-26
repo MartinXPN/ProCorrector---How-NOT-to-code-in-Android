@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,7 +46,7 @@ public class Main extends AppCompatActivity {
     private void copyTextToClipboard( String text ) {
 
         ClipboardManager clipboard = (ClipboardManager) getSystemService( CLIPBOARD_SERVICE );
-        ClipData clip = ClipData.newPlainText("ProCorrector", text);
+        ClipData clip = ClipData.newPlainText("Spell Checker", text);
         clipboard.setPrimaryClip( clip );
         Toast.makeText( Main.this, "Text copied to clipboard", Toast.LENGTH_SHORT ).show();
     }
@@ -67,8 +68,8 @@ public class Main extends AppCompatActivity {
 
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
-        i.putExtra(Intent.EXTRA_SUBJECT, "ProCorrector Feedback" );
-        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"XPNProCorrector@gmail.com"});
+        i.putExtra(Intent.EXTRA_SUBJECT, "Spell Checker Feedback");
+        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"XPNInc@gmail.com"});
         try {
             startActivity(Intent.createChooser(i, "Choose an Email client:"));
         }
@@ -84,7 +85,7 @@ public class Main extends AppCompatActivity {
         final RelativeLayout layout = (RelativeLayout) dialog.findViewById(R.id.welcome_page);
         Animation animation = AnimationUtils.loadAnimation( Main.this, R.anim.fade_in );
         dialog.show();
-        layout.startAnimation( animation );
+        layout.startAnimation(animation);
 
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +97,7 @@ public class Main extends AppCompatActivity {
                 editor.putBoolean("firstLaunch", false);
                 editor.apply();
 
-                Animation animation = AnimationUtils.loadAnimation( getApplicationContext(), R.anim.fade_out );
+                Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out);
                 layout.startAnimation(animation);
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -141,6 +142,15 @@ public class Main extends AppCompatActivity {
         createNewNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if( sp.contains( "newDocumentHintShown" ) ) {
+                    Intent i = new Intent(Main.this, EditCorrectText.class);
+                    i.putExtra("id", -1);
+                    i.putExtra("title", "");
+                    i.putExtra("content", "");
+                    startActivityForResult(i, EDIT_CORRECT_TEXT_ACTIVITY_CODE);
+                    return;
+                }
 
                 editor.putBoolean( "newDocumentHintShown", true );
                 editor.apply();
@@ -191,7 +201,7 @@ public class Main extends AppCompatActivity {
 
         /// use toolbar as actionbar
         Toolbar toolbar = (Toolbar) findViewById( R.id.toolbar );
-        toolbar.setTitle(Html.fromHtml("<font color='#ffffff'>ProCorrector </font>"));
+        toolbar.setTitle(Html.fromHtml("<font color='#ffffff'>Spell Checker</font>"));
         setSupportActionBar(toolbar);
 
         android.support.design.widget.FloatingActionButton createNewNote = ( android.support.design.widget.FloatingActionButton ) findViewById(R.id.new_text_button);
