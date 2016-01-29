@@ -892,6 +892,8 @@ public class EditCorrectText extends AppCompatActivity {
                         break;
                     }
                 }
+
+                finish = Math.min( finish, text.length() );
                 if( isAlreadySet )  return;
                 else                text.setSpan(new ForegroundColorSpan(Color.parseColor("#D20000")), start, finish, 0);
             }

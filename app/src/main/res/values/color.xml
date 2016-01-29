@@ -44,8 +44,8 @@
     <color name="help_text_question">#000</color>
     <color name="help_text_answer">#555</color>
 
-    <color name="welcome_color_primary">#2196F3</color>
-    <color name="welcome_color_primary_dark">#1976D2</color>
-    <color name="welcome_color_accent">#FFFFFF</color>
+    <color name="welcome_color_primary">#FF4988F3</color>
+    <color name="welcome_color_primary_dark">#004ea1</color>
+    <color name="welcome_color_accent">#000000</color>
 
 </resources>
