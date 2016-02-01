@@ -49,49 +49,52 @@ import java.util.Locale;
 
 public class EditCorrectText extends AppCompatActivity {
 
-    private EditText content;
-    private EditText title;
-    private LinearLayout correctionBox;
-    private LinearLayout continuationBox;
-    private ScrollView editTextScroll;
-    private ListView correctionListView;
-    private ListView continuationListView;
-    private CardView suggestionsCard;
-    private float suggestionWidth;
-    private CharSequence text;
-    private ArrayList <String> continuationList = new ArrayList<>();
-    private ArrayList <String> correctionList = new ArrayList<>();
-    private CharSequence displayedSuggestions = "";
-    private DatabaseHelper database;
-    private int documentID;
+    private EditText content;                                           /// content View of the document
+    private EditText title;                                             /// title View of the document
+    private LinearLayout correctionBox;                                 /// correction View of suggestions
+    private LinearLayout continuationBox;                               /// continuation View of suggestions
+    private ScrollView editTextScroll;                                  /// the whole EditText is placed in ScrollVew to make scrolling smooth, without it scrolling is done by moving the cursor
+    private ListView correctionListView;                                /// the ListView of suggested corrections
+    private ListView continuationListView;                              /// the ListView of suggested continuations
+    private CardView suggestionsCard;                                   /// all the suggestions are placed in CardView to have a shadow
+    private float suggestionWidth;                                      /// the width of one block of suggestions
+    private CharSequence text;                                          /// the whole text typed in document
+    private ArrayList <String> continuationList = new ArrayList<>();    /// the list of suggested continuations of a word that are displayed in continuationListView
+    private ArrayList <String> correctionList = new ArrayList<>();      /// the list of suggested corrections   of a word that are displayed in correctionListView
+    private CharSequence displayedSuggestions = "";                     /// current word for which the suggestions are displayed
+    private DatabaseHelper database;                                    /// the database from which the queries are done
+    private int documentID;                                             /// ID of the document in TextDatabase
 
-    private static boolean suggestionsTipShown;
-    private static boolean addToDictionaryTipShown;
+    private final String CACHE = "data";                                /// the name of SharedPreferences file
+    private static boolean suggestionsTipShown;                         /// kept for not searching it every time from SharedPreferences -> gets its initial value in onCreate
+    private static boolean addToDictionaryTipShown;                     /// kept for not searching it every time from SharedPreferences -> gets its initial value in onCreate
 
-    private existsTask ExistsTask = null;
-    private textChangedTask TextChangedTask = null;
-    private underliningTask underliningTask = null;
-    private correctionAndContinuationTask CorrectionAndContinuationTask = null;
+    private existsTask ExistsTask = null;                               /// checks if the word is correct or not and marks wrong words with a red color
+    private textChangedTask TextChangedTask = null;                     /// called whenever change happens in the text
+    private underliningTask underliningTask = null;                     /// called to underline wrong words
+    private correctionAndContinuationTask CorrectionAndContinuationTask = null; /// gets all suggestions at once
 
 
-    private Deque< ArrayList <Integer> > history = new ArrayDeque <>();
-    private static final int MAX_HISTORY_EPISODES = 500;
-    private int historyTimer = 0;
+    private Deque< ArrayList <Integer> > history = new ArrayDeque <>(); /// history of made changes on the document -> needed to detect the right indices for underliningTask
+    private static final int MAX_HISTORY_EPISODES = 500;                /// after 500 iterations the history is deleted
+    private int historyTimer = 0;                                       /// timer to know at which stage we currently are
 
-    private boolean justCreated = true;
-    private boolean showSuggestions = true;
-    private Menu myMenu = null;
+    private boolean justCreated = true;                                 /// some work is skipped when we just launch the app (making suggestions for the first word for example, as it takes time and is not needed because of being annoying)
+    private boolean showSuggestions = true;                             /// a flag that can be changed by pressing the yellow bulb in the action-bar
+    private Menu myMenu = null;                                         /// action-bar menu
 
+    /// the default language of the app is English and this part is dedicated for recoding utility
     private static String CurrentRecordingLanguageLocale = Locale.ENGLISH.toString();
     private static String CurrentRecordingLanguageCode = "ENG";
     private static String CurrentRecordingLanguageName = "English";
     private static int CurrentRecordingLanguageID = -1;
     private static final int SPEECH_REQUEST_CODE = 0;
-    private final String CACHE = "data";
-
-
 
     /*******************************actions support functions**************************************/
+    /**
+     * Set the recording language according to its ID
+     * @param languageID    the ID got from the class R
+     */
     private void setLanguage( int languageID ) {
 
         MenuItem flag = myMenu.findItem(R.id.action_choose_language);
@@ -101,11 +104,17 @@ public class EditCorrectText extends AppCompatActivity {
         int flagID = RecordingLanguage.getLanguageFlagFromLanguageID( languageID );
         flag.setIcon( flagID );
 
+        /// some languages can be recorded but don't have their database of words so the program may make wrong corrections
+        /// the word Schwein is a German word but the program will consider it as English and will find it incorrect
         if( !Language.supportsLanguage( CurrentRecordingLanguageCode ) ) {
             Toast.makeText( EditCorrectText.this, CurrentRecordingLanguageName + " is not fully supported!\nThe program may make wrong corrections.", Toast.LENGTH_LONG ).show();
         }
     }
 
+    /**
+     * Saves the document to database
+     * Parameters: title | text | date
+     */
     private void saveNoteToDatabase() {
 
         String contentValue = content.getText().toString();
@@ -118,8 +127,8 @@ public class EditCorrectText extends AppCompatActivity {
         String creationDate = dateFormat.format( new Date() );
 
         TextDatabase db = new TextDatabase(getApplicationContext());
-        if( documentID == -1 )  { db.insert( titleValue, contentValue, creationDate );    }
-        else                    { db.update(titleValue, contentValue, documentID); }
+        if( documentID == -1 )  { db.insert( titleValue, contentValue, creationDate ); }
+        else                    { db.update(titleValue, contentValue, documentID);   }
 
         //Log.d("Note", "Was saved to database" );
     }
@@ -132,7 +141,11 @@ public class EditCorrectText extends AppCompatActivity {
         Toast.makeText( EditCorrectText.this, "Text copied to clipboard", Toast.LENGTH_LONG ).show();
     }
 
-    ////////////////////////////////show or hide////////////////////////////////////////////////////
+    /**
+     * Called when the bulb is clicked
+     * it changes the parameter showSuggestions to its opposite and changes the color of the bulb
+     * @param item  the MenuItem of the bulb
+     */
     private void showOrHideSuggestions( MenuItem item ) {
 
         if( !suggestionsTipShown ) {
@@ -149,6 +162,10 @@ public class EditCorrectText extends AppCompatActivity {
         if( showSuggestions )   item.setIcon( R.mipmap.show_suggestions_on_icon );
         else                    item.setIcon( R.mipmap.show_suggestions_off_icon );
     }
+
+    /**
+     * Shows "Ignore Once" and "Add to dictionary" icons if the current word is marked red
+     */
     private void showOrHideIgnoreAddIcons() {
 
         SpannableString text = new SpannableString( content.getText() );
@@ -175,6 +192,10 @@ public class EditCorrectText extends AppCompatActivity {
         }
     }
 
+    /**
+     * Takes the current word and adds to correctWords in DatabaseHelper
+     * That causes the program to think that this word is actually correct
+     */
     private void ignoreOnce() {
 
         String word = Language.getCurrentSubstring(text, content.getSelectionStart());
@@ -185,6 +206,11 @@ public class EditCorrectText extends AppCompatActivity {
         underliningTask.execute(0, content.getText().length());
         Toast.makeText( EditCorrectText.this, word + " will be ignored in this document", Toast.LENGTH_SHORT ).show();
     }
+
+    /**
+     * Adds the current word to library
+     * Done in background because working with database may take a lot of time which is impossible in the main UI thread
+     */
     private void addToLibrary() {
 
         String word = Language.getCurrentSubstring(text, content.getSelectionStart());
@@ -193,7 +219,8 @@ public class EditCorrectText extends AppCompatActivity {
         Toast.makeText(EditCorrectText.this, word + " added to dictionary", Toast.LENGTH_SHORT).show();
     }
 
-    ////////////////////////////////record//////////////////////////////////////////////////////////
+
+
     private void displaySpeechRecognizer() {
 
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -209,12 +236,15 @@ public class EditCorrectText extends AppCompatActivity {
 
             int l = content.getSelectionStart();
             int r = content.getSelectionEnd();
-            replaceFragment( spokenText, l, r );
+            replaceFragment(spokenText, l, r);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    //////////////////////////////////send message//////////////////////////////////////////////////
+
+    /**
+     * Sends the note via messenger or e-mail
+     */
     private void sendNote() {
 
         String messageBody = content.getText().toString();
@@ -231,6 +261,28 @@ public class EditCorrectText extends AppCompatActivity {
             Toast.makeText( EditCorrectText.this, "There are no messaging applications installed", Toast.LENGTH_SHORT ).show();
         }
     }
+
+    /**
+     * Write feedback by E-mail to XPNInc@gmail.com
+     */
+    private void writeFeedback() {
+
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        i.putExtra(Intent.EXTRA_SUBJECT, "Spell Checker Feedback");
+        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"XPNInc@gmail.com"});
+        try {
+            startActivity(Intent.createChooser(i, "Choose an Email client :"));
+        }
+        catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText( EditCorrectText.this, "There are no Email applications installed", Toast.LENGTH_SHORT ).show();
+        }
+    }
+
+
+    /**
+     * Shown during the first launch or when the user clicks on Help & Tips
+     */
     private void showSuggestionsTip() {
 
         final LinearLayout background = (LinearLayout) findViewById( R.id.hint_semitransparent_background );
@@ -276,6 +328,9 @@ public class EditCorrectText extends AppCompatActivity {
             }
         });
     }
+    /**
+     * Shown during the first launch or when the user clicks on Help & Tips
+     */
     private void showAddToDictionaryTip() {
 
         final LinearLayout background = (LinearLayout) findViewById( R.id.hint_semitransparent_background );
@@ -286,7 +341,7 @@ public class EditCorrectText extends AppCompatActivity {
         Animation animation = AnimationUtils.loadAnimation(EditCorrectText.this, R.anim.fade_in);
         background.setVisibility( View.VISIBLE );
         arrow.setVisibility( View.VISIBLE );
-        hint.setVisibility( View.VISIBLE );
+        hint.setVisibility(View.VISIBLE);
 
         background.startAnimation(animation);
         arrow.startAnimation(animation);
@@ -321,6 +376,9 @@ public class EditCorrectText extends AppCompatActivity {
             }
         });
     }
+    /**
+     * Shown during the first launch or when the user clicks on Help & Tips
+     */
     private void showHelpAndTips() {
 
         SharedPreferences sp = getSharedPreferences(CACHE, MODE_PRIVATE);
@@ -331,29 +389,18 @@ public class EditCorrectText extends AppCompatActivity {
 
         showSuggestionsTip();
     }
-    private void writeFeedback() {
 
-        Intent i = new Intent(Intent.ACTION_SEND);
-        i.setType("message/rfc822");
-        i.putExtra(Intent.EXTRA_SUBJECT, "Spell Checker Feedback");
-        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"XPNInc@gmail.com"});
-        try {
-            startActivity(Intent.createChooser(i, "Choose an Email client :"));
-        }
-        catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText( EditCorrectText.this, "There are no Email applications installed", Toast.LENGTH_SHORT ).show();
-        }
-    }
     /*******************************actions support functions**************************************/
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_correct_text);
         Bundle bundle = getIntent().getExtras();
 
+        /// these are done because findViewById takes a lot of time
         content = (EditText) findViewById( R.id.text );
         title = (EditText) findViewById( R.id.title );
         correctionBox = (LinearLayout) findViewById( R.id.correction_box );
@@ -364,6 +411,7 @@ public class EditCorrectText extends AppCompatActivity {
         suggestionsCard = (CardView) findViewById( R.id.suggestions_card );
         suggestionWidth = getResources().getDimension(R.dimen.suggestion_box_width);
 
+        /// initialize variables from SharedPreferences because every time making a query will be time-consuming
         suggestionsTipShown = getSharedPreferences( CACHE, MODE_PRIVATE ).contains( "suggestionsTipShown" );
         addToDictionaryTipShown = getSharedPreferences( CACHE, MODE_PRIVATE ).contains( "addToDictionaryTipShown" );
 
@@ -371,9 +419,10 @@ public class EditCorrectText extends AppCompatActivity {
 
         /// use toolbar as actionbar
         final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        toolbar.setTitle("");
+        toolbar.setTitle("");           /// we don't need a title in this activity
         setSupportActionBar(toolbar);
 
+        /// click on the done icon has to save notes and exit
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -382,12 +431,14 @@ public class EditCorrectText extends AppCompatActivity {
             }
         });
 
+        /// initialize helper classes
         new Language();
         new RecordingLanguage( EditCorrectText.this );
         if( CurrentRecordingLanguageID == -1 )
             CurrentRecordingLanguageID = RecordingLanguage.getLanguageIDFromLanguageCode( CurrentRecordingLanguageCode );
 
 
+        /// get the info about this document with bundle
         documentID = bundle.getInt( "id" );
         String previous_title = bundle.getString( "title" );
         String previous_content = bundle.getString( "content" );
@@ -395,10 +446,15 @@ public class EditCorrectText extends AppCompatActivity {
             previous_title = "";
 
 
+        /// DatabaseHelper is single-tone
         database = DatabaseHelper.getInstance(this);
         try                     { database.createDataBase(); }
         catch (IOException e)   { e.printStackTrace(); }
+
+
+
         /*************************** Listeners ****************************************************/
+        /// clicking on the text has to produce the process of showing the suggestions
         content.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -409,6 +465,7 @@ public class EditCorrectText extends AppCompatActivity {
                 //Log.d("EditCorrectText", "content is clicked");
             }
         });
+        /// most part is done in TextChangeTask to save time for UI thread
         content.addTextChangedListener(new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -442,25 +499,23 @@ public class EditCorrectText extends AppCompatActivity {
         });
 
         /// display previous notes
+        /// written after content.listener to ensure that the wrong words will be detected and marked
         content.setText(previous_content);
         title.setText(previous_title);
 
 
+        /// click on a suggestion item has to replace the current word with the clicked one
         correctionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                replaceWord(correctionList.get(position));
-            }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) { replaceWord(correctionList.get(position)); }
         });
-
         continuationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                replaceWord(continuationList.get(position));
-            }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) { replaceWord(continuationList.get(position)); }
         });
 
 
+        /// when the view is scrolled the suggestions have to be hidden
         editTextScroll.setSmoothScrollingEnabled(true);
         editTextScroll.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             int prevY = 0;
@@ -476,6 +531,10 @@ public class EditCorrectText extends AppCompatActivity {
             }
         });
 
+
+
+        /// this prevents the program from crashing
+        /// it closes the current page so that the user thinks that he touched the back button 3:)
         /*Thread.setDefaultUncaughtExceptionHandler( new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable ex) {
@@ -517,7 +576,7 @@ public class EditCorrectText extends AppCompatActivity {
     public boolean onCreateOptionsMenu( Menu menu ) {
         // Menu icons are inflated just as they were with actionbar
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate( R.menu.menu_edit_correct_text, menu );
+        getMenuInflater().inflate(R.menu.menu_edit_correct_text, menu);
         myMenu = menu;
         if( CurrentRecordingLanguageID == -1 )
             CurrentRecordingLanguageID = R.id.action_language_ENG;
@@ -527,14 +586,18 @@ public class EditCorrectText extends AppCompatActivity {
     }
 
 
+    /**
+     * Sets correctionList + continuationList under cursor
+     * Also handles the case when one of them or both are empy
+     */
     private void setSuggestionsUnderCursor() {
 
+        /// we don't have to do extra work if showing suggestions is not permitted
         if( !showSuggestions )
             return;
 
         //Log.d( "EditCorrectText", "setSuggestionsUnderCursor" );
         Layout content_layout = content.getLayout();
-
         int pos = content.getSelectionStart();
         int line = content_layout.getLineForOffset(pos);
         float x = content_layout.getPrimaryHorizontal(pos);
@@ -542,19 +605,19 @@ public class EditCorrectText extends AppCompatActivity {
         float y = content_layout.getLineBottom(line);
         float boxWidth = suggestionsCard.getPaddingLeft() + suggestionsCard.getPaddingRight();
 
-        if( !correctionList.isEmpty() )     boxWidth += suggestionWidth;
-        if( !continuationList.isEmpty() )   boxWidth += suggestionWidth;
+        if( !correctionList.isEmpty() )     boxWidth += suggestionWidth;        /// + length of one suggestion block to boxWidth
+        if( !continuationList.isEmpty() )   boxWidth += suggestionWidth;        /// + length of one suggestion block to boxWidth
 
-        y -= h + suggestionsCard.getPaddingTop();
-        y += content.getPaddingTop();
-        x += content.getPaddingLeft();
+        y -= h + suggestionsCard.getPaddingTop();                               /// move y coordinate to its real place on the screen
+        y += content.getPaddingTop();                                           /// content EditText has a padding from the top
+        x += content.getPaddingLeft();                                          /// content EditText has a padding from the left
 
-        x -= boxWidth / 2;
-        x = Math.min( x, editTextScroll.getWidth() - boxWidth );
-        x = Math.max( x, 0 );
+        x -= boxWidth / 2;                                                      /// the cursor has to be in the middle of suggestions
+        x = Math.min( x, editTextScroll.getWidth() - boxWidth );                /// we can't get out of the screen
+        x = Math.max( x, 0 );                                                   /// we can't get our of the screen
 
-        suggestionsCard.setX(x);
-        suggestionsCard.setY(y);
+        suggestionsCard.setX(x);                                                /// finally set the x coordinate
+        suggestionsCard.setY(y);                                                /// finally set the y coordinate
 
 
         /// if the app is launched the first time show that its possible to turn suggestions on/off
@@ -566,12 +629,12 @@ public class EditCorrectText extends AppCompatActivity {
 
     private void setContinuationListVisible() {
 
-        suggestionsCard.setVisibility( View.VISIBLE );
-        continuationBox.setVisibility( View.VISIBLE );
+        suggestionsCard.setVisibility(View.VISIBLE);
+        continuationBox.setVisibility(View.VISIBLE);
     }
     private void setCorrectionListVisible() {
 
-        suggestionsCard.setVisibility( View.VISIBLE );
+        suggestionsCard.setVisibility(View.VISIBLE);
         correctionBox.setVisibility(View.VISIBLE);
     }
     private void setSuggestionsVisible() {
@@ -581,9 +644,9 @@ public class EditCorrectText extends AppCompatActivity {
     }
     private void setSuggestionsInvisible() {
 
-        suggestionsCard.setVisibility( View.GONE );
-        correctionBox.setVisibility( View.GONE );
-        continuationBox.setVisibility( View.GONE );
+        suggestionsCard.setVisibility(View.GONE);
+        correctionBox.setVisibility(View.GONE);
+        continuationBox.setVisibility(View.GONE);
     }
     private void setSuggestionsInvisibleAndClearLists() {
 
@@ -596,8 +659,14 @@ public class EditCorrectText extends AppCompatActivity {
         displayedSuggestions = "";
     }
 
-    public void suggestWord() {                                  /// done in main thread
+    /**
+     * Done in main thread
+     * Starts an AsyncTask if there is a need of making a database query to get suggestions
+     * Aligns current suggestions under cursor if displayed suggestions are made for the current word and are not empty
+     */
+    public void suggestWord() {
 
+        /// no need of doing extra work if showing suggestions is not allowed
         if( !showSuggestions ) {
             //Log.d( "EditCorrectText", "we don't need suggestions" );
             setSuggestionsInvisibleAndClearLists();
@@ -607,38 +676,47 @@ public class EditCorrectText extends AppCompatActivity {
         String needed = Language.getCurrentSubstring(text, content.getSelectionStart());
         if( needed.length() >= 2 ) {
 
+            /// the first part of if() is written for speed
             if( needed.length() == displayedSuggestions.length() && needed.matches( displayedSuggestions.toString() ) ) {
-                //Log.d( "suggestWord", "the same word" );
+
                 setSuggestionsUnderCursor();
                 return;
             }
 
-            //Log.d( "suggestWord", "we have a new word--> previous was: " + displayedSuggestions + "\tnow: " + needed );
+            /// if we have a new word => we have to start a new suggestion task and clear previous lists
             setSuggestionsInvisibleAndClearLists();
             displayedSuggestions = needed;
 
             CorrectionAndContinuationTask = new correctionAndContinuationTask();
             CorrectionAndContinuationTask.execute( needed );
         }
-        else
+        else {
+            /// words that have too small length are not queried because there are a lot of words starting with a for example and it will be slow
             setSuggestionsInvisibleAndClearLists();
+        }
     }
 
-    public void underlineWrongWords( int start, int count ) {   /// done in background and is called by underliningTask
+    /**
+     * Done in background and is called by underliningTask
+     * @param start starting position
+     * @param count number of characters
+     */
+    public void underlineWrongWords( int start, int count ) {
 
         CharSequence s = text;
         if( s.length() == 0 )
             return;
 
         int end = start + count;
-        start -= 3;
-        end   += 3;
-        if( start < 0 )             start = 0;
-        if( end < 0 )               end = 0;
-        if( start > s.length()-1 )  start = s.length()-1;
-        if( end > s.length()-1 )    end = s.length()-1;
+        start -= 3;                                                 /// to be safe
+        end   += 3;                                                 /// to be safe
+        if( start < 0 )             start = 0;                      /// not to go out of the string
+        if( end < 0 )               end = 0;                        /// not to go out of the string
+        if( start > s.length()-1 )  start = s.length()-1;           /// not to go out of the string
+        if( end > s.length()-1 )    end = s.length()-1;             /// not to go out of the string
 
 
+        /// come to the right place if the endpoints are in a whitespace or so
         while (start < s.length() && !Language.isCorrectLetter(s.charAt(start)))            start++;
         while (end >= 0 && end < s.length() && !Language.isCorrectLetter(s.charAt(end)))    end--;
         if (end < start || start >= s.length() || end < 0 )                                 return;
@@ -670,6 +748,12 @@ public class EditCorrectText extends AppCompatActivity {
         }
     }
 
+    /**
+     * Replaces some part of the text with another string
+     * @param newString the new string
+     * @param l         the left offset of the initial text - inclusive
+     * @param r         the right offset of the initial text - exclusive
+     */
     public void replaceFragment( String newString, int l, int r ) {
 
         SpannableStringBuilder res = new SpannableStringBuilder( content.getText());
@@ -682,7 +766,12 @@ public class EditCorrectText extends AppCompatActivity {
         historyTimer = 0;
     }
 
-    public void replaceWord( String newWord )  {                /// done in main thread!
+    /**
+     * Replaces current word with the new one
+     * Done in main thread
+     * @param newWord   the new word
+     */
+    public void replaceWord( String newWord )  {
 
         setSuggestionsInvisibleAndClearLists();
         int position = content.getSelectionStart();
@@ -695,9 +784,9 @@ public class EditCorrectText extends AppCompatActivity {
 
         String currentLanguage = Language.getLanguageCode( text.charAt( r ) );
         while( r+1 < text.length() && Language.isCorrectLetter( text.charAt( r+1 ), currentLanguage ) ) r++;
-        while( l-1 >= 0 && Language.isCorrectLetter( text.charAt( l-1 ), currentLanguage ) )            l--;
+        while( l-1 >= 0 && Language.isCorrectLetter( text.charAt( l-1 ), currentLanguage)) l--;
 
-        replaceFragment( newWord, l, Math.min(r+1, text.length()) );
+        replaceFragment(newWord, l, Math.min(r + 1, text.length()));
         setSuggestionsInvisibleAndClearLists();
     }
 
@@ -793,11 +882,6 @@ public class EditCorrectText extends AppCompatActivity {
             int count = Integer.parseInt( params[1].toString() );
             underlineWrongWords(start, count);
             return null;
-        }
-
-        @Override
-        protected void onPostExecute(Object o) {
-            super.onPostExecute(o);
         }
     }
     class checkCorrectnessOfkMultipleWordsTask extends AsyncTask <Object, Object, Object>{
@@ -985,6 +1069,10 @@ public class EditCorrectText extends AppCompatActivity {
             return convertView;
         }
     }
+
+    /**
+     * ViewHolder for correction and continuation suggestions
+     */
     class ViewHolder {
         TextView suggestion;
     }

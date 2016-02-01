@@ -9,7 +9,7 @@ import java.util.HashSet;
 public class Language {
 
     /**
-     * the order of languages in languageCodes has to be the same as the order in alphabet
+     * The order of languages in languageCodes has to be the same as the order in alphabet
      * */
     private static final String[] languageCodes = { "ARM", "ENG", "RUS"/*, "GRE"*//*, "GEO"*/ };
     private static final char[][] alphabet = {  /*ARM*/ { 'ա', 'բ', 'գ', 'դ', 'ե', 'զ', 'է', 'ը', 'թ', 'ժ', 'ի', 'լ', 'խ', 'ծ', 'կ', 'հ', 'ձ', 'ղ', 'ճ', 'մ', 'յ', 'ն', 'շ', 'ո', 'չ', 'պ', 'ջ', 'ռ', 'ս', 'վ', 'տ', 'ր', 'ց', 'ւ', 'փ', 'ք', 'և', 'օ', 'ֆ' },
@@ -44,33 +44,46 @@ public class Language {
         return languageCodeToLetters.containsKey( languageCode );
     }
 
+    /**
+     * @return HashSet of characters if languageCode exists, null otherwise
+     */
     public static HashSet <Character> getAlphabet( String languageCode ) {
         return languageCodeToLetters.get(languageCode);
     }
+
+    /**
+     * @return  languageCode of the letter if it is known, null otherwise
+     */
     public static String getLanguageCode( char letter ) {
 
         letter = Character.toLowerCase( letter );
         //Log.d( "Language getCode", lettersToLanguageCode.get( letter ) );
         return lettersToLanguageCode.get(letter);
     }
+    /**
+     * @return      default language (English) if the word contains several languages
+     */
     public static String getLanguageCode( String word ) {
 
         if( !isUniqueLanguage( word ) )
             return defaultLanguage;
         return getLanguageCode(Character.toLowerCase(word.charAt(0)));
     }
-    public static String getLanguageCodeWithoutCheckingValidity( String word ) {
-
-        return getLanguageCode(word.charAt(0));
-    }
 
 
+    /**
+     * @return  true if the letter is contained in any alphabet
+     */
     public static boolean isCorrectLetter( char letter ) {
 
         letter = Character.toLowerCase( letter );
         //Log.d( "Language isCorrect", "" + allAlphabets.contains( letter ) );
         return allAlphabets.contains(letter);
     }
+
+    /**
+     * @return true if the alphabet of the specified language contains the letter, false otherwise
+     */
     public static boolean isCorrectLetter( char letter, String languageCode ) {
 
         letter = Character.toLowerCase( letter );
@@ -80,6 +93,9 @@ public class Language {
         return languageCodeToLetters.get( languageCode ).contains(letter);
     }
 
+    /**
+     * @return true if both charaters belong to the same langauge alphabet, false otherwise
+     */
     public static boolean isSameLanguage( char a, char b ) {
 
         a = Character.toLowerCase( a );
@@ -88,6 +104,11 @@ public class Language {
 
         return languageCode != null && languageCodeToLetters.get( languageCode ).contains( b );
     }
+
+    /**
+     * @param   s the initial string
+     * @return  true if all the letters of the string belong to the same language alphabet, false otherwise
+     */
     public static boolean isUniqueLanguage( String s ) {
 
         if( s.isEmpty() )
@@ -106,7 +127,11 @@ public class Language {
         return true;
     }
 
-
+    /**
+     * @param s the initial string
+     * @return  list of words that are different in 1 place from the initial string
+     *          difference -> deletion, insertion, replacing a character
+     */
     public static ArrayList<String> editDistance( String s, String languageCode ) {
 
         if( languageCode == null || !isUniqueLanguage( s ) )
@@ -138,12 +163,23 @@ public class Language {
         //Log.d( "Language editDistance", res.toString() );
         return res;
     }
+
+    /**
+     * @param s the initial string
+     * @return  list of words that are different in 1 place from the initial string
+     *          difference -> deletion, insertion, replacing a character
+     */
     public static ArrayList <String> editDistance( String s ) {
 
         if( s.isEmpty() )
             return new ArrayList<>();
         return editDistance(s, getLanguageCode(s.charAt(0)));
     }
+    /**
+     * @param s the initial string
+     * @return  list of words that are different in 2 places from the initial string
+     *          difference -> deletion, insertion, replacing a character
+     */
     public static ArrayList <String> editDistance2( String s ) {
 
         ArrayList <String> res = new ArrayList<>();
@@ -155,6 +191,7 @@ public class Language {
         //Log.d( "Language editDistance2", res.toString() );
         return res;
     }
+
 
     public static String getCurrentLanguageSubstring(CharSequence text, int position) {
 
@@ -198,7 +235,12 @@ public class Language {
     }
 
 
-
+    /**
+     * The method divides into words using language codes
+     * @param text                  the text from which we need to get words
+     * @param useOnlyUnknownWords   checked via DatabaseHelper
+     * @return                      HashMap of <LanguageCode, words> mapping
+     */
     public static HashMap <String, ArrayList <String> > divideIntoWordsUsingLanguage( String text, boolean useOnlyUnknownWords ) {
 
         HashMap <String, ArrayList <String> > res = new HashMap<>();
@@ -229,12 +271,20 @@ public class Language {
         //Log.d( "Language divideIntoWord", res.toString() );
         return res;
     }
+
+    /**
+     * The method divides into words by looking at known and unknown characters
+     * @param text                  the text from which we need to get words
+     * @param useOnlyUnknownWords   checked via DatabaseHelper
+     * @return                      HashMap of <LanguageCode, words> mapping
+     */
     public static HashMap <String, ArrayList <String> > divideIntoWordsUsingUnknownCharacters( String text, boolean useOnlyUnknownWords ) {
 
         HashMap <String, ArrayList <String> > res = new HashMap<>();
         String currentLanguage;
         StringBuilder currentWord;
 
+        /// loop through the text and add words to Map
         for( int i=0; i < text.length(); i++ ) {
 
             if( !isCorrectLetter( text.charAt( i ) ) )
@@ -269,10 +319,25 @@ public class Language {
 
         return false;
     }
+
+    /**
+     * Uses Knutt-Moris-Pratt's algorithm
+     * @param word              the small string that has to be inside text
+     * @param text              the big text inside which there has to be the word
+     * @return                  true if text contains word and false otherwise
+     */
     public static boolean contains( String word, String text ) {
 
         return contains( word, text, '#' );
     }
+
+    /**
+     * Uses Knutt-Moris-Pratt's algorithm
+     * @param word              the small string that has to be inside text
+     * @param text              the big text inside which there has to be the word
+     * @param unusedCharacter   some character that is not used both in text and in word
+     * @return                  true if text contains word and false otherwise
+     */
     public static boolean contains( String word, String text, char unusedCharacter ) {
 
         String all = word + unusedCharacter + text;

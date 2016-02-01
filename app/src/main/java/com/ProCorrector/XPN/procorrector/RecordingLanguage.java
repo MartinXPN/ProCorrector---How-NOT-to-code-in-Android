@@ -14,6 +14,9 @@ public class RecordingLanguage {
     private static HashMap <Integer, Integer> languageIdToLanguageFlag = new HashMap<>();
     private static HashMap <Integer, String> languageIdToLanguageLocale = new HashMap<>();
 
+    /**
+     * The most awful implementation that one could think of
+     */
     public RecordingLanguage( Context from ) {
 
         context = from;

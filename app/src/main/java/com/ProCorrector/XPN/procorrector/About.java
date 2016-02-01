@@ -8,6 +8,9 @@ import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+/**
+ * Class shows the information about app and links to the project and the author
+ */
 public class About extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {

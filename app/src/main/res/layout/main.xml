@@ -62,7 +62,8 @@
         android:src="@drawable/ic_arrow_down_right"
         android:layout_alignBottom="@+id/new_text_button"
         android:layout_toLeftOf="@+id/new_text_button"
-        android:layout_toStartOf="@+id/new_text_button" />
+        android:layout_toStartOf="@+id/new_text_button"
+        android:contentDescription="@null" />
 
     <TextView
         android:visibility="gone"

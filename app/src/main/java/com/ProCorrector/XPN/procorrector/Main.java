@@ -32,11 +32,11 @@ import java.util.List;
 
 public class Main extends AppCompatActivity {
 
-    public static List <ArrayList> list = new ArrayList<>();
-    TextDatabase myNotesDB = new TextDatabase( this );
-    private final int EDIT_CORRECT_TEXT_ACTIVITY_CODE = 1;
-    private final String CACHE = "data";
-    MyAdapter adapter = null;
+    public static List <ArrayList> list = new ArrayList<>();    /// the list of created documents
+    TextDatabase myNotesDB = new TextDatabase( this );          /// database that keeps all created documents
+    private final int EDIT_CORRECT_TEXT_ACTIVITY_CODE = 1;      /// EditCorrectText activity is called as startActivityForResult in order to update listVew onResult
+    private final String CACHE = "data";                        /// the name of SharedPreferences file
+    MyAdapter adapter = null;                                   /// adapter for list of created documents
 
 
     /*******************************actions support functions**************************************/
@@ -179,16 +179,20 @@ public class Main extends AppCompatActivity {
     /*******************************actions support functions**************************************/
 
 
+    /**
+     * created for handling events after EditCorrectText Activity finishes its work
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if( requestCode == EDIT_CORRECT_TEXT_ACTIVITY_CODE )
-        {
+        if( requestCode == EDIT_CORRECT_TEXT_ACTIVITY_CODE ) {
+
             list = myNotesDB.getAll();
             adapter.notifyDataSetChanged();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,8 +201,10 @@ public class Main extends AppCompatActivity {
         setContentView(R.layout.main);
 
         /// use toolbar as actionbar
+        /// title has to white instead of black, which is caused by light theme
         Toolbar toolbar = (Toolbar) findViewById( R.id.toolbar );
-        toolbar.setTitle(Html.fromHtml("<font color='#ffffff'>Spell Checker</font>"));
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        //toolbar.setTitle(Html.fromHtml("<font color='#ffffff'>Spell Checker</font>"));
         setSupportActionBar(toolbar);
 
         android.support.design.widget.FloatingActionButton createNewNote = ( android.support.design.widget.FloatingActionButton ) findViewById(R.id.new_text_button);
@@ -235,6 +241,7 @@ public class Main extends AppCompatActivity {
         });
 
 
+        /// show tips on the first launch
         SharedPreferences sp = getSharedPreferences(CACHE, Context.MODE_PRIVATE);
         if( !sp.contains( "firstLaunch" ) ) {
             showWelcomePage();
@@ -334,6 +341,9 @@ public class Main extends AppCompatActivity {
         }
 
 
+        /**
+         * ViewHolder class is created in order not calling findViewById frequently => making the scrolling smoother
+         */
         protected class ViewHolder {
 
             TextView title;

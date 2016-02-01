@@ -73,9 +73,8 @@ public class TextDatabase extends SQLiteOpenHelper
         Cursor cursor = db.rawQuery(query, null);
         List <ArrayList> res = new ArrayList<>();
 
-        if (cursor.moveToFirst())
-            do
-            {
+        if( cursor.moveToFirst() ) {
+            do {
                 int id = cursor.getInt(0);
                 String title = cursor.getString(1);
                 String text = cursor.getString(2);
@@ -87,7 +86,8 @@ public class TextDatabase extends SQLiteOpenHelper
                 one.add( text );
                 one.add( date );
                 res.add( one );
-            } while( cursor.moveToNext() );
+            } while ( cursor.moveToNext() );
+        }
 
         cursor.close();
         db.close();
