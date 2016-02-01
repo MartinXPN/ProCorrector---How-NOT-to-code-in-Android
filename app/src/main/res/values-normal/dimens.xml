@@ -48,7 +48,7 @@
     <dimen name="suggestion_list_item_padding">5dp</dimen>
     <dimen name="suggestion_list_item_text_size">20sp</dimen>
     <dimen name="suggestion_box_height">190dp</dimen>
-    <dimen name="suggestion_box_width">250dp</dimen>
+    <dimen name="suggestion_box_width">125dp</dimen>
     <dimen name="suggestion_box_list_divider">0.01dp</dimen>
 
     <dimen name="help_question_text_size">22sp</dimen>

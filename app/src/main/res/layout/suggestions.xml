@@ -1,49 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/all_suggestions"
-    android:weightSum="2"
-    android:layout_width="@dimen/suggestion_box_width"
-    android:layout_height="@dimen/suggestion_box_height"
-    android:orientation="horizontal"
-    android:baselineAligned="false">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+
+    android:id="@+id/suggestions_card"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    card_view:cardBackgroundColor="@color/suggestion_list_background"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardElevation="4dp"
+    card_view:cardCornerRadius="2dp">
 
     <LinearLayout
-        android:id="@+id/correction_box"
-        android:background="@drawable/rectangle_with_round_corners"
-        android:visibility="invisible"
-        android:layout_weight="1"
+        android:id="@+id/all_suggestions"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="@dimen/suggestion_box_height"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
-        <ListView
-            android:id="@+id/correction_list"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/correction_box"
+            android:layout_width="@dimen/suggestion_box_width"
             android:layout_height="match_parent"
             android:background="@color/transparent"
-            android:dividerHeight="@dimen/suggestion_box_list_divider"
-            android:divider="@color/suggestion_list_divider" />
-    </LinearLayout>
+            android:visibility="gone"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/continuation_box"
-        android:background="@drawable/rectangle_with_round_corners"
-        android:visibility="invisible"
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+            <ListView
+                android:id="@+id/correction_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                android:dividerHeight="@dimen/suggestion_box_list_divider"
+                android:divider="@color/suggestion_list_divider" />
+        </LinearLayout>
 
-        <ListView
-            android:id="@+id/continuation_list"
-            android:layout_width="match_parent"
+
+        <LinearLayout
+            android:id="@+id/continuation_box"
+            android:layout_width="@dimen/suggestion_box_width"
             android:layout_height="match_parent"
             android:background="@color/transparent"
-            android:dividerHeight="@dimen/suggestion_box_list_divider"
-            android:divider="@color/suggestion_list_divider" />
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/continuation_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                android:dividerHeight="@dimen/suggestion_box_list_divider"
+                android:divider="@color/suggestion_list_divider" />
+        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</android.support.v7.widget.CardView>

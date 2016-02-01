@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Layout;
@@ -18,7 +19,6 @@ import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.util.Pair;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,12 +51,22 @@ public class EditCorrectText extends AppCompatActivity {
 
     private EditText content;
     private EditText title;
+    private LinearLayout correctionBox;
+    private LinearLayout continuationBox;
+    private ScrollView editTextScroll;
+    private ListView correctionListView;
+    private ListView continuationListView;
+    private CardView suggestionsCard;
+    private float suggestionWidth;
     private CharSequence text;
     private ArrayList <String> continuationList = new ArrayList<>();
     private ArrayList <String> correctionList = new ArrayList<>();
     private CharSequence displayedSuggestions = "";
     private DatabaseHelper database;
     private int documentID;
+
+    private static boolean suggestionsTipShown;
+    private static boolean addToDictionaryTipShown;
 
     private existsTask ExistsTask = null;
     private textChangedTask TextChangedTask = null;
@@ -125,7 +135,8 @@ public class EditCorrectText extends AppCompatActivity {
     ////////////////////////////////show or hide////////////////////////////////////////////////////
     private void showOrHideSuggestions( MenuItem item ) {
 
-        if( !getSharedPreferences(CACHE, MODE_PRIVATE).contains( "suggestionsTipShown" ) ) {
+        if( !suggestionsTipShown ) {
+            suggestionsTipShown = true;
             SharedPreferences.Editor editor = getSharedPreferences(CACHE, MODE_PRIVATE).edit();
             editor.putBoolean( "suggestionsTipShown", true );
             editor.apply();
@@ -151,7 +162,7 @@ public class EditCorrectText extends AppCompatActivity {
                 ignoreOnce.setVisible(true);
                 addToLibrary.setVisible(true);
 
-                if( !getSharedPreferences( CACHE, MODE_PRIVATE ).contains( "addToDictionaryTipShown" ) && getSharedPreferences( CACHE, MODE_PRIVATE ).contains( "suggestionsTipShown" ) )
+                if( !addToDictionaryTipShown && suggestionsTipShown )
                     showAddToDictionaryTip();
             }
             else {
@@ -241,6 +252,7 @@ public class EditCorrectText extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                suggestionsTipShown = true;
                 SharedPreferences sp = getSharedPreferences(CACHE, MODE_PRIVATE);
                 SharedPreferences.Editor editor = sp.edit();
                 editor.putBoolean("suggestionsTipShown", true);
@@ -285,6 +297,7 @@ public class EditCorrectText extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                addToDictionaryTipShown = true;
                 SharedPreferences sp = getSharedPreferences(CACHE, MODE_PRIVATE);
                 SharedPreferences.Editor editor = sp.edit();
                 editor.putBoolean("addToDictionaryTipShown", true);
@@ -322,7 +335,7 @@ public class EditCorrectText extends AppCompatActivity {
 
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
-        i.putExtra(Intent.EXTRA_SUBJECT, "Spell Checker Feedback" );
+        i.putExtra(Intent.EXTRA_SUBJECT, "Spell Checker Feedback");
         i.putExtra(Intent.EXTRA_EMAIL, new String[]{"XPNInc@gmail.com"});
         try {
             startActivity(Intent.createChooser(i, "Choose an Email client :"));
@@ -343,11 +356,23 @@ public class EditCorrectText extends AppCompatActivity {
 
         content = (EditText) findViewById( R.id.text );
         title = (EditText) findViewById( R.id.title );
+        correctionBox = (LinearLayout) findViewById( R.id.correction_box );
+        continuationBox = (LinearLayout) findViewById( R.id.continuation_box );
+        editTextScroll = (ScrollView) findViewById( R.id.scroll );
+        correctionListView = (ListView) findViewById( R.id.correction_list );
+        continuationListView = (ListView) findViewById( R.id.continuation_list );
+        suggestionsCard = (CardView) findViewById( R.id.suggestions_card );
+        suggestionWidth = getResources().getDimension(R.dimen.suggestion_box_width);
+
+        suggestionsTipShown = getSharedPreferences( CACHE, MODE_PRIVATE ).contains( "suggestionsTipShown" );
+        addToDictionaryTipShown = getSharedPreferences( CACHE, MODE_PRIVATE ).contains( "addToDictionaryTipShown" );
+
+
 
         /// use toolbar as actionbar
         final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(" ");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -373,8 +398,6 @@ public class EditCorrectText extends AppCompatActivity {
         database = DatabaseHelper.getInstance(this);
         try                     { database.createDataBase(); }
         catch (IOException e)   { e.printStackTrace(); }
-
-
         /*************************** Listeners ****************************************************/
         content.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -398,7 +421,7 @@ public class EditCorrectText extends AppCompatActivity {
                 //Log.d("text changed", s + " START=" + start + " B=" + before + " C=" + count);
                 text = s;
 
-                if( before == count ) {
+                if (before == count) {
                     //Log.d( "EditCorrectText", "color is changed" );
                     return;
                 }
@@ -423,30 +446,29 @@ public class EditCorrectText extends AppCompatActivity {
         title.setText(previous_title);
 
 
-        ListView myCorrectionList = (ListView) findViewById( R.id.correction_list );
-        myCorrectionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        correctionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 replaceWord(correctionList.get(position));
             }
         });
 
-        ListView myContinuationList = (ListView) findViewById( R.id.continuation_list );
-        myContinuationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        continuationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 replaceWord(continuationList.get(position));
             }
         });
 
 
-        final ScrollView scroll = (ScrollView) findViewById( R.id.scroll );
-        scroll.setSmoothScrollingEnabled(true);
-        scroll.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+        editTextScroll.setSmoothScrollingEnabled(true);
+        editTextScroll.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             int prevY = 0;
 
             @Override
             public void onScrollChanged() {
 
-                int scrollY = scroll.getScrollY();
+                int scrollY = editTextScroll.getScrollY();
                 if (Math.abs(prevY - scrollY) > 30) {
                     setSuggestionsInvisible();
                     prevY = scrollY;
@@ -491,6 +513,7 @@ public class EditCorrectText extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
     public boolean onCreateOptionsMenu( Menu menu ) {
         // Menu icons are inflated just as they were with actionbar
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -498,7 +521,7 @@ public class EditCorrectText extends AppCompatActivity {
         myMenu = menu;
         if( CurrentRecordingLanguageID == -1 )
             CurrentRecordingLanguageID = R.id.action_language_ENG;
-        setLanguage( CurrentRecordingLanguageID );
+        setLanguage(CurrentRecordingLanguageID);
 
         return true;
     }
@@ -511,51 +534,31 @@ public class EditCorrectText extends AppCompatActivity {
 
         //Log.d( "EditCorrectText", "setSuggestionsUnderCursor" );
         Layout content_layout = content.getLayout();
-        ScrollView scroll = (ScrollView) findViewById( R.id.scroll );
-        LinearLayout suggestions = (LinearLayout) findViewById(R.id.all_suggestions);
-        ViewGroup.LayoutParams suggestions_layout = suggestions.getLayoutParams();
 
         int pos = content.getSelectionStart();
         int line = content_layout.getLineForOffset(pos);
         float x = content_layout.getPrimaryHorizontal(pos);
-        float h = scroll.getScrollY();
+        float h = editTextScroll.getScrollY();
         float y = content_layout.getLineBottom(line);
+        float boxWidth = suggestionsCard.getPaddingLeft() + suggestionsCard.getPaddingRight();
 
-        y -= h;
+        if( !correctionList.isEmpty() )     boxWidth += suggestionWidth;
+        if( !continuationList.isEmpty() )   boxWidth += suggestionWidth;
+
+        y -= h + suggestionsCard.getPaddingTop();
         y += content.getPaddingTop();
         x += content.getPaddingLeft();
 
-        if( !correctionList.isEmpty() && !continuationList.isEmpty() ) {
-            x -= suggestions_layout.width / 2;
-            x = Math.min( x, scroll.getWidth() - suggestions_layout.width );
-            x = Math.max(x, 0);
-            setSuggestionsVisible();
-        }
-        else if( !correctionList.isEmpty() ) {
-            x -= suggestions_layout.width / 4;
-            x = Math.min( x, scroll.getWidth() - suggestions_layout.width / 2 );
-            x = Math.max(x, 0);
-            setCorrectionListVisible();
-        }
-        else if( !continuationList.isEmpty() ) {
-            x -= 3*suggestions_layout.width / 4;
-            x = Math.min( x, scroll.getWidth() - suggestions_layout.width );
-            x = Math.max( x, -suggestions_layout.width / 2 );
-            setContinuationListVisible();
-        }
-        else {
-            return;
-        }
+        x -= boxWidth / 2;
+        x = Math.min( x, editTextScroll.getWidth() - boxWidth );
+        x = Math.max( x, 0 );
 
+        suggestionsCard.setX(x);
+        suggestionsCard.setY(y);
 
-        if( suggestions.getX() != x || suggestions.getY() != y ) {
-            suggestions.setX(x);
-            suggestions.setY(y);
-        }
 
         /// if the app is launched the first time show that its possible to turn suggestions on/off
-        SharedPreferences sp = getSharedPreferences( CACHE, MODE_PRIVATE );
-        if( !sp.contains( "suggestionsTipShown" ) ) {
+        if( !suggestionsTipShown ) {
             showSuggestionsTip();
         }
     }
@@ -563,13 +566,13 @@ public class EditCorrectText extends AppCompatActivity {
 
     private void setContinuationListVisible() {
 
-        LinearLayout myContinuationBox = (LinearLayout) findViewById(R.id.continuation_box);
-        myContinuationBox.setVisibility(View.VISIBLE);
+        suggestionsCard.setVisibility( View.VISIBLE );
+        continuationBox.setVisibility( View.VISIBLE );
     }
     private void setCorrectionListVisible() {
 
-        LinearLayout myCorrectionBox = (LinearLayout) findViewById(R.id.correction_box);
-        myCorrectionBox.setVisibility(View.VISIBLE);
+        suggestionsCard.setVisibility( View.VISIBLE );
+        correctionBox.setVisibility(View.VISIBLE);
     }
     private void setSuggestionsVisible() {
 
@@ -578,10 +581,9 @@ public class EditCorrectText extends AppCompatActivity {
     }
     private void setSuggestionsInvisible() {
 
-        LinearLayout myCorrectionBox = (LinearLayout) findViewById(R.id.correction_box);
-        LinearLayout myContinuationBox = (LinearLayout) findViewById(R.id.continuation_box);
-        myCorrectionBox.setVisibility(View.INVISIBLE);
-        myContinuationBox.setVisibility(View.INVISIBLE);
+        suggestionsCard.setVisibility( View.GONE );
+        correctionBox.setVisibility( View.GONE );
+        continuationBox.setVisibility( View.GONE );
     }
     private void setSuggestionsInvisibleAndClearLists() {
 
@@ -704,22 +706,16 @@ public class EditCorrectText extends AppCompatActivity {
         if( correctionList.isEmpty() )
             return;
 
-        LinearLayout myCorrectionBox = (LinearLayout) findViewById(R.id.correction_box);
-        myCorrectionBox.setVisibility(View.VISIBLE);
-
-        ListView correctionList = (ListView) findViewById(R.id.correction_list);
-        correctionList.setAdapter(new MyCorrectionListAdapter());
+        setCorrectionListVisible();
+        correctionListView.setAdapter(new CorrectionListAdapter());
     }
     private void showContinuationList() {
 
         if( continuationList.isEmpty() )
             return;
 
-        LinearLayout myContinuationBox = (LinearLayout) findViewById(R.id.continuation_box);
-        myContinuationBox.setVisibility(View.VISIBLE);
-
-        ListView continuationList = (ListView) findViewById(R.id.continuation_list);
-        continuationList.setAdapter(new MyContinuationListAdapter());
+        setContinuationListVisible();
+        continuationListView.setAdapter(new ContinuationListAdapter());
     }
     private void capitalizeFirstLetter(ArrayList<String> list) {
 
@@ -793,7 +789,7 @@ public class EditCorrectText extends AppCompatActivity {
 
         protected Object doInBackground(Object... params) {
 
-            int start = Integer.parseInt( params[0].toString() );
+            int start = Integer.parseInt(params[0].toString());
             int count = Integer.parseInt( params[1].toString() );
             underlineWrongWords(start, count);
             return null;
@@ -934,43 +930,64 @@ public class EditCorrectText extends AppCompatActivity {
 
 
 /**********************************Adapters********************************************************/
-    class MyCorrectionListAdapter extends BaseAdapter {
+
+    class CorrectionListAdapter extends BaseAdapter {
+
+        ViewHolder viewHolder;
         public int getCount()               { return correctionList.size(); }
         public Object getItem(int position) { return null; }
         public long getItemId(int position) { return position; }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent)
-        {
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            if( convertView == null ) {
+
+                viewHolder = new ViewHolder();
+                convertView = getLayoutInflater().inflate( R.layout.suggestion_list_item, parent, false );
+                viewHolder.suggestion = (TextView) convertView.findViewById( R.id.suggestion );
+                convertView.setTag( viewHolder );
+            }
+            else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+
             String row = correctionList.get(position);
+            viewHolder.suggestion.setText(row);
 
-            LayoutInflater in = getLayoutInflater();
-            View res = in.inflate(R.layout.suggestion_list_item, null);
-
-            TextView suggestion = ( TextView ) res.findViewById( R.id.suggestion );
-            suggestion.setText(row);
-
-            return res;
+            return convertView;
         }
     }
-    class MyContinuationListAdapter extends BaseAdapter {
+    class ContinuationListAdapter extends BaseAdapter {
+
+        ViewHolder viewHolder;
         public int getCount()               { return continuationList.size(); }
         public Object getItem(int position) { return null; }
         public long getItemId(int position) { return position; }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent)
-        {
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            if( convertView == null ) {
+
+                viewHolder = new ViewHolder();
+                convertView = getLayoutInflater().inflate( R.layout.suggestion_list_item, parent, false );
+                viewHolder.suggestion = (TextView) convertView.findViewById( R.id.suggestion );
+                convertView.setTag( viewHolder );
+            }
+            else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+
             String row = continuationList.get(position);
+            viewHolder.suggestion.setText(row);
 
-            LayoutInflater in = getLayoutInflater();
-            View res = in.inflate(R.layout.suggestion_list_item, null);
-
-            TextView suggestion = ( TextView ) res.findViewById( R.id.suggestion );
-            suggestion.setText(row);
-
-            return res;
+            return convertView;
         }
     }
+    class ViewHolder {
+        TextView suggestion;
+    }
+
 /**********************************Adapters********************************************************/
 }

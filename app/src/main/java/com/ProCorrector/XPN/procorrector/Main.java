@@ -11,8 +11,6 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,7 +40,6 @@ public class Main extends AppCompatActivity {
 
 
     /*******************************actions support functions**************************************/
-
     private void copyTextToClipboard( String text ) {
 
         ClipboardManager clipboard = (ClipboardManager) getSystemService( CLIPBOARD_SERVICE );
@@ -269,6 +266,7 @@ public class Main extends AppCompatActivity {
 
     class MyAdapter extends BaseAdapter {
 
+        ViewHolder viewHolder;
         @Override
         public void notifyDataSetChanged()  { super.notifyDataSetChanged(); }
         public int getCount()               { return list.size(); }
@@ -278,28 +276,41 @@ public class Main extends AppCompatActivity {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent)
         {
+
+            if( convertView == null ) {
+
+                convertView = getLayoutInflater().inflate(R.layout.main_list_item, parent, false);
+                viewHolder = new ViewHolder();
+
+                viewHolder.title = (TextView) convertView.findViewById( R.id.title );
+                viewHolder.text = (TextView) convertView.findViewById( R.id.text );
+                viewHolder.date = (TextView) convertView.findViewById( R.id.date );
+                viewHolder.copy = (ImageView) convertView.findViewById( R.id.copy );
+                viewHolder.trash = (ImageView) convertView.findViewById( R.id.trash );
+                viewHolder.send = (ImageView) convertView.findViewById( R.id.send );
+
+                convertView.setTag( viewHolder );
+            }
+            else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+
             ArrayList row = list.get(position);
             final String title_value = (String) row.get(1);
             final String text_value = (String) row.get(2);
             final String creationDate = (String) row.get(3);
 
-            final LayoutInflater in = getLayoutInflater();
-            final View res = in.inflate(R.layout.main_list_item, null);
+            viewHolder.title.setText( title_value );
+            viewHolder.text.setText( text_value );
+            viewHolder.date.setText( creationDate );
 
-            TextView title = ( TextView ) res.findViewById( R.id.title );   title.setText( title_value );
-            TextView text = ( TextView ) res.findViewById( R.id.text );     text.setText(text_value);
-            TextView date = (TextView ) res.findViewById( R.id.date );      date.setText(creationDate);
-            ImageView copy = (ImageView) res.findViewById( R.id.copy );
-            ImageView trash = (ImageView) res.findViewById( R.id.trash );
-            ImageView send = (ImageView) res.findViewById( R.id.send );
-
-            copy.setOnClickListener(new View.OnClickListener() {
+            viewHolder.copy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     copyTextToClipboard( text_value );
                 }
             });
-            trash.setOnClickListener(new View.OnClickListener() {
+            viewHolder.trash.setOnClickListener(new View.OnClickListener() {
 
                 int currentPosition = position;
                 @Override
@@ -312,14 +323,25 @@ public class Main extends AppCompatActivity {
                     Toast.makeText( Main.this, title + " removed", Toast.LENGTH_SHORT ).show();
                 }
             });
-            send.setOnClickListener(new View.OnClickListener() {
+            viewHolder.send.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     sendNote( title_value, text_value );
                 }
             });
 
-            return res;
+            return convertView;
+        }
+
+
+        protected class ViewHolder {
+
+            TextView title;
+            TextView text;
+            TextView date;
+            ImageView copy;
+            ImageView trash;
+            ImageView send;
         }
     }
 }
