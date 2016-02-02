@@ -25,7 +25,8 @@
             android:layout_weight="1"
             android:clickable="true"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_copy_white"/>
+            android:src="@drawable/ic_copy_white"
+            android:contentDescription="@null" />
         <ImageView
             android:id="@+id/trash"
             android:layout_width="wrap_content"
@@ -33,7 +34,8 @@
             android:layout_weight="1"
             android:clickable="true"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_trash_white" />
+            android:src="@drawable/ic_trash_white"
+            android:contentDescription="@null" />
         <ImageView
             android:id="@+id/send"
             android:layout_width="wrap_content"
@@ -41,7 +43,8 @@
             android:layout_weight="1"
             android:clickable="true"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_send_white"/>
+            android:src="@drawable/ic_send_white"
+            android:contentDescription="@null" />
     </LinearLayout>
 
 
@@ -51,7 +54,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@drawable/transparent_rectangle"
-        android:layout_weight="10">
+        android:layout_weight="10"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:orientation="vertical"

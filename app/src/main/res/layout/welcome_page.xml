@@ -14,7 +14,7 @@
         android:gravity="center"
         android:textColor="#e6f4f4f4"
         android:textSize="@dimen/welcome_page_title_size"
-        android:text="Welcome to Spell Checker"
+        android:text="@string/welcome_page_title"
         android:layout_above="@+id/imageView"
         android:layout_centerHorizontal="true" />
 
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:textColor="#d2f4f4f4"
         android:textSize="@dimen/welcome_page_continue_size"
-        android:text="(Tap to continue)"
+        android:text="@string/tap_to_continue"
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true" />
 

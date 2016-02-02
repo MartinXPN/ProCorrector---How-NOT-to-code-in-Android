@@ -73,7 +73,7 @@
         android:textColor="#ebebeb"
         android:gravity="center"
         android:textSize="25sp"
-        android:text="Create your\nfirst document"
+        android:text="@string/help_and_tips_create_document"
         android:layout_above="@+id/help_show_suggestions_arrow"
         android:layout_alignRight="@+id/help_show_suggestions_arrow"
         android:layout_alignEnd="@+id/help_show_suggestions_arrow" />

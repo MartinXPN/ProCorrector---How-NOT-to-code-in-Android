@@ -24,7 +24,8 @@
         android:scaleType="centerInside"
         android:src="@drawable/ic_arrow_up_right"
         android:layout_alignRight="@+id/hint_semitransparent_background"
-        android:layout_alignEnd="@+id/hint_semitransparent_background"/>
+        android:layout_alignEnd="@+id/hint_semitransparent_background"
+        android:contentDescription="@null" />
     <TextView
         android:id="@+id/help_add_to_dictionary_hint"
         android:layout_width="wrap_content"
@@ -32,7 +33,7 @@
         android:textColor="#ebebeb"
         android:gravity="center"
         android:textSize="25sp"
-        android:text="Ignore once or\nAdd to dictionary"
+        android:text="@string/help_and_tips_ignore_add"
         android:layout_below="@+id/help_add_to_dictionary_arrow"
         android:layout_alignRight="@+id/help_add_to_dictionary_arrow"
         android:layout_alignEnd="@+id/help_add_to_dictionary_arrow" />
@@ -42,7 +43,7 @@
         android:layout_height="wrap_content"
         android:textColor="#d2f4f4f4"
         android:textSize="@dimen/welcome_page_continue_size"
-        android:text="(Tap to continue)"
+        android:text="@string/tap_to_continue"
         android:layout_below="@+id/help_add_to_dictionary_hint"
         android:layout_centerHorizontal="true" />
 

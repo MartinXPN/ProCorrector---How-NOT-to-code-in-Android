@@ -3,6 +3,7 @@
     <string name="app_name">Spell Checker</string>
     <string name="title_hint">Title…</string>
     <string name="text_hint">Type the text here…</string>
+    <string name="welcome_page_title">Welcome to Spell Checker</string>
 
     <string name="action_settings_title">Settings</string>
     <string name="action_show_suggestions_title">Show suggestions</string>
@@ -149,17 +150,14 @@
 
     <string name="about_app_description">Spell Checker is an app designed for creating texts, taking notes, editing and correcting essays, etc. It can be used any time even without an internet access.\nIt will find any spelling mistake and offer suggestions from its dictionary, which is created from Wikipedia’s most widely used words.\nThe app supports several languages, including English, Russian and Armenian.\nIt\'s an open-source <a href="https://github.com/MartinXPN/ProCorrector.git">project</a> done mainly for educational reasons.</string>
     <string name="about_author_text">© 2016 <a href="https://www.linkedin.com/in/martin-mirakyan-945597101">Martin Mirakyan</a>\nAll Rights Reserved.</string>
+    <string name="list_of_fully_supported_languages_title">List of fully supported languages</string>
+    <string name="list_of_fully_supported_languages">• English\n• Armenian\n• Russian</string>
 
 
-    <string name="help_question_1_question">-How to create a document?</string>
-    <string name="help_question_1_answer">Click on the blue button that appears in the bottom-right corner of the main screen</string>
-    <string name="help_question_2_question">-How to edit a document?</string>
-    <string name="help_question_2_answer">Click on the document you want to edit</string>
-    <string name="help_question_3_question">-How to delete a document?</string>
-    <string name="help_question_3_answer">Long press on the document you want to delete</string>
-    <string name="help_question_4_question">-How to turn suggestions ON/OFF?</string>
-    <string name="help_question_4_answer">To turn the suggestions off click on the yellow bulb\nTo turn the suggestions on click on the light grey bulb</string>
-    <string name="help_question_5_question">-How to add a word to dictionary, or how to ignore it for once?</string>
-    <string name="help_question_5_answer">To add a word to dictionary click on the word you want to add, and then click on this button\nTo ignore a word for once click on the word you want to ignore and then click on this button</string>
+    <string name="help_and_tips_create_document">Create a document</string>
+    <string name="help_and_tips_ignore_add">Ignore once or\nAdd to dictionary</string>
+    <string name="help_and_tips_suggestions">Tap on lamp to\nshow/hide suggestions</string>
+
+    <string name="tap_to_continue">(Tap to continue)</string>
 
 </resources>

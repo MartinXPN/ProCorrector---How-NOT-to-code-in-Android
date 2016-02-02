@@ -17,7 +17,7 @@
         android:gravity="start"
         android:textColor="@color/help_text_question"
         android:textSize="@dimen/help_question_text_size"
-        android:text="List of fully supported languages"/>
+        android:text="@string/list_of_fully_supported_languages_title"/>
 
 
     <RelativeLayout
@@ -31,7 +31,7 @@
             android:paddingRight="10dp"
             android:textColor="@color/help_text_answer"
             android:textSize="@dimen/help_answer_text_size"
-            android:text="• English\n• Armenian\n• Russian"
+            android:text="@string/list_of_fully_supported_languages"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
