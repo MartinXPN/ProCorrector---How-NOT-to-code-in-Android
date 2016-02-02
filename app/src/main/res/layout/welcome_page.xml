@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:textColor="#d2f4f4f4"
         android:textSize="@dimen/welcome_page_continue_size"
-        android:text="Tap to continue"
+        android:text="(Tap to continue)"
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true" />
 

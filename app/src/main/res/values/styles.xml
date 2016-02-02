@@ -31,4 +31,10 @@
         <item name="android:windowBackground">@color/view_documents_window_background</item>
     </style>
 
+    <style name="TransparentStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/transparent</item>
+        <item name="colorPrimary">@color/transparent</item>
+        <item name="android:windowBackground">@color/transparent</item>
+    </style>
+
 </resources>

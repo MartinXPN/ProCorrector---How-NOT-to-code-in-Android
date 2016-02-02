@@ -11,8 +11,10 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -124,6 +126,14 @@ public class Main extends AppCompatActivity {
         final SharedPreferences.Editor editor = sp.edit();
         editor.remove( "newDocumentHintShown" );
         editor.apply();
+
+        /// this is set to ensure that no other document is opened but a new one
+        background.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
 
 
         Animation animation = AnimationUtils.loadAnimation( Main.this, R.anim.fade_in );

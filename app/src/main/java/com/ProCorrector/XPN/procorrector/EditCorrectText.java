@@ -1,7 +1,9 @@
 package com.ProCorrector.XPN.procorrector;
 
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -32,6 +34,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -281,48 +284,39 @@ public class EditCorrectText extends AppCompatActivity {
 
 
     /**
-     * Shown during the first launch or when the user clicks on Help & Tips
+     * Shows tips to new user
+     * @param layoutResID   which layout to show from res/layout.xml
+     * @param viewResID     clicking on this view results in dismissing this dialog
+     * @param hintType      needed to turn the flag off in SharedPreferences
      */
-    private void showSuggestionsTip() {
+    private void showOverlay( int layoutResID, int viewResID, final String hintType ) {
 
-        final LinearLayout background = (LinearLayout) findViewById( R.id.hint_semitransparent_background );
-        final ImageView arrow = (ImageView) findViewById( R.id.help_show_suggestions_arrow);
-        final TextView hint = (TextView) findViewById( R.id.help_show_suggestions_hint );
+        final Dialog dialog = new Dialog(EditCorrectText.this, R.style.TransparentStyle);
+        dialog.setContentView( layoutResID );
+        final RelativeLayout layout = (RelativeLayout) dialog.findViewById( viewResID );
+        Animation animation = AnimationUtils.loadAnimation( EditCorrectText.this, R.anim.fade_in );
+        dialog.show();
+        layout.startAnimation(animation);
 
-
-        Animation animation = AnimationUtils.loadAnimation(EditCorrectText.this, R.anim.fade_in);
-        background.setVisibility( View.VISIBLE );
-        arrow.setVisibility( View.VISIBLE );
-        hint.setVisibility( View.VISIBLE );
-
-        background.startAnimation(animation);
-        arrow.startAnimation(animation);
-        hint.startAnimation(animation);
-
-
-        background.setOnClickListener(new View.OnClickListener() {
+        layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                suggestionsTipShown = true;
+                if( hintType.matches( "suggestionsTipShown" ) )             suggestionsTipShown = true;
+                else if( hintType.matches( "addToDictionaryTipShown" ) )    addToDictionaryTipShown = true;
                 SharedPreferences sp = getSharedPreferences(CACHE, MODE_PRIVATE);
                 SharedPreferences.Editor editor = sp.edit();
-                editor.putBoolean("suggestionsTipShown", true);
+                editor.putBoolean( hintType, true);
                 editor.apply();
 
                 Animation animation = AnimationUtils.loadAnimation(EditCorrectText.this, R.anim.fade_out);
-                background.startAnimation(animation);
-                arrow.startAnimation(animation);
-                hint.startAnimation(animation);
-
+                layout.startAnimation(animation);
 
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        arrow.setVisibility(View.GONE);
-                        hint.setVisibility(View.GONE);
-                        background.setVisibility(View.GONE);
+                        dialog.dismiss();
                     }
                 }, 250);
             }
@@ -331,50 +325,14 @@ public class EditCorrectText extends AppCompatActivity {
     /**
      * Shown during the first launch or when the user clicks on Help & Tips
      */
+    private void showSuggestionsTip() {
+        showOverlay( R.layout.help_and_tips_suggestion, R.id.help_and_tips_suggestion, "suggestionsTipShown" );
+    }
+    /**
+     * Shown during the first launch or when the user clicks on Help & Tips
+     */
     private void showAddToDictionaryTip() {
-
-        final LinearLayout background = (LinearLayout) findViewById( R.id.hint_semitransparent_background );
-        final ImageView arrow = (ImageView) findViewById( R.id.help_add_to_dictionary_arrow );
-        final TextView hint = (TextView) findViewById( R.id.help_add_to_dictionary_hint );
-
-
-        Animation animation = AnimationUtils.loadAnimation(EditCorrectText.this, R.anim.fade_in);
-        background.setVisibility( View.VISIBLE );
-        arrow.setVisibility( View.VISIBLE );
-        hint.setVisibility(View.VISIBLE);
-
-        background.startAnimation(animation);
-        arrow.startAnimation(animation);
-        hint.startAnimation(animation);
-
-
-        background.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                addToDictionaryTipShown = true;
-                SharedPreferences sp = getSharedPreferences(CACHE, MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putBoolean("addToDictionaryTipShown", true);
-                editor.apply();
-
-                Animation animation = AnimationUtils.loadAnimation(EditCorrectText.this, R.anim.fade_out);
-                background.startAnimation(animation);
-                arrow.startAnimation(animation);
-                hint.startAnimation(animation);
-
-
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        arrow.setVisibility(View.GONE);
-                        hint.setVisibility(View.GONE);
-                        background.setVisibility(View.GONE);
-                    }
-                }, 250);
-            }
-        });
+        showOverlay(R.layout.help_and_tips_ignore_add, R.id.help_and_tips_ignore_add, "addToDictionaryTipShown" );
     }
     /**
      * Shown during the first launch or when the user clicks on Help & Tips
@@ -383,6 +341,8 @@ public class EditCorrectText extends AppCompatActivity {
 
         SharedPreferences sp = getSharedPreferences(CACHE, MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
+        addToDictionaryTipShown = false;
+        suggestionsTipShown = false;
         editor.remove("addToDictionaryTipShown");
         editor.remove("suggestionsTipShown");
         editor.apply();
@@ -391,6 +351,7 @@ public class EditCorrectText extends AppCompatActivity {
     }
 
     /*******************************actions support functions**************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     @Override
