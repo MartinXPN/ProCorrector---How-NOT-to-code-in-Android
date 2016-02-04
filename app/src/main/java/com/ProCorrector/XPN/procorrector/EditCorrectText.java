@@ -66,6 +66,9 @@ public class EditCorrectText extends AppCompatActivity {
     private DatabaseHelper database;                                    /// the database from which the queries are done
     private int documentID;                                             /// ID of the document in TextDatabase
 
+    private CorrectionListAdapter correctionListAdapter = new CorrectionListAdapter();          /// keep it to notifyDatasetChanged insted of creating new adapter every time
+    private ContinuationListAdapter continuationListAdapter = new ContinuationListAdapter();    /// keep it to notifyDatasetChanged insted of creating new adapter every time
+
     private final String CACHE = "data";                                /// the name of SharedPreferences file
     private static boolean suggestionsTipShown;                         /// kept for not searching it every time from SharedPreferences -> gets its initial value in onCreate
     private static boolean addToDictionaryTipShown;                     /// kept for not searching it every time from SharedPreferences -> gets its initial value in onCreate
@@ -463,6 +466,10 @@ public class EditCorrectText extends AppCompatActivity {
         title.setText(previous_title);
 
 
+        /// set adapters to suggestion lists
+        correctionListView.setAdapter( correctionListAdapter );
+        continuationListView.setAdapter( continuationListAdapter );
+
         /// click on a suggestion item has to replace the current word with the clicked one
         correctionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -755,7 +762,7 @@ public class EditCorrectText extends AppCompatActivity {
             return;
 
         setCorrectionListVisible();
-        correctionListView.setAdapter(new CorrectionListAdapter());
+        correctionListAdapter.notifyDataSetChanged();
     }
     private void showContinuationList() {
 
@@ -763,7 +770,7 @@ public class EditCorrectText extends AppCompatActivity {
             return;
 
         setContinuationListVisible();
-        continuationListView.setAdapter(new ContinuationListAdapter());
+        continuationListAdapter.notifyDataSetChanged();
     }
     private void capitalizeFirstLetter(ArrayList<String> list) {
 
