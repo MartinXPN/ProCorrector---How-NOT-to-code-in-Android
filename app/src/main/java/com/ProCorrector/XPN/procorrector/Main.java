@@ -63,6 +63,15 @@ public class Main extends AppCompatActivity {
         }
     }
 
+    private void deleteDocument( int position ) {
+
+        String title = (String) list.get(position).get( 1 );
+        myNotesDB.delete( (int) list.get(position).get( 0 ) );
+        list.remove( position );
+        adapter.notifyDataSetChanged();
+        Toast.makeText( Main.this, title + " removed", Toast.LENGTH_SHORT ).show();
+    }
+
     private void writeFeedback() {
 
         Intent i = new Intent(Intent.ACTION_SEND);
@@ -190,12 +199,12 @@ public class Main extends AppCompatActivity {
 
 
     /**
-     * created for handling events after EditCorrectText Activity finishes its work
+     * Created for handling events after EditCorrectText Activity finishes its work
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if( requestCode == EDIT_CORRECT_TEXT_ACTIVITY_CODE ) {
+        if( requestCode == EDIT_CORRECT_TEXT_ACTIVITY_CODE && resultCode == RESULT_OK ) {
 
             list = myNotesDB.getAll();
             adapter.notifyDataSetChanged();
@@ -214,7 +223,6 @@ public class Main extends AppCompatActivity {
         /// title has to white instead of black, which is caused by light theme
         Toolbar toolbar = (Toolbar) findViewById( R.id.toolbar );
         toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        //toolbar.setTitle(Html.fromHtml("<font color='#ffffff'>Spell Checker</font>"));
         setSupportActionBar(toolbar);
 
         android.support.design.widget.FloatingActionButton createNewNote = ( android.support.design.widget.FloatingActionButton ) findViewById(R.id.new_text_button);
@@ -328,16 +336,9 @@ public class Main extends AppCompatActivity {
                 }
             });
             viewHolder.trash.setOnClickListener(new View.OnClickListener() {
-
-                int currentPosition = position;
                 @Override
                 public void onClick(View v) {
-                    TextDatabase db = new TextDatabase(Main.this);
-                    String title = (String) list.get(currentPosition).get( 1 );
-                    db.delete((int) list.get(currentPosition).get(0));
-                    list.remove(currentPosition);
-                    adapter.notifyDataSetChanged();
-                    Toast.makeText( Main.this, title + " removed", Toast.LENGTH_SHORT ).show();
+                    deleteDocument( position );
                 }
             });
             viewHolder.send.setOnClickListener(new View.OnClickListener() {

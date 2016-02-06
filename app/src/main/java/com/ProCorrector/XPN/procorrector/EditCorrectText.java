@@ -66,8 +66,8 @@ public class EditCorrectText extends AppCompatActivity {
     private DatabaseHelper database;                                    /// the database from which the queries are done
     private int documentID;                                             /// ID of the document in TextDatabase
 
-    private CorrectionListAdapter correctionListAdapter = new CorrectionListAdapter();          /// keep it to notifyDatasetChanged insted of creating new adapter every time
-    private ContinuationListAdapter continuationListAdapter = new ContinuationListAdapter();    /// keep it to notifyDatasetChanged insted of creating new adapter every time
+    private CorrectionListAdapter correctionListAdapter = new CorrectionListAdapter();          /// keep it to notifyDatasetChanged instead of creating new adapter every time
+    private ContinuationListAdapter continuationListAdapter = new ContinuationListAdapter();    /// keep it to notifyDatasetChanged instead of creating new adapter every time
 
     private final String CACHE = "data";                                /// the name of SharedPreferences file
     private static boolean suggestionsTipShown;                         /// kept for not searching it every time from SharedPreferences -> gets its initial value in onCreate
@@ -828,7 +828,7 @@ public class EditCorrectText extends AppCompatActivity {
                 historyTimer++;
             }
 
-            return new Pair( start, count );
+            return new Pair<>(start, count);
         }
 
         protected void onPostExecute( Pair p ) {
