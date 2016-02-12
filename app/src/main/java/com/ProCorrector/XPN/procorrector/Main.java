@@ -10,8 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -19,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -204,7 +201,7 @@ public class Main extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if( requestCode == EDIT_CORRECT_TEXT_ACTIVITY_CODE && resultCode == RESULT_OK ) {
+        if( requestCode == EDIT_CORRECT_TEXT_ACTIVITY_CODE ) {
 
             list = myNotesDB.getAll();
             adapter.notifyDataSetChanged();
@@ -220,7 +217,7 @@ public class Main extends AppCompatActivity {
         setContentView(R.layout.main);
 
         /// use toolbar as actionbar
-        /// title has to white instead of black, which is caused by light theme
+        /// title has to be white instead of black, which is caused by light theme
         Toolbar toolbar = (Toolbar) findViewById( R.id.toolbar );
         toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         setSupportActionBar(toolbar);
@@ -243,20 +240,6 @@ public class Main extends AppCompatActivity {
         final ListView myPreviousNotes = ( ListView ) findViewById(R.id.list );
         adapter = new MyAdapter();
         myPreviousNotes.setAdapter(adapter);
-
-
-        myPreviousNotes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ArrayList row = list.get(position);
-
-                Intent i = new Intent(Main.this, EditCorrectText.class);
-                i.putExtra("id", (Integer) row.get(0));
-                i.putExtra("title", (String) row.get(1));
-                i.putExtra("content", (String) row.get(2));
-                startActivityForResult(i, EDIT_CORRECT_TEXT_ACTIVITY_CODE);
-            }
-        });
 
 
         /// show tips on the first launch
@@ -301,12 +284,12 @@ public class Main extends AppCompatActivity {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent)
         {
-
             if( convertView == null ) {
 
                 convertView = getLayoutInflater().inflate(R.layout.main_list_item, parent, false);
                 viewHolder = new ViewHolder();
 
+                viewHolder.contentPart = (LinearLayout) convertView.findViewById( R.id.content_part );
                 viewHolder.title = (TextView) convertView.findViewById( R.id.title );
                 viewHolder.text = (TextView) convertView.findViewById( R.id.text );
                 viewHolder.date = (TextView) convertView.findViewById( R.id.date );
@@ -321,7 +304,8 @@ public class Main extends AppCompatActivity {
             }
 
             ArrayList row = list.get(position);
-            final String title_value = (String) row.get(1);
+            final int id = (Integer) row.get(0);
+            final String title_value = ((String) row.get(1)).matches( "" ) ? "Untitled" : (String) row.get(1);
             final String text_value = (String) row.get(2);
             final String creationDate = (String) row.get(3);
 
@@ -332,19 +316,31 @@ public class Main extends AppCompatActivity {
             viewHolder.copy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    copyTextToClipboard( text_value );
+                    copyTextToClipboard(text_value);
                 }
             });
             viewHolder.trash.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    deleteDocument( position );
+                    deleteDocument(position);
                 }
             });
             viewHolder.send.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    sendNote( title_value, text_value );
+                    sendNote(title_value, text_value);
+                }
+            });
+
+            viewHolder.contentPart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent i = new Intent( Main.this, EditCorrectText.class );
+                    i.putExtra( "id", id );
+                    i.putExtra( "title", title_value );
+                    i.putExtra( "content", text_value );
+                    startActivityForResult( i, EDIT_CORRECT_TEXT_ACTIVITY_CODE );
                 }
             });
 
@@ -357,6 +353,7 @@ public class Main extends AppCompatActivity {
          */
         protected class ViewHolder {
 
+            LinearLayout contentPart;
             TextView title;
             TextView text;
             TextView date;

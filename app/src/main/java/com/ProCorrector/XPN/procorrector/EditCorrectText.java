@@ -123,16 +123,21 @@ public class EditCorrectText extends AppCompatActivity {
 
         String contentValue = content.getText().toString();
         String titleValue = title.getText().toString();
+        TextDatabase db = new TextDatabase(getApplicationContext());
 
-        if (contentValue.matches("") && titleValue.matches(""))     return;
-        if (titleValue.matches(""))                                 titleValue = "Untitled";
+
+        if (contentValue.matches("") && titleValue.matches(""))
+        {
+            if( documentID != -1 )
+                db.delete( documentID );
+            return;
+        }
 
         DateFormat dateFormat = new SimpleDateFormat( "MMM dd\nHH:mm", Locale.US );
         String creationDate = dateFormat.format( new Date() );
 
-        TextDatabase db = new TextDatabase(getApplicationContext());
         if( documentID == -1 )  { db.insert( titleValue, contentValue, creationDate ); }
-        else                    { db.update(titleValue, contentValue, documentID);   }
+        else                    { db.update( titleValue, contentValue, documentID );   }
 
         //Log.d("Note", "Was saved to database" );
     }
@@ -404,8 +409,6 @@ public class EditCorrectText extends AppCompatActivity {
         documentID = bundle.getInt( "id" );
         String previous_title = bundle.getString( "title" );
         String previous_content = bundle.getString( "content" );
-        if( previous_title != null && previous_title.matches( "Untitled" ) )
-            previous_title = "";
 
 
         /// DatabaseHelper is single-tone
@@ -469,6 +472,7 @@ public class EditCorrectText extends AppCompatActivity {
         /// set adapters to suggestion lists
         correctionListView.setAdapter( correctionListAdapter );
         continuationListView.setAdapter( continuationListAdapter );
+
 
         /// click on a suggestion item has to replace the current word with the clicked one
         correctionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -622,6 +626,8 @@ public class EditCorrectText extends AppCompatActivity {
         setSuggestionsInvisible();
         correctionList.clear();
         continuationList.clear();
+        correctionListAdapter.notifyDataSetChanged();
+        continuationListAdapter.notifyDataSetChanged();
         displayedSuggestions = "";
     }
 
@@ -639,6 +645,8 @@ public class EditCorrectText extends AppCompatActivity {
             return;
         }
 
+        /// words that have too small length are not queried because there are a lot of words starting with a for example
+        /// and because of that the program will slow down
         String needed = Language.getCurrentSubstring(text, content.getSelectionStart());
         if( needed.length() >= 2 ) {
 
@@ -657,7 +665,8 @@ public class EditCorrectText extends AppCompatActivity {
             CorrectionAndContinuationTask.execute( needed );
         }
         else {
-            /// words that have too small length are not queried because there are a lot of words starting with a for example and it will be slow
+            /// words that have too small length are not queried because there are a lot of words starting with a for example
+            /// and because of that the program will slow down
             setSuggestionsInvisibleAndClearLists();
         }
     }
