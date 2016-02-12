@@ -17,13 +17,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class Main extends AppCompatActivity {
     TextDatabase myNotesDB = new TextDatabase( this );          /// database that keeps all created documents
     private final int EDIT_CORRECT_TEXT_ACTIVITY_CODE = 1;      /// EditCorrectText activity is called as startActivityForResult in order to update listVew onResult
     private final String CACHE = "data";                        /// the name of SharedPreferences file
-    MyAdapter adapter = null;                                   /// adapter for list of created documents
+    ListViewAdapter adapter = null;                                   /// adapter for list of created documents
 
 
     /*******************************actions support functions**************************************/
@@ -238,7 +239,7 @@ public class Main extends AppCompatActivity {
 
         list = myNotesDB.getAll();
         final ListView myPreviousNotes = ( ListView ) findViewById(R.id.list );
-        adapter = new MyAdapter();
+        adapter = new ListViewAdapter();
         myPreviousNotes.setAdapter(adapter);
 
 
@@ -272,94 +273,91 @@ public class Main extends AppCompatActivity {
     }
 
 
-    class MyAdapter extends BaseAdapter {
-
-        ViewHolder viewHolder;
-        @Override
-        public void notifyDataSetChanged()  { super.notifyDataSetChanged(); }
-        public int getCount()               { return list.size(); }
-        public Object getItem(int position) { return null; }
-        public long getItemId(int position) { return position; }
+    class ListViewAdapter extends BaseSwipeAdapter {
 
         @Override
-        public View getView(final int position, View convertView, ViewGroup parent)
-        {
-            if( convertView == null ) {
+        public int getSwipeLayoutResourceId(int position) {
+            return R.id.swipe;
+        }
 
-                convertView = getLayoutInflater().inflate(R.layout.main_list_item, parent, false);
-                viewHolder = new ViewHolder();
+        @Override
+        public View generateView(int position, ViewGroup viewGroup) {
+            return getLayoutInflater().inflate(R.layout.main_list_item, null);
+        }
 
-                viewHolder.contentPart = (LinearLayout) convertView.findViewById( R.id.content_part );
-                viewHolder.title = (TextView) convertView.findViewById( R.id.title );
-                viewHolder.text = (TextView) convertView.findViewById( R.id.text );
-                viewHolder.date = (TextView) convertView.findViewById( R.id.date );
-                viewHolder.copy = (ImageView) convertView.findViewById( R.id.copy );
-                viewHolder.trash = (ImageView) convertView.findViewById( R.id.trash );
-                viewHolder.send = (ImageView) convertView.findViewById( R.id.send );
+        @Override
+        public void fillValues( final int position, View convertView ) {
 
-                convertView.setTag( viewHolder );
-            }
-            else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
+            LinearLayout contentPart = (LinearLayout) convertView.findViewById( R.id.content_part );
+            TextView title = (TextView) convertView.findViewById( R.id.title );
+            TextView text = (TextView) convertView.findViewById( R.id.text );
+            TextView date = (TextView) convertView.findViewById( R.id.date );
+            ImageView copy = (ImageView) convertView.findViewById( R.id.copy );
+            ImageView trash = (ImageView) convertView.findViewById( R.id.trash );
+            ImageView send = (ImageView) convertView.findViewById( R.id.send );
 
             ArrayList row = list.get(position);
             final int id = (Integer) row.get(0);
-            final String title_value = ((String) row.get(1)).matches( "" ) ? "Untitled" : (String) row.get(1);
+            final String title_value = (String) row.get(1);
             final String text_value = (String) row.get(2);
             final String creationDate = (String) row.get(3);
 
-            viewHolder.title.setText( title_value );
-            viewHolder.text.setText( text_value );
-            viewHolder.date.setText( creationDate );
+            title.setText( title_value.matches("") ? "Untitled" : title_value );
+            text.setText( text_value );
+            date.setText( creationDate );
 
-            viewHolder.copy.setOnClickListener(new View.OnClickListener() {
+            copy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     copyTextToClipboard(text_value);
                 }
             });
-            viewHolder.trash.setOnClickListener(new View.OnClickListener() {
+            trash.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    adapter.closeAllItems();
                     deleteDocument(position);
                 }
             });
-            viewHolder.send.setOnClickListener(new View.OnClickListener() {
+            send.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     sendNote(title_value, text_value);
                 }
             });
 
-            viewHolder.contentPart.setOnClickListener(new View.OnClickListener() {
+            contentPart.setOnTouchListener(new View.OnTouchListener() {
                 @Override
-                public void onClick(View v) {
-
-                    Intent i = new Intent( Main.this, EditCorrectText.class );
-                    i.putExtra( "id", id );
-                    i.putExtra( "title", title_value );
-                    i.putExtra( "content", text_value );
-                    startActivityForResult( i, EDIT_CORRECT_TEXT_ACTIVITY_CODE );
+                public boolean onTouch(View v, MotionEvent event) {
+                    adapter.closeAllItems();
+                    return false;
                 }
             });
 
-            return convertView;
+            contentPart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent i = new Intent(Main.this, EditCorrectText.class);
+                    i.putExtra("id", id);
+                    i.putExtra("title", title_value);
+                    i.putExtra("content", text_value);
+                    startActivityForResult(i, EDIT_CORRECT_TEXT_ACTIVITY_CODE);
+                }
+            });
         }
 
-
-        /**
-         * ViewHolder class is created in order not calling findViewById frequently => making the scrolling smoother
-         */
-        protected class ViewHolder {
-
-            LinearLayout contentPart;
-            TextView title;
-            TextView text;
-            TextView date;
-            ImageView copy;
-            ImageView trash;
-            ImageView send;
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+        @Override
+        public long getItemId(int position) {
+            return position;
         }
     }
 }
