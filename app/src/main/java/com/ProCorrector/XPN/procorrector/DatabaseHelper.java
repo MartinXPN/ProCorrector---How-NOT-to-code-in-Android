@@ -150,17 +150,17 @@ public class DatabaseHelper extends SQLiteOpenHelper
                             isFromCorrection = false;
                     }
 
-                    if( isFromCorrection )  { if( correction.size() < MAX_WORDS_SUGGESTIONS )       correction.add( now ); }
-                    else                    { if( continuation.size() < MAX_WORDS_SUGGESTIONS )     continuation.add(now); }
+                    if( isFromCorrection )  correction.add( now );
+                    else                    continuation.add( now );
                 }
                 else {
                     /// if HashSet contains the word than the word was the candidate for adding to correction list
                     /// otherwise the word was the candidate for continuation list
-                    if( h.contains( now ) ) { if( correction.size() < MAX_WORDS_SUGGESTIONS )       correction.add( now ); }
-                    else                    { if( continuation.size() < MAX_WORDS_SUGGESTIONS )     continuation.add( now ); }
+                    if( h.contains( now ) ) correction.add( now );
+                    else                    continuation.add( now );
                 }
 
-            } while( c.moveToNext() && ( correction.size() < MAX_WORDS_SUGGESTIONS || continuation.size() < MAX_WORDS_SUGGESTIONS ) );
+            } while( c.moveToNext() );
         }
         c.close();
     }

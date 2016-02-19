@@ -36,7 +36,7 @@ public class Main extends AppCompatActivity {
     TextDatabase myNotesDB = new TextDatabase( this );          /// database that keeps all created documents
     private final int EDIT_CORRECT_TEXT_ACTIVITY_CODE = 1;      /// EditCorrectText activity is called as startActivityForResult in order to update listVew onResult
     private final String CACHE = "data";                        /// the name of SharedPreferences file
-    ListViewAdapter adapter = null;                                   /// adapter for list of created documents
+    ListViewAdapter adapter = null;                             /// adapter for list of created documents
 
 
     /*******************************actions support functions**************************************/
@@ -64,6 +64,9 @@ public class Main extends AppCompatActivity {
     private void deleteDocument( int position ) {
 
         String title = (String) list.get(position).get( 1 );
+        if( title.matches( "" ) )
+            title = "Untitled";
+
         myNotesDB.delete( (int) list.get(position).get( 0 ) );
         list.remove( position );
         adapter.notifyDataSetChanged();
