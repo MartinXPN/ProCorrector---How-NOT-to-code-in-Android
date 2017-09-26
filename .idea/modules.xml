@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ProCorrector.iml" filepath="$PROJECT_DIR$/ProCorrector.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ProCorrector---How-NOT-to-code-in-Android.iml" filepath="$PROJECT_DIR$/ProCorrector---How-NOT-to-code-in-Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

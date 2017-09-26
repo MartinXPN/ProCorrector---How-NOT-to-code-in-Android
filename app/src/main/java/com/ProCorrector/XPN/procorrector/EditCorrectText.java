@@ -1,6 +1,7 @@
 package com.ProCorrector.XPN.procorrector;
 
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
@@ -233,8 +234,13 @@ public class EditCorrectText extends AppCompatActivity {
     private void displaySpeechRecognizer() {
 
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, CurrentRecordingLanguageLocale);    /// set the language here
-        startActivityForResult(intent, SPEECH_REQUEST_CODE);    // Start the activity, the intent will be populated with the speech text
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, CurrentRecordingLanguageLocale);   /// set the language here
+        try {
+            this.startActivityForResult(intent, SPEECH_REQUEST_CODE);
+        }
+        catch ( ActivityNotFoundException e ) {
+            Toast.makeText(this, "Speech recognizer not found on your device", Toast.LENGTH_SHORT).show();
+        }
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -368,14 +374,14 @@ public class EditCorrectText extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         /// these are done because findViewById takes a lot of time
-        content = (EditText) findViewById( R.id.text );
-        title = (EditText) findViewById( R.id.title );
-        correctionBox = (LinearLayout) findViewById( R.id.correction_box );
-        continuationBox = (LinearLayout) findViewById( R.id.continuation_box );
-        editTextScroll = (ScrollView) findViewById( R.id.scroll );
-        correctionListView = (ListView) findViewById( R.id.correction_list );
-        continuationListView = (ListView) findViewById( R.id.continuation_list );
-        suggestionsCard = (CardView) findViewById( R.id.suggestions_card );
+        content = findViewById( R.id.text );
+        title = findViewById( R.id.title );
+        correctionBox = findViewById( R.id.correction_box );
+        continuationBox = findViewById( R.id.continuation_box );
+        editTextScroll = findViewById( R.id.scroll );
+        correctionListView = findViewById( R.id.correction_list );
+        continuationListView = findViewById( R.id.continuation_list );
+        suggestionsCard = findViewById( R.id.suggestions_card );
         suggestionWidth = getResources().getDimension(R.dimen.suggestion_box_width);
 
         /// initialize variables from SharedPreferences because every time making a query will be time-consuming
@@ -385,7 +391,7 @@ public class EditCorrectText extends AppCompatActivity {
 
 
         /// use toolbar as actionbar
-        final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");           /// we don't need a title in this activity
         setSupportActionBar(toolbar);
 
@@ -505,7 +511,7 @@ public class EditCorrectText extends AppCompatActivity {
 
         /// this prevents the program from crashing
         /// it closes the current page so that the user thinks that he touched the back button 3:)
-        /*Thread.setDefaultUncaughtExceptionHandler( new Thread.UncaughtExceptionHandler() {
+        Thread.setDefaultUncaughtExceptionHandler( new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable ex) {
 
@@ -513,7 +519,7 @@ public class EditCorrectText extends AppCompatActivity {
                 Thread.dumpStack();
                 System.exit( 2 );
             }
-        });*/
+        });
     }
 
     @Override

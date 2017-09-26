@@ -8,7 +8,6 @@ import java.util.HashMap;
 
 public class RecordingLanguage {
 
-    private static Context context;
     private static HashMap<Integer, String> languageIdToLanguageCode = new HashMap<>();
     private static HashMap <Integer, String> languageIdToLanguageName = new HashMap<>();
     private static HashMap <Integer, Integer> languageIdToLanguageFlag = new HashMap<>();
@@ -17,9 +16,8 @@ public class RecordingLanguage {
     /**
      * The most awful implementation that one could think of
      */
-    public RecordingLanguage( Context from ) {
+    public RecordingLanguage( Context context ) {
 
-        context = from;
         int ID;
         Resources res = context.getResources();
 
