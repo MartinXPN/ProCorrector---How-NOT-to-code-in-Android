@@ -2,6 +2,15 @@
 
 New and better version of this project is available here: https://github.com/MartinXPN/SpellNote.
 
+<p float="left">
+  <img src="images/1.jpg" width="130" />
+  <img src="images/2.jpg" width="130" /> 
+  <img src="images/3.jpg" width="130" />
+  <img src="images/4.jpg" width="130" />
+  <img src="images/5.jpg" width="130" />
+  <img src="images/6.jpg" width="130" />
+</p>
+
 ProCorrector was my first android project with a terribly written codebse and several mistakes that a lot of people do while
 just starting to learn programming in Java and Android. This project can be a guide for someone who just starts to learn 
 Android and wants to know what type of issues he may face and what common mistakes he shouldn't do while designing the project.
@@ -48,4 +57,4 @@ A better way would be to choose a good ORM library that can satisfy all your nee
 Realm are currently considered as one of the bests. I've used Realm in my other project.
 
 #
-Despite having this many issues this project was downloaded more than 100.000 times while being in play store for about a year.
+Despite having this many issues this project was downloaded more than 100.000 times while being in play store for about a year. Here is the link to the project in play store: https://play.google.com/store/apps/details?id=com.ProCorrector.XPN.procorrector&hl=en
